@@ -1,0 +1,113 @@
+/** These are the default options.
+ * If left as is, can be omitted.
+ */
+options {
+    LOOKAHEAD = 1;
+    CHOICE_AMBIGUITY_CHECK = 2;
+    OTHER_AMBIGUITY_CHECK = 1;
+    STATIC = true;
+    DEBUG_PARSER = false;
+    DEBUG_LOOKAHEAD = false;
+    DEBUG_TOKEN_MANAGER = false;
+    ERROR_REPORTING = true;
+    JAVA_UNICODE_ESCAPE = false;
+    UNICODE_INPUT = false;
+    IGNORE_CASE = false;
+    USER_TOKEN_MANAGER = false;
+    USER_CHAR_STREAM = false;
+    BUILD_PARSER = true;
+    BUILD_TOKEN_MANAGER = true;
+    SANITY_CHECK = true;
+    FORCE_LA_CHECK = false;
+  }
+  
+  PARSER_BEGIN(Mylexicon)
+  
+  /** Simple brace matcher. */
+  public class Mylexicon {
+  
+    /** Main entry point. */
+    public static void main(String args[]) throws ParseException, TokenMgrError {
+      Mylexicon parser = new Mylexicon(System.in);
+      parser.Input();
+    }
+  
+  }
+
+  PARSER_END(Mylexicon)
+
+  /** Lexical analyzer specification. */ 
+
+  /** These separate tokens from each other!
+   * If you don't want them to be counted as part of a token
+   * (e.g., "xyz 123" would be counted as token despite being wrong)
+   * put them as tokens to be skipped.
+   */
+  SKIP : 
+  { 
+    " "
+    | "\n" 
+    | "\r" 
+    | "\r\n" 
+    | "\t" 
+  }
+  
+  TOKEN :
+  {
+    < VARIABLE : ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* > 
+  }
+
+  TOKEN : 
+  { 
+    < NUMBER : ( ["0"-"9"] )+ > 
+  }
+
+  TOKEN :
+  {
+    < EMAIL : ( ["a"-"z","A"-"Z","0"-"9","_","-","."] )+ "@" ( ["a"-"z","A"-"Z","0"-"9","_","-","."] )+ >
+  }
+
+  TOKEN :
+  {
+    < URL : "https://" ( ["a"-"z","A"-"Z","0"-"9","_","-",".","/","~"] )+ >
+  }
+
+  
+  
+  /** Root production. */
+
+  /** This only checks that there are no errors. 
+   * It outputs nothing, except errors if any.
+  */
+  void Input() :
+  {
+    Token t;
+  }
+  {
+    (
+      t = <VARIABLE>
+      {
+        System.out.println("<VARIABLE>: " + t.image);
+      }
+      |
+      t = <NUMBER>
+      {
+        System.out.println("<NUMBER>: " + t.image);
+      }
+      |
+      t = <EMAIL>
+      {
+        System.out.println("<EMAIL>: " + t.image);
+      }
+      |
+      t = <URL>
+      {
+        System.out.println("<URL>: " + t.image);
+      }
+    )+
+    <EOF>
+    
+    {
+      System.out.println("\nNo invalid strings found (variables, numbers, emails, or URLs).");
+    }
+  }

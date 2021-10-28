@@ -1,0 +1,86 @@
+/* the quick brown fox */
+foobar 
+goof50 
+pillar12 
+height
+spacing
+count
+int
+float
+bool
+char
+string
+True 
+False
+456
+12.59f
+arr
+matrix(2,2)
+#(1,2,3,4)
+$A
+$f
+“Hello World”
+‘2021-10-26’
+‘16:54:31’
+‘2021-10-26 16:54:31’
+const
+null
+global
++
+-
+*
+/
+**
+++
+-- 
+%
+:=
+<<
+>>
+< 
+>
+>= 
+<= 
+== 
+!=
+and
+or
+not
+def
+return
+inquire
+otherwise
+otherwise if
+perform
+times
+until
+with test before
+with test after
+show
+print
+echo
+display
+clear()
+clean()
+exit
+typeof
+halt
+proceed
+AddPlusTwo()
+class
+summon
+self
+pass
+check
+onError
+after all
+require
+from
+;
+,
+(
+)
+[
+]
+{
+}
