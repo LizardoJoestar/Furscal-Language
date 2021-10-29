@@ -177,7 +177,13 @@ TOKEN :
 
 TOKEN :
 {
-  < SET_OPERATIONS : "union" | "diff" | "intersect" | "include" | "exclude" >
+  < SET_OPERATIONS : 
+  "union" 
+  | "diff" 
+  | "intersect" 
+  | "include" 
+  | "exclude" 
+  >
   {
     System.out.println("<SET_OPERATIONS>");
   }
@@ -185,7 +191,12 @@ TOKEN :
 
 TOKEN : 
 {
-  < SET_COMPARISONS : "><" | "=" | "<>" | "contains" >
+  < SET_COMPARISONS : 
+  "><" 
+  | "=" 
+  | "<>" 
+  | "contains" 
+  >
   {
     System.out.println("<SET_COMPARISONS>");
   }
@@ -193,7 +204,16 @@ TOKEN :
 
 TOKEN :
 {
-  < MATH_CONSTANTS : "Math.PI" | "Math.E" | "Math.SQRT2" | "Math.SQRT2_2" | "Math.LN2" | "Math.LN10" | "Math.LOG2E" | "Math.LOG10E" >
+  < MATH_CONSTANTS : 
+  "Math.PI" 
+  | "Math.E" 
+  | "Math.SQRT2" 
+  | "Math.SQRT2_2" 
+  | "Math.LN2" 
+  | "Math.LN10" 
+  | "Math.LOG2E" 
+  | "Math.LOG10E" 
+  >
   {
     System.out.println("<MATH_CONSTANTS>");
   }
@@ -201,7 +221,20 @@ TOKEN :
 
 TOKEN : 
 {
-  < TRIG_FUNCTIONS : "Math.acos(" <ID> ")" | "Math.acosh(" <ID> ")" | "Math.asin(" <ID> ")" | "Math.asinh(" <ID> ")" | "Math.atan(" <ID> ")" | "Math.atan2(" <ID> "," <ID> ")" | "Math.atanh(" <ID> ")" | "Math.cos(" <ID> ")" | "Math.cosh(" <ID> ")" | "Math.sin(" <ID> ")" | "Math.sinh(" <ID> ")" | "Math.tan(" <ID> ")" | "Math.tanh(" <ID> ")" >
+  < TRIG_FUNCTIONS : 
+  "Math.acos(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.acosh(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.asin(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.asinh(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.atan(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.atan2(" ( <ID> | <INTDEF> | <DECIMALDEF> ) "," ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" | "Math.atanh(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.cos(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.cosh(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.sin(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.sinh(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.tan(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.tanh(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  >
   {
     System.out.println("<TRIG_FUNCTIONS>");
   }
@@ -209,7 +242,19 @@ TOKEN :
 
 TOKEN : 
 {
-  < ASSIGN_OPERATORS : "+=" | "-=" | "*=" | "/=" | "<<=" | ">>=" | ">>>=" | "&=" |  "^=" | "|=" | "**=" >
+  < ASSIGN_OPERATORS : 
+  "+=" 
+  | "-=" 
+  | "*=" 
+  | "/=" 
+  | "<<=" 
+  | ">>=" 
+  | ">>>=" 
+  | "&=" 
+  | "^=" 
+  | "|=" 
+  | "**=" 
+  >
   {
     Sytem.out.println("<ASSIGN_OPERATORS>");
   }
@@ -217,7 +262,25 @@ TOKEN :
 
 TOKEN : 
 {
-  < ARITHMETIC_FUNCTIONS : "Math.abs(" <ID> ")" | "Math.exp(" <ID> ")" | "Math.log(" <ID> ")" | "Math.log10(" <ID> ")" | "Math.log1p(" <ID> ")" | "Math.log2(" <ID> ")" | "Math.max(" <ID> ")" | "Math.min(" <ID> ")" | "Math.random()" | "Math.round(" <ID> ")" | "Math.sqrt(" <ID> ")" | "Math.pow(" <ID> ")" | "Math.ceil(" <ID> ")" | "Math.floor(" <ID> ")" | "Math.cbrt(" <ID> ")" | "Math.expm1(" <ID> ")" | "Math.sign(" <ID> ")" >
+  < ARITHMETIC_FUNCTIONS : 
+  "Math.abs(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.exp(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.log(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.log10(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.log1p(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.log2(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.max(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.min(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.random()" 
+  | "Math.round(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.sqrt(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.pow(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.ceil(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.floor(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.cbrt(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.expm1(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.sign(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  >
   {
     System.out.println("<ARITHMETIC_FUNCTIONS>");
   }
