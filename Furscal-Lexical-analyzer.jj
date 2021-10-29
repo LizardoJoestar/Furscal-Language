@@ -68,6 +68,20 @@ TOKEN :
   < ID : <LETTER> ( <LETTER> | <DIGIT> )* > 
 }
 
+TOKEN : 
+{
+  < COMMENT : "/""*" (~[])* "*""/" >
+}
+
+TOKEN : 
+{
+  < TYPE : "int" | "decimal" | "bool" | "char" | "string" | "date" | "time" | "datetime" >
+}
+
+TOKEN : 
+{
+  
+}
 
 
 /** Parser/Syntax analyzer specification! */ 
