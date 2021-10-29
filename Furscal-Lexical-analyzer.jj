@@ -22,20 +22,20 @@ options
     FORCE_LA_CHECK = false;
 }
   
-PARSER_BEGIN(Mylexicon)
+PARSER_BEGIN(Furscal)
 
 /** Simple brace matcher. */
-public class Mylexicon 
+public class Furscal 
 {
   /** Main entry point. */
   public static void main(String args[]) throws ParseException, TokenMgrError 
   {
-    Mylexicon parser = new Mylexicon(System.in);
+    Furscal parser = new Mylexicon(System.in);
     parser.Input();
   }
 }
 
-PARSER_END(Mylexicon)
+PARSER_END(Furscal)
 
 /** Lexical analyzer specification. */ 
 
@@ -53,23 +53,7 @@ SKIP :
   | "\t" 
 }
 
-TOKEN :
-{
-  < #DIGIT : ( ["0"-"9"] ) >
-}
 
-TOKEN : 
-{
-  < #LETTER : ( ["a"-"z","A"-"Z"] ) >
-}
-
-TOKEN :
-{
-  < ID : <LETTER> ( <LETTER> | <DIGIT> )* > 
-  {
-    System.out.println("<ID>");
-  }
-}
 
 TOKEN : 
 {
@@ -298,7 +282,7 @@ TOKEN :
 
 TOKEN : 
 {
-  < FUNCTIONDECLARE : "def" >
+  < FUNCTIONDECLARE : ("def") >
   {
     System.out.println("<FUNCTIONDECLARE>");
   }
@@ -629,6 +613,28 @@ TOKEN :
   >
   {
     System.out.println("<MATH_CONSTANTS>");
+  }
+}
+
+/** General tokens. ALWAYS put after more specific tokens
+ * Such as < VAR : "var" >, otherwise these will match to general tokens
+ * like <ID>. Order of Token declaration matters!!
+ */
+TOKEN :
+{
+  < #DIGIT : ( ["0"-"9"] ) >
+}
+
+TOKEN : 
+{
+  < #LETTER : ( ["a"-"z","A"-"Z"] ) >
+}
+
+TOKEN :
+{
+  < ID : <LETTER> ( <LETTER> | <DIGIT> )* > 
+  {
+    System.out.println("<ID>");
   }
 }
 
