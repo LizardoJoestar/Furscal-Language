@@ -73,7 +73,7 @@ TOKEN :
 
 TOKEN : 
 {
-  < COMMENT : "/""*" (~[])* "*""/" >
+  < COMMENT : "/" "*" (~[])* "*" "/" >
   {
     System.out.println("<COMMENT>");
   }
@@ -113,7 +113,7 @@ TOKEN :
 
 TOKEN : 
 {
-  < CHARDEF: "$" (<LETRA>) >
+  < CHARDEF: "$" <LETRA> >
   {
     System.out.println("<CHARDEF>");
   }
@@ -121,7 +121,7 @@ TOKEN :
 
 TOKEN : 
 {
-  < STRINGDEF : "  \" (~[])* \"  " >
+  < STRINGDEF : "\"" (~[])* "\"" >
   {
     System.out.println("<STRINGDEF>");
   }
@@ -154,7 +154,7 @@ TOKEN :
 
 TOKEN : 
 {
-  < ARR : "ARR" >
+  < ARR : "arr" >
   {
     System.out.println("<ARR>");
   }
@@ -162,7 +162,7 @@ TOKEN :
 
 TOKEN : 
 {
-  < MATRIX : "matrix (" (<DIGIT>) + "," (<DIGIT>) + ")" >
+  < MATRIX : "matrix (" ( <DIGIT> )+ "," ( <DIGIT> )+ ")" >
   {
     System.out.println("<MATRIX>");
   }
@@ -170,7 +170,7 @@ TOKEN :
 
 TOKEN : 
 {
-  < ARRAYSETDEF : "#(" (~[])* ")" >
+  < ARRAYSETDEF : "#(" ( ~[] )* ")" >
   {
     System.out.println("<ARRAYSETDEF>");
   }
@@ -202,7 +202,12 @@ TOKEN :
 
 TOKEN : 
 {
-  < ARITHMETICOPERATOR : "+" | "-" | "*" | "/" >
+  < ARITHMETICOPERATOR : 
+  "+" 
+  | "-" 
+  | "*" 
+  | "/" 
+  >
   {
     System.out.println("<ARITHMETICOPERATOR>");
   }
@@ -244,7 +249,7 @@ TOKEN :
 {
   < ASSIGN : ":=" >
   {
-    System.out.println("<INTDEF>");
+    System.out.println("<ASSIGN>");
   }
 }
 
@@ -252,7 +257,7 @@ TOKEN :
 {
   < SHIFTLEFT : "<<" >
   {
-    System.out.println("<SHITLEFT>");
+    System.out.println("<SHIFTLEFT>");
   }
 }
 
@@ -266,7 +271,14 @@ TOKEN :
 
 TOKEN : 
 {
-  < RELATIONALOPERATOR : "<" | ">" | ">=" | "<=" | "==" | "!=" >
+  < RELATIONALOPERATOR : 
+  "<" 
+  | ">" 
+  | ">=" 
+  | "<=" 
+  | "==" 
+  | "!=" 
+  >
   {
     System.out.println("<RELATIONALOPERATOR>");
   }
@@ -274,7 +286,11 @@ TOKEN :
 
 TOKEN : 
 {
-  < LOGICALOPERATOR : "and" | "or" | "not" >
+  < LOGICALOPERATOR : 
+  "and" 
+  | "or" 
+  | "not" 
+  >
   {
     System.out.println("<LOGICALOPERATOR>");
   }
@@ -306,7 +322,10 @@ TOKEN :
 
 TOKEN : 
 {
-  < DEFAULT : "otherwise" | "otherwise if" >
+  < DEFAULT : 
+  "otherwise" 
+  | "otherwise if" 
+  >
   {
     System.out.println("<DEFAULT>");
   }
@@ -354,7 +373,12 @@ TOKEN :
 
 TOKEN : 
 {
-  < SHOW : "show" | "print" | "echo" | "display" >
+  < SHOW : 
+  "show" 
+  | "print" 
+  | "echo" 
+  | "display" 
+  >
   {
     System.out.println("<SHOW>");
   }
@@ -362,7 +386,10 @@ TOKEN :
 
 TOKEN : 
 {
-  < CLEAR : "clear()" | "clean()" >
+  < CLEAR : 
+  "clear()" 
+  | "clean()" 
+  >
   {
     System.out.println("<CLEAR>");
   }
@@ -402,7 +429,7 @@ TOKEN :
 
 TOKEN : 
 {
-  < CALLING : <ID> "(" (~[])*  ")" >
+  < CALLING : <ID> "(" (~[])* ")" >
   {
     System.out.println("<CALLING>");
   }
@@ -450,7 +477,7 @@ TOKEN :
 
 TOKEN : 
 {
-  < ONERROR : "onerror" >
+  < ONERROR : "onError" >
   {
     System.out.println("<ONERROR>");
   }
@@ -458,15 +485,10 @@ TOKEN :
 
 TOKEN : 
 {
-  < AFTERALL : "afterall" >
+  < AFTERALL : "after all" >
   {
     System.out.println("<AFTERALL>");
   }
-}
-
-TOKEN : 
-{
-  < TYPE : "int" | "decimal" | "bool" | "char" | "string" | "date" | "time" | "datetime" >
 }
 
 /** Beastman1972's half: */
