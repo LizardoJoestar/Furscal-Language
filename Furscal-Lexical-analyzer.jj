@@ -78,11 +78,150 @@ TOKEN :
   < TYPE : "int" | "decimal" | "bool" | "char" | "string" | "date" | "time" | "datetime" >
 }
 
+/** Beastman1972's half: */
 TOKEN : 
 {
-  
+  < REQUIRE : "require" >
+  {
+    System.out.println("<REQUIRE>");
+  }
 }
 
+TOKEN : 
+{
+  < FROM : "from" >
+  {
+    System.out.println("<FROM>");
+  }
+}
+
+TOKEN : 
+{
+  < LINE_END : ";" >
+  {
+    System.out.println("<LINE_END>");
+  }
+}
+
+TOKEN :
+{
+  < SEPARATOR : "," >
+  {
+    System.out.println("<SEPARATOR>");
+  }
+}
+
+TOKEN : 
+{
+  < PARENTHESIS_LEFT : "(" >
+  {
+    System.out.println("<PARENTHESIS_LEFT>");
+  }
+}
+
+TOKEN : 
+{
+  < PARENTHESIS_RIGHT: ")" >
+  {
+    System.out.println("<PARENTHESIS_RIGHT>");
+  }
+}
+
+TOKEN : 
+{
+  < SQUARE_LEFT : "[" >
+  {
+    System.out.println("<SQUARE_LEFT>");
+  }
+}
+
+TOKEN : 
+{
+  < SQUARE_RIGHT : "]" >
+  {
+    System.out.println("<SQUARE_RIGHT>");
+  }
+}
+
+TOKEN : 
+{
+  < BRACKET_LEFT : "{" >
+  {
+    System.out.println("<BRACKET_LEFT>");
+  }
+}
+
+TOKEN : 
+{
+  < BRAKCET_RIGHT : "}" >
+  {
+    System.out.println("<BRACKET_RIGHT>");
+  }
+}
+
+TOKEN : 
+{
+  < PROCEDURE : "procedure" >
+  {
+    System.out.println("<PROCEDURE>");
+  }
+}
+
+TOKEN : 
+{
+  < SET : "set" >
+  {
+    System.out.println("<SET>");
+  }
+}
+
+TOKEN :
+{
+  < SET_OPERATIONS : "union" | "diff" | "intersect" | "include" | "exclude" >
+  {
+    System.out.println("<SET_OPERATIONS>");
+  }
+}
+
+TOKEN : 
+{
+  < SET_COMPARISONS : "><" | "=" | "<>" | "contains" >
+  {
+    System.out.println("<SET_COMPARISONS>");
+  }
+}
+
+TOKEN :
+{
+  < MATH_CONSTANTS : "Math.PI" | "Math.E" | "Math.SQRT2" | "Math.SQRT2_2" | "Math.LN2" | "Math.LN10" | "Math.LOG2E" | "Math.LOG10E" >
+  {
+    System.out.println("<MATH_CONSTANTS>");
+  }
+}
+
+TOKEN : 
+{
+  < TRIG_FUNCTIONS : "Math.acos(" <ID> ")" | "Math.acosh(" <ID> ")" | "Math.asin(" <ID> ")" | "Math.asinh(" <ID> ")" | "Math.atan(" <ID> ")" | "Math.atan2(" <ID> "," <ID> ")" | "Math.atanh(" <ID> ")" | "Math.cos(" <ID> ")" | "Math.cosh(" <ID> ")" | "Math.sin(" <ID> ")" | "Math.sinh(" <ID> ")" | "Math.tan(" <ID> ")" | "Math.tanh(" <ID> ")" >
+  {
+    System.out.println("<TRIG_FUNCTIONS>");
+  }
+}
+
+TOKEN : 
+{
+  < ASSIGN_OPERATORS : "+=" | "-=" | "*=" | "/=" | "<<=" | ">>=" | ">>>=" | "&=" |  "^=" | "|=" | "**=" >
+  {
+    Sytem.out.println("<ASSIGN_OPERATORS>");
+  }
+}
+
+TOKEN : 
+{
+  < ARITHMETIC_FUNCTIONS : "Math.abs(" <ID> ")" | "Math.exp(" <ID> ")" | "Math.log(" <ID> ")" | "Math.log10(" <ID> ")" | "Math.log1p(" <ID> ")" | "Math.log2(" <ID> ")" | "Math.max(" <ID> ")" | "Math.min(" <ID> ")" | "Math.random()" | "Math.round(" <ID> ")" | "Math.sqrt(" <ID> ")" | "Math.pow(" <ID> ")" | "Math.ceil(" <ID> ")" | "Math.floor(" <ID> ")" | "Math.cbrt(" <ID> ")" | "Math.expm1(" <ID> ")" | "Math.sign(" <ID> ")" >
+  {
+    System.out.println("<ARITHMETIC_FUNCTIONS>");
+  }
+}
 
 /** Parser/Syntax analyzer specification! */ 
 /** Root production. */
