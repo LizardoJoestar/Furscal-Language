@@ -70,7 +70,7 @@ TOKEN :
 
 
 
-/** Parser/Syntax analyzer specification */ 
+/** Parser/Syntax analyzer specification! */ 
 /** Root production. */
 /** This only checks that there are no errors. 
  * It outputs nothing, except errors if any.
