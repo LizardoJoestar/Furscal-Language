@@ -113,7 +113,7 @@ TOKEN :
 
 TOKEN : 
 {
-  < CHARDEF: "$" <LETRA> >
+  < CHARDEF: "$" <LETTER> >
   {
     System.out.println("<CHARDEF>");
   }
@@ -129,7 +129,7 @@ TOKEN :
 
 TOKEN : 
 {
-  < DATEDEF : "'" <DIGIT> <DIGIT> <DIGIT> <DIGIT> "-" <DIGIT> {0,1} <DIGIT> "-" <DIGIT> {0,3} <DIGIT> "'" >
+  < DATEDEF : "'" <DIGIT> <DIGIT> <DIGIT> <DIGIT> "-" (<DIGIT>){0,1} <DIGIT> "-" (<DIGIT>){0,3} <DIGIT> "'" >
   {
     System.out.println("<DATEDEF>");
   }
@@ -137,7 +137,7 @@ TOKEN :
 
 TOKEN : 
 {
-  < TIMEDEF : "'" <DIGIT> {0,2} <DIGIT> ":" <DIGIT> {0,5} <DIGIT> ":" <DIGIT> {0,5} <DIGIT> "'">
+  < TIMEDEF : "'" (<DIGIT>){0,2} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> "'">
   {
     System.out.println("<TIMEDEF>");
   }
@@ -145,8 +145,8 @@ TOKEN :
 
 TOKEN : 
 {
-  < DATEIMEDEF : "'" <DIGIT> <DIGIT> <DIGIT> <DIGIT> "-" <DIGIT> {0,1} <DIGIT> "-" <DIGIT> {0,3} <DIGIT> (" ")
-  <DIGIT> {0,2} <DIGIT> ":" <DIGIT> {0,5} <DIGIT> ":" <DIGIT> {0,5} <DIGIT> "'" >
+  < DATEIMEDEF : "'" <DIGIT> <DIGIT> <DIGIT> <DIGIT> "-" (<DIGIT>){0,1} <DIGIT> "-" (<DIGIT>){0,3} <DIGIT> (" ")
+  (<DIGIT>){0,2} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> "'" >
   {
     System.out.println("<DATETIMEDEF>");
   }
@@ -239,7 +239,7 @@ TOKEN :
 
 TOKEN : 
 {
-  < MODULUS : "%"
+  < MODULUS : "%" >
   {
     System.out.println("<MODULUS>");
   }
@@ -322,12 +322,12 @@ TOKEN :
 
 TOKEN : 
 {
-  < DEFAULT : 
+  < DEFAULT_ : 
   "otherwise" 
   | "otherwise if" 
   >
   {
-    System.out.println("<DEFAULT>");
+    System.out.println("<DEFAULT_>");
   }
 }
 
