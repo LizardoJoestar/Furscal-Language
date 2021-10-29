@@ -30,7 +30,7 @@ public class Furscal
   /** Main entry point. */
   public static void main(String args[]) throws ParseException, TokenMgrError 
   {
-    Furscal parser = new Mylexicon(System.in);
+    Furscal parser = new Furscal(System.in);
     parser.Input();
   }
 }
@@ -81,7 +81,7 @@ TOKEN :
 
 TOKEN : 
 {
-  < DECIMALDEF : <DIGIT> ( "." (<DIGIT>) + ) "f" >
+  < DECIMALDEF : <DIGIT> ( ~[] )* "f" >
   {
     System.out.println("<DECIMALDEF>");
   }
@@ -103,9 +103,10 @@ TOKEN :
   }
 }
 
+
 TOKEN : 
 {
-  < STRINGDEF : "\"" (~[])* "\"" >
+  < STRINGDEF : "'"  (~["\n","\r"])*  "'" >
   {
     System.out.println("<STRINGDEF>");
   }
@@ -113,7 +114,7 @@ TOKEN :
 
 TOKEN : 
 {
-  < DATEDEF : "'" <DIGIT> <DIGIT> <DIGIT> <DIGIT> "-" (<DIGIT>){0,1} <DIGIT> "-" (<DIGIT>){0,3} <DIGIT> "'" >
+  < DATEDEF : "&" <DIGIT> <DIGIT> <DIGIT> <DIGIT> "-" (<DIGIT>){0,1} <DIGIT> "-" (<DIGIT>){0,3} <DIGIT> "&" >
   {
     System.out.println("<DATEDEF>");
   }
@@ -121,7 +122,7 @@ TOKEN :
 
 TOKEN : 
 {
-  < TIMEDEF : "'" (<DIGIT>){0,2} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> "'">
+  < TIMEDEF : "&" (<DIGIT>){0,2} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> "&" >
   {
     System.out.println("<TIMEDEF>");
   }
@@ -129,8 +130,8 @@ TOKEN :
 
 TOKEN : 
 {
-  < DATEIMEDEF : "'" <DIGIT> <DIGIT> <DIGIT> <DIGIT> "-" (<DIGIT>){0,1} <DIGIT> "-" (<DIGIT>){0,3} <DIGIT> (" ")
-  (<DIGIT>){0,2} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> "'" >
+  < DATETIMEDEF : "&" <DIGIT> <DIGIT> <DIGIT> <DIGIT> "-" (<DIGIT>){0,1} <DIGIT> "-" (<DIGIT>){0,3} <DIGIT> (" ")
+  (<DIGIT>){0,2} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> "&" >
   {
     System.out.println("<DATETIMEDEF>");
   }
@@ -146,7 +147,7 @@ TOKEN :
 
 TOKEN : 
 {
-  < MATRIX : "matrix (" ( <DIGIT> )+ "," ( <DIGIT> )+ ")" >
+  < MATRIX : "matrix" >
   {
     System.out.println("<MATRIX>");
   }
@@ -164,7 +165,7 @@ TOKEN :
 {
   < CONSTANT : "const" >
   {
-    System.out.println("<INTDEF>");
+    System.out.println("<CONSTANT>");
   }
 }
 
@@ -371,8 +372,8 @@ TOKEN :
 TOKEN : 
 {
   < CLEAR : 
-  "clear()" 
-  | "clean()" 
+  "clear" 
+  | "clean" 
   >
   {
     System.out.println("<CLEAR>");
@@ -411,13 +412,13 @@ TOKEN :
   }
 }
 
-TOKEN : 
-{
-  < CALLING : <ID> "(" (~[])* ")" >
-  {
-    System.out.println("<CALLING>");
-  }
-}
+// TOKEN : 
+// {
+//   < CALLING : <ID> "(" (~[])* ")" >
+//   {
+//     System.out.println("<CALLING>");
+//   }
+// }
 
 TOKEN : 
 {
@@ -550,7 +551,7 @@ TOKEN :
 
 TOKEN : 
 {
-  < BRAKCET_RIGHT : "}" >
+  < BRACKET_RIGHT : "}" >
   {
     System.out.println("<BRACKET_RIGHT>");
   }
@@ -619,18 +620,19 @@ TOKEN :
 TOKEN : 
 {
   < TRIG_FUNCTIONS : 
-  "Math.acos(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.acosh(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.asin(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.asinh(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.atan(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.atan2(" ( <ID> | <INTDEF> | <DECIMALDEF> ) "," ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" | "Math.atanh(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.cos(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.cosh(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.sin(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.sinh(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.tan(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.tanh(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  "Math.acos" 
+  | "Math.acosh" 
+  | "Math.asin" 
+  | "Math.asinh" 
+  | "Math.atan" 
+  | "Math.atan2"
+  | "Math.atanh" 
+  | "Math.cos" 
+  | "Math.cosh" 
+  | "Math.sin" 
+  | "Math.sinh" 
+  | "Math.tan" 
+  | "Math.tanh" 
   >
   {
     System.out.println("<TRIG_FUNCTIONS>");
@@ -653,30 +655,30 @@ TOKEN :
   | "**=" 
   >
   {
-    Sytem.out.println("<ASSIGN_OPERATORS>");
+    System.out.println("<ASSIGN_OPERATORS>");
   }
 }
 
 TOKEN : 
 {
   < ARITHMETIC_FUNCTIONS : 
-  "Math.abs(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.exp(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.log(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.log10(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.log1p(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.log2(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.max(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.min(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.random()" 
-  | "Math.round(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.sqrt(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.pow(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.ceil(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.floor(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.cbrt(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.expm1(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
-  | "Math.sign(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  "Math.abs" 
+  | "Math.exp" 
+  | "Math.log" 
+  | "Math.log10" 
+  | "Math.log1p" 
+  | "Math.log2" 
+  | "Math.max" 
+  | "Math.min" 
+  | "Math.random" 
+  | "Math.round" 
+  | "Math.sqrt" 
+  | "Math.pow" 
+  | "Math.ceil" 
+  | "Math.floor" 
+  | "Math.cbrt" 
+  | "Math.expm1" 
+  | "Math.sign" 
   >
   {
     System.out.println("<ARITHMETIC_FUNCTIONS>");
@@ -714,8 +716,80 @@ TOKEN :
 */
 void Input() :
 {
+  Token t;
 }
 {
+  (  
+    <COMMENT>
+    | <TYPE>
+    | <INTDEF>
+    | <DECIMALDEF>
+    | <BOOLDEF>
+    | <CHARDEF>
+    | <STRINGDEF>
+    | <DATEDEF> 
+    | <TIMEDEF> 
+    | <DATETIMEDEF>
+    | <ARR>
+    | <MATRIX>
+    | <ARRAYSETDEF>
+    | <CONSTANT>
+    | <NULL>
+    | <GLOBAL>
+    | <ARITHMETICOPERATOR>
+    | <POWER>
+    | <POSTFIXINC>
+    | <POSTFIXDEC>
+    | <MODULUS>
+    | <ASSIGN> 
+    | <SHIFTLEFT>
+    | <SHIFTRIGHT>
+    | <RELATIONALOPERATOR>
+    | <LOGICALOPERATOR>
+    | <FUNCTIONDECLARE>
+    | <RETURN>
+    | <QUESTION>
+    | <DEFAULT_>
+    | <LOOP>
+    | <LOOPCOUNTER>
+    | <LOOPUNTIL>
+    | <LOOPTESTAFTER>
+    | <LOOPTESTBEFORE>
+    | <SHOW>
+    | <CLEAR>
+    | <EXIT>
+    | <TYPEOF>
+    | <HALT>
+    | <PROCEED>
+    // | <CALLING> 
+    | <CLASSDECLARE>
+    | <OBJECTDECLARE>
+    | <SELF>
+    | <PASSALL>
+    | <CHECK>
+    | <ONERROR>
+    | <AFTERALL>
+    | <REQUIRE>
+    | <FROM>
+    | <LINE_END>
+    | <SEPARATOR>
+    | <PARENTHESIS_LEFT>
+    | <PARENTHESIS_RIGHT>
+    | <SQUARE_LEFT>
+    | <SQUARE_RIGHT>
+    | <BRACKET_LEFT>
+    | <BRACKET_RIGHT>
+    | <PROCEDURE>
+    | <SET>
+    | <SET_OPERATIONS>
+    | <SET_COMPARISONS>
+    | <MATH_CONSTANTS>
+    | <TRIG_FUNCTIONS>
+    | <ASSIGN_OPERATORS>
+    | <ARITHMETIC_FUNCTIONS>
+    | <ID>
+  )*
+  <EOF>
   {
     System.out.println("\nNo invalid strings found.");
   }
