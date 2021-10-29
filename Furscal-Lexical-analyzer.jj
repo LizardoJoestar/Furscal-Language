@@ -616,28 +616,6 @@ TOKEN :
   }
 }
 
-/** General tokens. ALWAYS put after more specific tokens
- * Such as < VAR : "var" >, otherwise these will match to general tokens
- * like <ID>. Order of Token declaration matters!!
- */
-TOKEN :
-{
-  < #DIGIT : ( ["0"-"9"] ) >
-}
-
-TOKEN : 
-{
-  < #LETTER : ( ["a"-"z","A"-"Z"] ) >
-}
-
-TOKEN :
-{
-  < ID : <LETTER> ( <LETTER> | <DIGIT> )* > 
-  {
-    System.out.println("<ID>");
-  }
-}
-
 TOKEN : 
 {
   < TRIG_FUNCTIONS : 
@@ -704,6 +682,30 @@ TOKEN :
     System.out.println("<ARITHMETIC_FUNCTIONS>");
   }
 }
+
+/** General tokens. ALWAYS put after more specific tokens
+ * Such as < VAR : "var" >, otherwise these will match to general tokens
+ * like <ID>. Order of Token declaration matters!!
+ */
+TOKEN :
+{
+  < #DIGIT : ( ["0"-"9"] ) >
+}
+
+TOKEN : 
+{
+  < #LETTER : ( ["a"-"z","A"-"Z"] ) >
+}
+
+TOKEN :
+{
+  < ID : <LETTER> ( <LETTER> | <DIGIT> )* > 
+  {
+    System.out.println("<ID>");
+  }
+}
+
+
 
 /** Parser/Syntax analyzer specification! */ 
 /** Root production. */
