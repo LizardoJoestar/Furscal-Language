@@ -78,11 +78,213 @@ TOKEN :
   < TYPE : "int" | "decimal" | "bool" | "char" | "string" | "date" | "time" | "datetime" >
 }
 
+/** Beastman1972's half: */
 TOKEN : 
 {
-  
+  < REQUIRE : "require" >
+  {
+    System.out.println("<REQUIRE>");
+  }
 }
 
+TOKEN : 
+{
+  < FROM : "from" >
+  {
+    System.out.println("<FROM>");
+  }
+}
+
+TOKEN : 
+{
+  < LINE_END : ";" >
+  {
+    System.out.println("<LINE_END>");
+  }
+}
+
+TOKEN :
+{
+  < SEPARATOR : "," >
+  {
+    System.out.println("<SEPARATOR>");
+  }
+}
+
+TOKEN : 
+{
+  < PARENTHESIS_LEFT : "(" >
+  {
+    System.out.println("<PARENTHESIS_LEFT>");
+  }
+}
+
+TOKEN : 
+{
+  < PARENTHESIS_RIGHT: ")" >
+  {
+    System.out.println("<PARENTHESIS_RIGHT>");
+  }
+}
+
+TOKEN : 
+{
+  < SQUARE_LEFT : "[" >
+  {
+    System.out.println("<SQUARE_LEFT>");
+  }
+}
+
+TOKEN : 
+{
+  < SQUARE_RIGHT : "]" >
+  {
+    System.out.println("<SQUARE_RIGHT>");
+  }
+}
+
+TOKEN : 
+{
+  < BRACKET_LEFT : "{" >
+  {
+    System.out.println("<BRACKET_LEFT>");
+  }
+}
+
+TOKEN : 
+{
+  < BRAKCET_RIGHT : "}" >
+  {
+    System.out.println("<BRACKET_RIGHT>");
+  }
+}
+
+TOKEN : 
+{
+  < PROCEDURE : "procedure" >
+  {
+    System.out.println("<PROCEDURE>");
+  }
+}
+
+TOKEN : 
+{
+  < SET : "set" >
+  {
+    System.out.println("<SET>");
+  }
+}
+
+TOKEN :
+{
+  < SET_OPERATIONS : 
+  "union" 
+  | "diff" 
+  | "intersect" 
+  | "include" 
+  | "exclude" 
+  >
+  {
+    System.out.println("<SET_OPERATIONS>");
+  }
+}
+
+TOKEN : 
+{
+  < SET_COMPARISONS : 
+  "><" 
+  | "=" 
+  | "<>" 
+  | "contains" 
+  >
+  {
+    System.out.println("<SET_COMPARISONS>");
+  }
+}
+
+TOKEN :
+{
+  < MATH_CONSTANTS : 
+  "Math.PI" 
+  | "Math.E" 
+  | "Math.SQRT2" 
+  | "Math.SQRT2_2" 
+  | "Math.LN2" 
+  | "Math.LN10" 
+  | "Math.LOG2E" 
+  | "Math.LOG10E" 
+  >
+  {
+    System.out.println("<MATH_CONSTANTS>");
+  }
+}
+
+TOKEN : 
+{
+  < TRIG_FUNCTIONS : 
+  "Math.acos(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.acosh(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.asin(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.asinh(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.atan(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.atan2(" ( <ID> | <INTDEF> | <DECIMALDEF> ) "," ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" | "Math.atanh(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.cos(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.cosh(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.sin(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.sinh(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.tan(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.tanh(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  >
+  {
+    System.out.println("<TRIG_FUNCTIONS>");
+  }
+}
+
+TOKEN : 
+{
+  < ASSIGN_OPERATORS : 
+  "+=" 
+  | "-=" 
+  | "*=" 
+  | "/=" 
+  | "<<=" 
+  | ">>=" 
+  | ">>>=" 
+  | "&=" 
+  | "^=" 
+  | "|=" 
+  | "**=" 
+  >
+  {
+    Sytem.out.println("<ASSIGN_OPERATORS>");
+  }
+}
+
+TOKEN : 
+{
+  < ARITHMETIC_FUNCTIONS : 
+  "Math.abs(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.exp(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.log(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.log10(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.log1p(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.log2(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.max(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.min(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.random()" 
+  | "Math.round(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.sqrt(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.pow(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.ceil(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.floor(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.cbrt(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.expm1(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  | "Math.sign(" ( <ID> | <INTDEF> | <DECIMALDEF> ) ")" 
+  >
+  {
+    System.out.println("<ARITHMETIC_FUNCTIONS>");
+  }
+}
 
 /** Parser/Syntax analyzer specification! */ 
 /** Root production. */
