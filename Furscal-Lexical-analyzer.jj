@@ -66,11 +66,402 @@ TOKEN :
 TOKEN :
 {
   < ID : <LETTER> ( <LETTER> | <DIGIT> )* > 
+  {
+    System.out.println("<ID>");
+  }
 }
 
 TOKEN : 
 {
   < COMMENT : "/""*" (~[])* "*""/" >
+  {
+    System.out.println("<COMMENT>");
+  }
+}
+
+TOKEN : 
+{
+  < TYPE : "int" | "decimal" | "bool" | "char" | "string" | "date" | "time" | "datetime" >
+  {
+    System.out.println("<TYPE>");
+  }
+}
+
+TOKEN :
+{
+  < INTDEF : (<DIGIT>) + >
+  {
+    System.out.println("<INTDEF>");
+  }
+}
+
+TOKEN : 
+{
+  < DECIMALDEF : <DIGIT> ( "." (<DIGIT>) + ) "f" >
+  {
+    System.out.println("<DECIMALDEF>");
+  }
+}
+
+TOKEN : 
+{
+  < BOOLDEF: "True" | "False" >
+  {
+    System.out.println("<BOOLDEF>");
+  }
+}
+
+TOKEN : 
+{
+  < CHARDEF: "$" (<LETRA>) >
+  {
+    System.out.println("<CHARDEF>");
+  }
+}
+
+TOKEN : 
+{
+  < STRINGDEF : "  \" (~[])* \"  " >
+  {
+    System.out.println("<STRINGDEF>");
+  }
+}
+
+TOKEN : 
+{
+  < DATEDEF : "'" <DIGIT> <DIGIT> <DIGIT> <DIGIT> "-" <DIGIT> {0,1} <DIGIT> "-" <DIGIT> {0,3} <DIGIT> "'" >
+  {
+    System.out.println("<DATEDEF>");
+  }
+}
+
+TOKEN : 
+{
+  < TIMEDEF : "'" <DIGIT> {0,2} <DIGIT> ":" <DIGIT> {0,5} <DIGIT> ":" <DIGIT> {0,5} <DIGIT> "'">
+  {
+    System.out.println("<TIMEDEF>");
+  }
+}
+
+TOKEN : 
+{
+  < DATEIMEDEF : "'" <DIGIT> <DIGIT> <DIGIT> <DIGIT> "-" <DIGIT> {0,1} <DIGIT> "-" <DIGIT> {0,3} <DIGIT> (" ")
+  <DIGIT> {0,2} <DIGIT> ":" <DIGIT> {0,5} <DIGIT> ":" <DIGIT> {0,5} <DIGIT> "'" >
+  {
+    System.out.println("<DATETIMEDEF>");
+  }
+}
+
+TOKEN : 
+{
+  < ARR : "ARR" >
+  {
+    System.out.println("<ARR>");
+  }
+}
+
+TOKEN : 
+{
+  < MATRIX : "matrix (" (<DIGIT>) + "," (<DIGIT>) + ")" >
+  {
+    System.out.println("<MATRIX>");
+  }
+}
+
+TOKEN : 
+{
+  < ARRAYSETDEF : "#(" (~[])* ")" >
+  {
+    System.out.println("<ARRAYSETDEF>");
+  }
+}
+
+TOKEN : 
+{
+  < CONSTANT : "const" >
+  {
+    System.out.println("<INTDEF>");
+  }
+}
+
+TOKEN : 
+{
+  < NULL : "null" >
+  {
+    System.out.println("<NULL>");
+  }
+}
+
+TOKEN : 
+{
+  < GLOBAL : "global" >
+  {
+    System.out.println("<GLOBAL>");
+  }
+}
+
+TOKEN : 
+{
+  < ARITHMETICOPERATOR : "+" | "-" | "*" | "/" >
+  {
+    System.out.println("<ARITHMETICOPERATOR>");
+  }
+}
+
+TOKEN : 
+{
+  < POWER : "**" >
+  {
+    System.out.println("<POWER>");
+  }
+}
+
+TOKEN : 
+{
+  < POSTFIXINC : "++" >
+  {
+    System.out.println("<POSTFIXINC>");
+  }
+}
+
+TOKEN : 
+{
+  < POSTFIXDEC : "--" >
+  {
+    System.out.println("<POSTFIXDEC>");
+  }
+}
+
+TOKEN : 
+{
+  < MODULUS : "%"
+  {
+    System.out.println("<MODULUS>");
+  }
+}
+
+TOKEN : 
+{
+  < ASSIGN : ":=" >
+  {
+    System.out.println("<INTDEF>");
+  }
+}
+
+TOKEN : 
+{
+  < SHIFTLEFT : "<<" >
+  {
+    System.out.println("<SHITLEFT>");
+  }
+}
+
+TOKEN : 
+{
+  < SHIFTRIGHT : ">>" >
+  {
+    System.out.println("<SHIFTRIGHT>");
+  }
+}
+
+TOKEN : 
+{
+  < RELATIONALOPERATOR : "<" | ">" | ">=" | "<=" | "==" | "!=" >
+  {
+    System.out.println("<RELATIONALOPERATOR>");
+  }
+}
+
+TOKEN : 
+{
+  < LOGICALOPERATOR : "and" | "or" | "not" >
+  {
+    System.out.println("<LOGICALOPERATOR>");
+  }
+}
+
+TOKEN : 
+{
+  < FUNCTIONDECLARE : "def" >
+  {
+    System.out.println("<FUNCTIONDECLARE>");
+  }
+}
+
+TOKEN : 
+{
+  < RETURN : "return" >
+  {
+    System.out.println("<RETURN>");
+  }
+}
+
+TOKEN : 
+{
+  < QUESTION : "inquire" >
+  {
+    System.out.println("<QUESTION>");
+  }
+}
+
+TOKEN : 
+{
+  < DEFAULT : "otherwise" | "otherwise if" >
+  {
+    System.out.println("<DEFAULT>");
+  }
+}
+
+TOKEN : 
+{
+  < LOOP : "perform" > 
+  {
+    System.out.println("<LOOP>");
+  }
+}
+
+TOKEN : 
+{
+  < LOOPCOUNTER : "times" >
+  {
+    System.out.println("<LOOPCOUNTER>");
+  }
+}
+
+TOKEN : 
+{
+  < LOOPUNTIL : "until" >
+  {
+    System.out.println("<LOPPUNTIL>");
+  }
+}
+
+TOKEN : 
+{
+  < LOOPTESTBEFORE : "with test before" >
+  {
+    System.out.println("<LOOPTESTBEFORE>");
+  }
+}
+
+TOKEN : 
+{
+  < LOOPTESTAFTER : "with test after" >
+  {
+    System.out.println("<LOOPTESTAFTER>");
+  }
+}
+
+TOKEN : 
+{
+  < SHOW : "show" | "print" | "echo" | "display" >
+  {
+    System.out.println("<SHOW>");
+  }
+}
+
+TOKEN : 
+{
+  < CLEAR : "clear()" | "clean()" >
+  {
+    System.out.println("<CLEAR>");
+  }
+}
+
+TOKEN : 
+{
+  < EXIT : "exit" >
+  {
+    System.out.println("<EXIT>");
+  }
+}
+
+TOKEN : 
+{
+  < TYPEOF : "typeof" >
+  {
+    System.out.println("<TYPEOF>");
+  }
+}
+
+TOKEN : 
+{
+  < HALT : "halt" >
+  {
+    System.out.println("<HALT>");
+  }
+}
+
+TOKEN : 
+{
+  < PROCEED : "proceed" >
+  {
+    System.out.println("<PROCCED>");
+  }
+}
+
+TOKEN : 
+{
+  < CALLING : <ID> "(" (~[])*  ")" >
+  {
+    System.out.println("<CALLING>");
+  }
+}
+
+TOKEN : 
+{
+  < CLASSDECLARE : "class" >
+  {
+    System.out.println("<CLASSDECLARE>");
+  }
+}
+
+TOKEN : 
+{
+  < OBJECTDECLARE : "summon" >
+  {
+    System.out.println("<OBJECTDECLARE>");
+  }
+}
+
+TOKEN : 
+{
+  < SELF : "self" >
+  {
+    System.out.println("<SELF>");
+  }
+}
+
+TOKEN : 
+{
+  < PASSALL : "pass" >
+  {
+    System.out.println("<PASSALL>");
+  }
+}
+
+TOKEN : 
+{
+  < CHECK : "check" >
+  {
+    System.out.println("<CHECK>");
+  }
+}
+
+TOKEN : 
+{
+  < ONERROR : "onerror" >
+  {
+    System.out.println("<ONERROR>");
+  }
+}
+
+TOKEN : 
+{
+  < AFTERALL : "afterall" >
+  {
+    System.out.println("<AFTERALL>");
+  }
 }
 
 TOKEN : 
