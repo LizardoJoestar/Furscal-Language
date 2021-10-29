@@ -60,7 +60,7 @@ TOKEN :
 
 TOKEN : 
 {
-  < #LETTER : ( ["a"-"z","A"-"Z"] )
+  < #LETTER : ( ["a"-"z","A"-"Z"] ) >
 }
 
 TOKEN :
