@@ -789,9 +789,9 @@ void Input() :
       }
     |
 
-    t = <REQUIERE>
+    t = <REQUIRE>
       {
-        System.out.println("<REQUIERE>: " + t.image);
+        System.out.println("<REQUIRE>: " + t.image);
       }
     |
     t = <FROM>
