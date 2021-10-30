@@ -58,131 +58,83 @@ SKIP :
 TOKEN : 
 {
   < COMMENT : "/" "*" (~[])* "*" "/" >
-  {
-    System.out.println("<COMMENT>");
-  }
 }
 
 TOKEN : 
 {
   < TYPE : "int" | "decimal" | "bool" | "char" | "string" | "date" | "time" | "datetime" >
-  {
-    System.out.println("<TYPE>");
-  }
 }
 
 TOKEN :
 {
   < INTDEF : (<DIGIT>) + >
-  {
-    System.out.println("<INTDEF>");
-  }
 }
 
 TOKEN : 
 {
   < DECIMALDEF : <DIGIT> ( ~[] )* "f" >
-  {
-    System.out.println("<DECIMALDEF>");
-  }
 }
 
 TOKEN : 
 {
   < BOOLDEF: "True" | "False" >
-  {
-    System.out.println("<BOOLDEF>");
-  }
 }
 
 TOKEN : 
 {
   < CHARDEF: "$" <LETTER> >
-  {
-    System.out.println("<CHARDEF>");
-  }
 }
 
 
 TOKEN : 
 {
   < STRINGDEF : "'"  (~["\n","\r"])*  "'" >
-  {
-    System.out.println("<STRINGDEF>");
-  }
 }
 
 TOKEN : 
 {
   < DATEDEF : "&" <DIGIT> <DIGIT> <DIGIT> <DIGIT> "-" (<DIGIT>){0,1} <DIGIT> "-" (<DIGIT>){0,3} <DIGIT> "&" >
-  {
-    System.out.println("<DATEDEF>");
-  }
 }
 
 TOKEN : 
 {
   < TIMEDEF : "&" (<DIGIT>){0,2} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> "&" >
-  {
-    System.out.println("<TIMEDEF>");
-  }
 }
 
 TOKEN : 
 {
   < DATETIMEDEF : "&" <DIGIT> <DIGIT> <DIGIT> <DIGIT> "-" (<DIGIT>){0,1} <DIGIT> "-" (<DIGIT>){0,3} <DIGIT> (" ")
   (<DIGIT>){0,2} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> "&" >
-  {
-    System.out.println("<DATETIMEDEF>");
-  }
 }
 
 TOKEN : 
 {
   < ARR : "arr" >
-  {
-    System.out.println("<ARR>");
-  }
 }
 
 TOKEN : 
 {
   < MATRIX : "matrix" >
-  {
-    System.out.println("<MATRIX>");
-  }
 }
 
 TOKEN : 
 {
   < ARRAYSETDEF : "#(" ( ~[] )* ")" >
-  {
-    System.out.println("<ARRAYSETDEF>");
-  }
 }
 
 TOKEN : 
 {
   < CONSTANT : "const" >
-  {
-    System.out.println("<CONSTANT>");
-  }
 }
 
 TOKEN : 
 {
   < NULL : "null" >
-  {
-    System.out.println("<NULL>");
-  }
 }
 
 TOKEN : 
 {
   < GLOBAL : "global" >
-  {
-    System.out.println("<GLOBAL>");
-  }
 }
 
 TOKEN : 
@@ -193,65 +145,41 @@ TOKEN :
   | "*" 
   | "/" 
   >
-  {
-    System.out.println("<ARITHMETICOPERATOR>");
-  }
 }
 
 TOKEN : 
 {
   < POWER : "**" >
-  {
-    System.out.println("<POWER>");
-  }
 }
 
 TOKEN : 
 {
   < POSTFIXINC : "++" >
-  {
-    System.out.println("<POSTFIXINC>");
-  }
 }
 
 TOKEN : 
 {
   < POSTFIXDEC : "--" >
-  {
-    System.out.println("<POSTFIXDEC>");
-  }
 }
 
 TOKEN : 
 {
   < MODULUS : "%" >
-  {
-    System.out.println("<MODULUS>");
-  }
 }
 
 TOKEN : 
 {
   < ASSIGN : ":=" >
-  {
-    System.out.println("<ASSIGN>");
-  }
 }
 
 TOKEN : 
 {
   < SHIFTLEFT : "<<" >
-  {
-    System.out.println("<SHIFTLEFT>");
-  }
 }
 
 TOKEN : 
 {
   < SHIFTRIGHT : ">>" >
-  {
-    System.out.println("<SHIFTRIGHT>");
-  }
 }
 
 TOKEN : 
@@ -264,9 +192,6 @@ TOKEN :
   | "==" 
   | "!=" 
   >
-  {
-    System.out.println("<RELATIONALOPERATOR>");
-  }
 }
 
 TOKEN : 
@@ -276,33 +201,21 @@ TOKEN :
   | "or" 
   | "not" 
   >
-  {
-    System.out.println("<LOGICALOPERATOR>");
-  }
 }
 
 TOKEN : 
 {
   < FUNCTIONDECLARE : ("def") >
-  {
-    System.out.println("<FUNCTIONDECLARE>");
-  }
 }
 
 TOKEN : 
 {
   < RETURN : "return" >
-  {
-    System.out.println("<RETURN>");
-  }
 }
 
 TOKEN : 
 {
   < QUESTION : "inquire" >
-  {
-    System.out.println("<QUESTION>");
-  }
 }
 
 TOKEN : 
@@ -311,49 +224,31 @@ TOKEN :
   "otherwise" 
   | "otherwise if" 
   >
-  {
-    System.out.println("<DEFAULT_>");
-  }
 }
 
 TOKEN : 
 {
   < LOOP : "perform" > 
-  {
-    System.out.println("<LOOP>");
-  }
 }
 
 TOKEN : 
 {
   < LOOPCOUNTER : "times" >
-  {
-    System.out.println("<LOOPCOUNTER>");
-  }
 }
 
 TOKEN : 
 {
   < LOOPUNTIL : "until" >
-  {
-    System.out.println("<LOPPUNTIL>");
-  }
 }
 
 TOKEN : 
 {
   < LOOPTESTBEFORE : "with test before" >
-  {
-    System.out.println("<LOOPTESTBEFORE>");
-  }
 }
 
 TOKEN : 
 {
   < LOOPTESTAFTER : "with test after" >
-  {
-    System.out.println("<LOOPTESTAFTER>");
-  }
 }
 
 TOKEN : 
@@ -364,9 +259,6 @@ TOKEN :
   | "echo" 
   | "display" 
   >
-  {
-    System.out.println("<SHOW>");
-  }
 }
 
 TOKEN : 
@@ -375,105 +267,66 @@ TOKEN :
   "clear" 
   | "clean" 
   >
-  {
-    System.out.println("<CLEAR>");
-  }
 }
 
 TOKEN : 
 {
   < EXIT : "exit" >
-  {
-    System.out.println("<EXIT>");
-  }
 }
 
 TOKEN : 
 {
   < TYPEOF : "typeof" >
-  {
-    System.out.println("<TYPEOF>");
-  }
 }
 
 TOKEN : 
 {
   < HALT : "halt" >
-  {
-    System.out.println("<HALT>");
-  }
 }
 
 TOKEN : 
 {
   < PROCEED : "proceed" >
-  {
-    System.out.println("<PROCCED>");
-  }
 }
 
 // TOKEN : 
 // {
 //   < CALLING : <ID> "(" (~[])* ")" >
-//   {
-//     System.out.println("<CALLING>");
-//   }
 // }
 
 TOKEN : 
 {
   < CLASSDECLARE : "class" >
-  {
-    System.out.println("<CLASSDECLARE>");
-  }
 }
 
 TOKEN : 
 {
   < OBJECTDECLARE : "summon" >
-  {
-    System.out.println("<OBJECTDECLARE>");
-  }
 }
 
 TOKEN : 
 {
   < SELF : "self" >
-  {
-    System.out.println("<SELF>");
-  }
 }
 
 TOKEN : 
 {
   < PASSALL : "pass" >
-  {
-    System.out.println("<PASSALL>");
-  }
 }
 
 TOKEN : 
 {
   < CHECK : "check" >
-  {
-    System.out.println("<CHECK>");
-  }
 }
 
 TOKEN : 
 {
   < ONERROR : "onError" >
-  {
-    System.out.println("<ONERROR>");
-  }
 }
 
 TOKEN : 
 {
   < AFTERALL : "after all" >
-  {
-    System.out.println("<AFTERALL>");
-  }
 }
 
 /** Beastman1972's half: */
@@ -719,61 +572,248 @@ void Input() :
   Token t;
 }
 {
-  (  
-    <COMMENT>
-    | <TYPE>
-    | <INTDEF>
-    | <DECIMALDEF>
-    | <BOOLDEF>
-    | <CHARDEF>
-    | <STRINGDEF>
-    | <DATEDEF> 
-    | <TIMEDEF> 
-    | <DATETIMEDEF>
-    | <ARR>
-    | <MATRIX>
-    | <ARRAYSETDEF>
-    | <CONSTANT>
-    | <NULL>
-    | <GLOBAL>
-    | <ARITHMETICOPERATOR>
-    | <POWER>
-    | <POSTFIXINC>
-    | <POSTFIXDEC>
-    | <MODULUS>
-    | <ASSIGN> 
-    | <SHIFTLEFT>
-    | <SHIFTRIGHT>
-    | <RELATIONALOPERATOR>
-    | <LOGICALOPERATOR>
-    | <FUNCTIONDECLARE>
-    | <RETURN>
-    | <QUESTION>
-    | <DEFAULT_>
-    | <LOOP>
-    | <LOOPCOUNTER>
-    | <LOOPUNTIL>
-    | <LOOPTESTAFTER>
-    | <LOOPTESTBEFORE>
-    | <SHOW>
-    | <CLEAR>
-    | <EXIT>
-    | <TYPEOF>
-    | <HALT>
-    | <PROCEED>
-    // | <CALLING> 
-    | <CLASSDECLARE>
-    | <OBJECTDECLARE>
-    | <SELF>
-    | <PASSALL>
-    | <CHECK>
-    | <ONERROR>
-    | <AFTERALL>
-    | <REQUIRE>
-    | <FROM>
-    | <LINE_END>
-    | <SEPARATOR>
-    | <PARENTHESIS_LEFT>
+  (
+    t = <COMMENT>
+      {
+        System.out.println("<COMMENT>: " + t.image);
+      }
+    |
+    t = <TYPE>
+      {
+        System.out.println("<TYPE>: " + t.image);
+      }
+    |
+    t = <INTDEF>
+      {
+        System.out.println("<INTDEF>: " + t.image);
+      }
+    |
+    t = <DECIMALDEF>
+      {
+        System.out.println("<DECIMALDEF>: " + t.image);
+      }
+    |
+    t = <BOOLDEF>
+      {
+        System.out.println("<BOOLDEF>: " + t.image);
+      }
+    |
+    t = <CHARDEF>
+      {
+        System.out.println("<CHARDEF>: " + t.image);
+      }
+    |
+    t = <STRINGDEF>
+      {
+        System.out.println("<STRINGDEF>: " + t.image);
+      }
+    |
+    t = <DATEDEF>
+      {
+        System.out.println("<DATEDEF>: " + t.image);
+      }
+    |
+    t = <DATETIMEDEF>
+      {
+        System.out.println("<DATETIMEDEF>: " + t.image);
+      }
+    |
+    t = <ARR>
+      {
+        System.out.println("<ARR>: " + t.image);
+      }
+    |
+    t = <MATRIX>
+      {
+        System.out.println("<MATRIX>: " + t.image);
+      }
+    |
+    t = <ARRAYSETDEF>
+      {
+        System.out.println("<ARRAYSETDEF>: " + t.image);
+      }
+    |
+    t = <CONSTANT>
+      {
+        System.out.println("<CONSTANT>: " + t.image);
+      }
+    |
+    t = <NULL>
+      {
+        System.out.println("<NULL>: " + t.image);
+      }
+    |
+    t = <GLOBAL>
+      {
+        System.out.println("<GLOBAL>: " + t.image);
+      }
+    |
+    t = <ARITHMETICOPERATOR>
+      {
+        System.out.println("<ARITHMETICOPERATOR>: " + t.image);
+      }
+    |
+    t = <POWER>
+      {
+        System.out.println("<POWER>: " + t.image);
+      }
+    |
+    t = <POSTFIXINC>
+      {
+        System.out.println("<POSTFIXINC>: " + t.image);
+      }
+    |
+    t = <POSTFIXDEC>
+      {
+        System.out.println("<POSTFIXDEC>: " + t.image);
+      }
+    |
+    t = <RELATIONALOPERATOR>
+      {
+        System.out.println("<RELATIONALOPERATOR>: " + t.image);
+      }
+    |
+    t = <LOGICALOPERATOR>
+      {
+        System.out.println("<LOGICALOPERATOR>: " + t.image);
+      }
+    |
+    t = <FUNCTIONDECLARE>
+      {
+        System.out.println("<FUNCTIONDECLARE>: " + t.image);
+      }
+    |
+    t = <RETURN>
+      {
+        System.out.println("<RETURN>: " + t.image);
+      }
+    |
+    t = <QUESTION>
+      {
+        System.out.println("<QUESTION>: " + t.image);
+      }
+    |
+    t = <DEFAULT_>
+      {
+        System.out.println("<DEFAULT_>: " + t.image);
+      }
+    |
+    t = <LOOP>
+      {
+        System.out.println("<LOOP>: " + t.image);
+      }
+    |
+    t = <LOOPCOUNTER>
+      {
+        System.out.println("<LOOPCOUNTER>: " + t.image);
+      }
+    |
+    t = <LOOPUNTIL>
+      {
+        System.out.println("<LOOPUNTIL>: " + t.image);
+      }
+    |
+    t = <LOOPTESTAFTER>
+      {
+        System.out.println("<LOOPTESTAFTER>: " + t.image);
+      }
+    |
+    t = <LOOPTESTBEFORE>
+      {
+        System.out.println("<LOOPTESTBEFORE>: " + t.image);
+      }
+    |
+    t = <SHOW>
+      {
+        System.out.println("<SHOW>: " + t.image);
+      }
+    |
+    t = <CLEAR>
+      {
+        System.out.println("<CLEAR>: " + t.image);
+      }
+    |
+    t = <EXIT>
+      {
+        System.out.println("<EXIT>: " + t.image);
+      }
+    |
+    t = <TYPEOF>
+      {
+        System.out.println("<TYPEOF>: " + t.image);
+      }
+    |
+    t = <HALT>
+      {
+        System.out.println("<HALT>: " + t.image);
+      }
+    |
+    //t = <CALLING>
+      //{
+        //System.out.println("<CALLING>: " + t.image);
+      //}
+    //|
+    t = <CLASSDECLARE>
+      {
+        System.out.println("<CLASSDECLARE>: " + t.image);
+      }
+    |
+    t = <OBJECTDECLARE>
+      {
+        System.out.println("<OBJECTDECLARE>: " + t.image);
+      }
+    |
+    t = <SELF>
+      {
+        System.out.println("<SELF>: " + t.image);
+      }
+    |
+    t = <PASSALL>
+      {
+        System.out.println("<PASSALL>: " + t.image);
+      }
+    |
+    t = <CHECK>
+      {
+        System.out.println("<CHECK>: " + t.image);
+      }
+    |
+    t = <ONERROR>
+      {
+        System.out.println("<ONERROR>: " + t.image);
+      }
+    |
+    t = <AFTERALL>
+      {
+        System.out.println("<AFTERALLL>: " + t.image);
+      }
+    |
+
+    t = <REQUIERE>
+      {
+        System.out.println("<REQUIERE>: " + t.image);
+      }
+    |
+    t = <FROM>
+      {
+        System.out.println("<FROM>: " + t.image);
+      }
+    |
+    t = <LINE_END>
+      {
+        System.out.println("<LINE_END>: " + t.image);
+      }
+    |
+    t = <SEPARATOR>
+      {
+        System.out.println("<SEPARATOR>: " + t.image);
+      }
+    |
+    t = <PARENTHESIS_LEFT>
+      {
+        System.out.println("<PARENTHESIS_LEFT>: " + t.image);
+      }
+    |
     | <PARENTHESIS_RIGHT>
     | <SQUARE_LEFT>
     | <SQUARE_RIGHT>
