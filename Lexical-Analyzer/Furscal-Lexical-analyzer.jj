@@ -570,6 +570,7 @@ TOKEN :
 void Input() :
 {
   Token t;
+  int ID_counter = 0;
 }
 {
   (
@@ -813,21 +814,77 @@ void Input() :
       {
         System.out.println("<PARENTHESIS_LEFT>: " + t.image);
       }
-    |
-    | <PARENTHESIS_RIGHT>
-    | <SQUARE_LEFT>
-    | <SQUARE_RIGHT>
-    | <BRACKET_LEFT>
-    | <BRACKET_RIGHT>
-    | <PROCEDURE>
-    | <SET>
-    | <SET_OPERATIONS>
-    | <SET_COMPARISONS>
-    | <MATH_CONSTANTS>
-    | <TRIG_FUNCTIONS>
-    | <ASSIGN_OPERATORS>
-    | <ARITHMETIC_FUNCTIONS>
-    | <ID>
+    | 
+    t = <PARENTHESIS_RIGHT>
+    {
+      System.out.println("<PARENTHESIS_RIGHT>: " + t.image);
+    }
+    | 
+    t = <SQUARE_LEFT>
+    {
+      System.out.println("<SQUARE_LEFT>: " + t.image);
+    }
+    | 
+    t = <SQUARE_RIGHT>
+    {
+      System.out.println("<SQUARE_RIGHT>: " + t.image);
+    }
+    | 
+    t = <BRACKET_LEFT>
+    {
+      System.out.println("<BRACKET_LEFT>: " + t.image);
+    }
+    | 
+    t = <BRACKET_RIGHT>
+    {
+      System.out.println("<BRACKET_RIGHT>: " + t.image);
+    }
+    | 
+    t = <PROCEDURE>
+    {
+      System.out.println("<PROCEDURE>: " + t.image);
+    }
+    | 
+    t = <SET>
+    {
+      System.out.println("<SET>: " + t.image);
+    }
+    | 
+    t = <SET_OPERATIONS>
+    {
+      System.out.println("<SET_OPERATIONS>: " + t.image);
+    }
+    | 
+    t = <SET_COMPARISONS>
+    {
+      System.out.println("<SET_COMPARISONS>: " + t.image);
+    }
+    | 
+    t = <MATH_CONSTANTS>
+    {
+      System.out.println("<MATH_CONSTANTS>: " + t.image);
+    }
+    | 
+    t = <TRIG_FUNCTIONS>
+    {
+      System.out.println("<TRIG_FUNCTIONS>: " + t.image);
+    }
+    | 
+    t = <ASSIGN_OPERATORS>
+    {
+      System.out.println("<ASSIGN_OPERATORS>: " + t.image);
+    }
+    | 
+    t = <ARITHMETIC_FUNCTIONS>
+    {
+      System.out.println("<ARITHMETIC_FUNCTIONS>: " + t.image);
+    }
+    | 
+    t = <ID>
+    {
+      System.out.println("<ID>: " + t.image + " " + "(" + ID_counter + ")");
+      ID_counter++;
+    }
   )*
   <EOF>
   {
