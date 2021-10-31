@@ -415,7 +415,7 @@ TOKEN :
   "Math.PI" 
   | "Math.E" 
   | "Math.SQRT2"
-  | "Math.SQRT2_2" 
+  | "Math.SQRT1_2" 
   | "Math.LN2" 
   | "Math.LN10" 
   | "Math.LOG2E" 
@@ -714,6 +714,11 @@ void Input() :
       {
         System.out.println("<HALT>: " + t.image);
       }
+    |
+    t = <PROCEED>
+    {
+      System.out.println("<PROCEED>: " + t.image);
+    }
     |
     //t = <CALLING>
       //{

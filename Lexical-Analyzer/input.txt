@@ -98,7 +98,7 @@ contains
 Math.PI 
 Math.E
 Math.SQRT2
-Math.SQRT_2
+Math.SQRT1_2
 Math.LN2
 Math.LN10
 Math.LOG2E

@@ -41,6 +41,8 @@ public class Furscal implements FurscalConstants {
       case POSTFIXDEC:
       case MODULUS:
       case ASSIGN:
+      case SHIFTLEFT:
+      case SHIFTRIGHT:
       case RELATIONALOPERATOR:
       case LOGICALOPERATOR:
       case FUNCTIONDECLARE:
@@ -57,6 +59,7 @@ public class Furscal implements FurscalConstants {
       case EXIT:
       case TYPEOF:
       case HALT:
+      case PROCEED:
       case CLASSDECLARE:
       case OBJECTDECLARE:
       case SELF:
@@ -201,6 +204,16 @@ System.out.println("<MODULUS>: " + t.image);
 System.out.println("<ASSIGN>: " + t.image);
         break;
         }
+      case SHIFTLEFT:{
+        t = jj_consume_token(SHIFTLEFT);
+System.out.println("<SHIFTLEFT>: " + t.image);
+        break;
+        }
+      case SHIFTRIGHT:{
+        t = jj_consume_token(SHIFTRIGHT);
+System.out.println("<SHIFTRIGHT>: " + t.image);
+        break;
+        }
       case RELATIONALOPERATOR:{
         t = jj_consume_token(RELATIONALOPERATOR);
 System.out.println("<RELATIONALOPERATOR>: " + t.image);
@@ -279,6 +292,11 @@ System.out.println("<TYPEOF>: " + t.image);
       case HALT:{
         t = jj_consume_token(HALT);
 System.out.println("<HALT>: " + t.image);
+        break;
+        }
+      case PROCEED:{
+        t = jj_consume_token(PROCEED);
+System.out.println("<PROCEED>: " + t.image);
         break;
         }
       case CLASSDECLARE:{
@@ -447,10 +465,10 @@ System.out.println("\nNo invalid strings found.");
 	   jj_la1_init_2();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0xcfffffc0,0xcfffffc0,};
+	   jj_la1_0 = new int[] {0xffffffc0,0xffffffc0,};
 	}
 	private static void jj_la1_init_1() {
-	   jj_la1_1 = new int[] {0xffffbfff,0xffffbfff,};
+	   jj_la1_1 = new int[] {0xffffffff,0xffffffff,};
 	}
 	private static void jj_la1_init_2() {
 	   jj_la1_2 = new int[] {0x4ff,0x4ff,};

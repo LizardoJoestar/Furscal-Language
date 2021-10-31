@@ -1655,7 +1655,7 @@ static private int jjMoveNfa_0(int startState, int curPos)
                      jjstateSet[jjnewStateCnt++] = 259;
                   break;
                case 265:
-                  if (curChar == 50)
+                  if (curChar == 49)
                      jjstateSet[jjnewStateCnt++] = 264;
                   break;
                case 270:
