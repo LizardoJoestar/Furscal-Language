@@ -141,11 +141,17 @@ public interface FurscalConstants {
   /** RegularExpression Id. */
   int ARITHMETIC_FUNCTIONS = 71;
   /** RegularExpression Id. */
-  int DIGIT = 72;
+  int ARRMETHODS = 72;
   /** RegularExpression Id. */
-  int LETTER = 73;
+  int HELP = 73;
   /** RegularExpression Id. */
-  int ID = 74;
+  int VERSION = 74;
+  /** RegularExpression Id. */
+  int DIGIT = 75;
+  /** RegularExpression Id. */
+  int LETTER = 76;
+  /** RegularExpression Id. */
+  int ID = 77;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -224,6 +230,9 @@ public interface FurscalConstants {
     "<TRIG_FUNCTIONS>",
     "<ASSIGN_OPERATORS>",
     "<ARITHMETIC_FUNCTIONS>",
+    "<ARRMETHODS>",
+    "\"--help\"",
+    "\"--version\"",
     "<DIGIT>",
     "<LETTER>",
     "<ID>",

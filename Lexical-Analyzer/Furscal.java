@@ -85,6 +85,8 @@ public class Furscal implements FurscalConstants {
       case TRIG_FUNCTIONS:
       case ASSIGN_OPERATORS:
       case ARITHMETIC_FUNCTIONS:
+      case ARRMETHODS:
+      case HELP:
       case ID:{
         ;
         break;
@@ -429,6 +431,18 @@ System.out.println("<ASSIGN_OPERATORS>: " + t.image);
 System.out.println("<ARITHMETIC_FUNCTIONS>: " + t.image);
         break;
         }
+      case ARRMETHODS:{
+        t = jj_consume_token(ARRMETHODS);
+System.out.println("<ARRMETHODS>: " + t.image);
+        break;
+        }
+      case HELP:{
+        t = jj_consume_token(HELP);
+System.out.println("<HELP>: " + t.image);
+        t = jj_consume_token(VERSION);
+System.out.println("<VERSION>: " + t.image);
+        break;
+        }
       case ID:{
         t = jj_consume_token(ID);
 System.out.println("<ID>: " + t.image + " " + "(" + ID_counter + ")");
@@ -471,7 +485,7 @@ System.out.println("\nNo invalid strings found.");
 	   jj_la1_1 = new int[] {0xffffffff,0xffffffff,};
 	}
 	private static void jj_la1_init_2() {
-	   jj_la1_2 = new int[] {0x4ff,0x4ff,};
+	   jj_la1_2 = new int[] {0x23ff,0x23ff,};
 	}
 
   /** Constructor with InputStream. */
@@ -617,7 +631,7 @@ System.out.println("\nNo invalid strings found.");
   /** Generate ParseException. */
   static public ParseException generateParseException() {
 	 jj_expentries.clear();
-	 boolean[] la1tokens = new boolean[75];
+	 boolean[] la1tokens = new boolean[78];
 	 if (jj_kind >= 0) {
 	   la1tokens[jj_kind] = true;
 	   jj_kind = -1;
@@ -637,7 +651,7 @@ System.out.println("\nNo invalid strings found.");
 		 }
 	   }
 	 }
-	 for (int i = 0; i < 75; i++) {
+	 for (int i = 0; i < 78; i++) {
 	   if (la1tokens[i]) {
 		 jj_expentry = new int[1];
 		 jj_expentry[0] = i;

@@ -471,6 +471,9 @@ TOKEN :
   | "Math.max" 
   | "Math.min" 
   | "Math.random" 
+  | "Math.sort"
+  | "Math.shuffle"
+  | "Math.choice"
   | "Math.round" 
   | "Math.sqrt" 
   | "Math.pow" 
@@ -480,6 +483,27 @@ TOKEN :
   | "Math.expm1" 
   | "Math.sign" 
   >
+}
+
+TOKEN :
+{
+  < ARRMETHODS : 
+  "index" 
+  | "pop" 
+  | "append" 
+  | "count" 
+  | "remove" 
+  >
+}
+
+TOKEN : 
+{
+  < HELP : "--help" >
+}
+
+TOKEN : 
+{
+  < VERSION : "--version" >
 }
 
 /** General tokens. ALWAYS put after more specific tokens
@@ -850,6 +874,20 @@ void Input() :
       System.out.println("<ARITHMETIC_FUNCTIONS>: " + t.image);
     }
     | 
+    t = <ARRMETHODS>
+    {
+      System.out.println("<ARRMETHODS>: " + t.image);
+    }
+    | 
+    t = <HELP>
+    {
+      System.out.println("<HELP>: " + t.image);
+    }
+    t = <VERSION>
+    {
+      System.out.println("<VERSION>: " + t.image);
+    }
+    |
     t = <ID>
     {
       System.out.println("<ID>: " + t.image + " " + "(" + ID_counter + ")");

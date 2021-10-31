@@ -144,5 +144,16 @@ Math.floor
 Math.cbrt
 Math.expm1
 Math.sign
+Math.shuffle
+Math.sort
+Math.choice
+--help
+--version
+append
+pop
+count
+index
+remove
+
 
 
