@@ -14,7 +14,8 @@ public class Furscal implements FurscalConstants {
 /** This only checks that there are no errors. 
  * It outputs nothing, except errors if any.
 */
-  static final public void Input() throws ParseException {
+  static final public void Input() throws ParseException {Token t;
+  int ID_counter = 0;
     label_1:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -40,8 +41,6 @@ public class Furscal implements FurscalConstants {
       case POSTFIXDEC:
       case MODULUS:
       case ASSIGN:
-      case SHIFTLEFT:
-      case SHIFTRIGHT:
       case RELATIONALOPERATOR:
       case LOGICALOPERATOR:
       case FUNCTIONDECLARE:
@@ -58,7 +57,6 @@ public class Furscal implements FurscalConstants {
       case EXIT:
       case TYPEOF:
       case HALT:
-      case PROCEED:
       case CLASSDECLARE:
       case OBJECTDECLARE:
       case SELF:
@@ -94,271 +92,329 @@ public class Furscal implements FurscalConstants {
       }
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case COMMENT:{
-        jj_consume_token(COMMENT);
+        t = jj_consume_token(COMMENT);
+System.out.println("<COMMENT>: " + t.image);
         break;
         }
       case TYPE:{
-        jj_consume_token(TYPE);
+        t = jj_consume_token(TYPE);
+System.out.println("<TYPE>: " + t.image);
         break;
         }
       case INTDEF:{
-        jj_consume_token(INTDEF);
+        t = jj_consume_token(INTDEF);
+System.out.println("<INTDEF>: " + t.image);
         break;
         }
       case DECIMALDEF:{
-        jj_consume_token(DECIMALDEF);
+        t = jj_consume_token(DECIMALDEF);
+System.out.println("<DECIMALDEF>: " + t.image);
         break;
         }
       case BOOLDEF:{
-        jj_consume_token(BOOLDEF);
+        t = jj_consume_token(BOOLDEF);
+System.out.println("<BOOLDEF>: " + t.image);
         break;
         }
       case CHARDEF:{
-        jj_consume_token(CHARDEF);
+        t = jj_consume_token(CHARDEF);
+System.out.println("<CHARDEF>: " + t.image);
         break;
         }
       case STRINGDEF:{
-        jj_consume_token(STRINGDEF);
-        break;
-        }
-      case DATEDEF:{
-        jj_consume_token(DATEDEF);
+        t = jj_consume_token(STRINGDEF);
+System.out.println("<STRINGDEF>: " + t.image);
         break;
         }
       case TIMEDEF:{
-        jj_consume_token(TIMEDEF);
+        t = jj_consume_token(TIMEDEF);
+System.out.println("<TIMEDEF>: " + t.image);
+        break;
+        }
+      case DATEDEF:{
+        t = jj_consume_token(DATEDEF);
+System.out.println("<DATEDEF>: " + t.image);
         break;
         }
       case DATETIMEDEF:{
-        jj_consume_token(DATETIMEDEF);
+        t = jj_consume_token(DATETIMEDEF);
+System.out.println("<DATETIMEDEF>: " + t.image);
         break;
         }
       case ARR:{
-        jj_consume_token(ARR);
+        t = jj_consume_token(ARR);
+System.out.println("<ARR>: " + t.image);
         break;
         }
       case MATRIX:{
-        jj_consume_token(MATRIX);
+        t = jj_consume_token(MATRIX);
+System.out.println("<MATRIX>: " + t.image);
         break;
         }
       case ARRAYSETDEF:{
-        jj_consume_token(ARRAYSETDEF);
+        t = jj_consume_token(ARRAYSETDEF);
+System.out.println("<ARRAYSETDEF>: " + t.image);
         break;
         }
       case CONSTANT:{
-        jj_consume_token(CONSTANT);
+        t = jj_consume_token(CONSTANT);
+System.out.println("<CONSTANT>: " + t.image);
         break;
         }
       case NULL:{
-        jj_consume_token(NULL);
+        t = jj_consume_token(NULL);
+System.out.println("<NULL>: " + t.image);
         break;
         }
       case GLOBAL:{
-        jj_consume_token(GLOBAL);
+        t = jj_consume_token(GLOBAL);
+System.out.println("<GLOBAL>: " + t.image);
         break;
         }
       case ARITHMETICOPERATOR:{
-        jj_consume_token(ARITHMETICOPERATOR);
+        t = jj_consume_token(ARITHMETICOPERATOR);
+System.out.println("<ARITHMETICOPERATOR>: " + t.image);
         break;
         }
       case POWER:{
-        jj_consume_token(POWER);
+        t = jj_consume_token(POWER);
+System.out.println("<POWER>: " + t.image);
         break;
         }
       case POSTFIXINC:{
-        jj_consume_token(POSTFIXINC);
+        t = jj_consume_token(POSTFIXINC);
+System.out.println("<POSTFIXINC>: " + t.image);
         break;
         }
       case POSTFIXDEC:{
-        jj_consume_token(POSTFIXDEC);
+        t = jj_consume_token(POSTFIXDEC);
+System.out.println("<POSTFIXDEC>: " + t.image);
         break;
         }
       case MODULUS:{
-        jj_consume_token(MODULUS);
+        t = jj_consume_token(MODULUS);
+System.out.println("<MODULUS>: " + t.image);
         break;
         }
       case ASSIGN:{
-        jj_consume_token(ASSIGN);
-        break;
-        }
-      case SHIFTLEFT:{
-        jj_consume_token(SHIFTLEFT);
-        break;
-        }
-      case SHIFTRIGHT:{
-        jj_consume_token(SHIFTRIGHT);
+        t = jj_consume_token(ASSIGN);
+System.out.println("<ASSIGN>: " + t.image);
         break;
         }
       case RELATIONALOPERATOR:{
-        jj_consume_token(RELATIONALOPERATOR);
+        t = jj_consume_token(RELATIONALOPERATOR);
+System.out.println("<RELATIONALOPERATOR>: " + t.image);
         break;
         }
       case LOGICALOPERATOR:{
-        jj_consume_token(LOGICALOPERATOR);
+        t = jj_consume_token(LOGICALOPERATOR);
+System.out.println("<LOGICALOPERATOR>: " + t.image);
         break;
         }
       case FUNCTIONDECLARE:{
-        jj_consume_token(FUNCTIONDECLARE);
+        t = jj_consume_token(FUNCTIONDECLARE);
+System.out.println("<FUNCTIONDECLARE>: " + t.image);
         break;
         }
       case RETURN:{
-        jj_consume_token(RETURN);
+        t = jj_consume_token(RETURN);
+System.out.println("<RETURN>: " + t.image);
         break;
         }
       case QUESTION:{
-        jj_consume_token(QUESTION);
+        t = jj_consume_token(QUESTION);
+System.out.println("<QUESTION>: " + t.image);
         break;
         }
       case DEFAULT_:{
-        jj_consume_token(DEFAULT_);
+        t = jj_consume_token(DEFAULT_);
+System.out.println("<DEFAULT_>: " + t.image);
         break;
         }
       case LOOP:{
-        jj_consume_token(LOOP);
+        t = jj_consume_token(LOOP);
+System.out.println("<LOOP>: " + t.image);
         break;
         }
       case LOOPCOUNTER:{
-        jj_consume_token(LOOPCOUNTER);
+        t = jj_consume_token(LOOPCOUNTER);
+System.out.println("<LOOPCOUNTER>: " + t.image);
         break;
         }
       case LOOPUNTIL:{
-        jj_consume_token(LOOPUNTIL);
+        t = jj_consume_token(LOOPUNTIL);
+System.out.println("<LOOPUNTIL>: " + t.image);
         break;
         }
       case LOOPTESTAFTER:{
-        jj_consume_token(LOOPTESTAFTER);
+        t = jj_consume_token(LOOPTESTAFTER);
+System.out.println("<LOOPTESTAFTER>: " + t.image);
         break;
         }
       case LOOPTESTBEFORE:{
-        jj_consume_token(LOOPTESTBEFORE);
+        t = jj_consume_token(LOOPTESTBEFORE);
+System.out.println("<LOOPTESTBEFORE>: " + t.image);
         break;
         }
       case SHOW:{
-        jj_consume_token(SHOW);
+        t = jj_consume_token(SHOW);
+System.out.println("<SHOW>: " + t.image);
         break;
         }
       case CLEAR:{
-        jj_consume_token(CLEAR);
+        t = jj_consume_token(CLEAR);
+System.out.println("<CLEAR>: " + t.image);
         break;
         }
       case EXIT:{
-        jj_consume_token(EXIT);
+        t = jj_consume_token(EXIT);
+System.out.println("<EXIT>: " + t.image);
         break;
         }
       case TYPEOF:{
-        jj_consume_token(TYPEOF);
+        t = jj_consume_token(TYPEOF);
+System.out.println("<TYPEOF>: " + t.image);
         break;
         }
       case HALT:{
-        jj_consume_token(HALT);
-        break;
-        }
-      case PROCEED:{
-        jj_consume_token(PROCEED);
+        t = jj_consume_token(HALT);
+System.out.println("<HALT>: " + t.image);
         break;
         }
       case CLASSDECLARE:{
-        jj_consume_token(CLASSDECLARE);
+        //t = <CALLING>
+              //{
+                //System.out.println("<CALLING>: " + t.image);
+              //}
+            //|
+            t = jj_consume_token(CLASSDECLARE);
+System.out.println("<CLASSDECLARE>: " + t.image);
         break;
         }
       case OBJECTDECLARE:{
-        jj_consume_token(OBJECTDECLARE);
+        t = jj_consume_token(OBJECTDECLARE);
+System.out.println("<OBJECTDECLARE>: " + t.image);
         break;
         }
       case SELF:{
-        jj_consume_token(SELF);
+        t = jj_consume_token(SELF);
+System.out.println("<SELF>: " + t.image);
         break;
         }
       case PASSALL:{
-        jj_consume_token(PASSALL);
+        t = jj_consume_token(PASSALL);
+System.out.println("<PASSALL>: " + t.image);
         break;
         }
       case CHECK:{
-        jj_consume_token(CHECK);
+        t = jj_consume_token(CHECK);
+System.out.println("<CHECK>: " + t.image);
         break;
         }
       case ONERROR:{
-        jj_consume_token(ONERROR);
+        t = jj_consume_token(ONERROR);
+System.out.println("<ONERROR>: " + t.image);
         break;
         }
       case AFTERALL:{
-        jj_consume_token(AFTERALL);
+        t = jj_consume_token(AFTERALL);
+System.out.println("<AFTERALLL>: " + t.image);
         break;
         }
       case REQUIRE:{
-        jj_consume_token(REQUIRE);
+        t = jj_consume_token(REQUIRE);
+System.out.println("<REQUIRE>: " + t.image);
         break;
         }
       case FROM:{
-        jj_consume_token(FROM);
+        t = jj_consume_token(FROM);
+System.out.println("<FROM>: " + t.image);
         break;
         }
       case LINE_END:{
-        jj_consume_token(LINE_END);
+        t = jj_consume_token(LINE_END);
+System.out.println("<LINE_END>: " + t.image);
         break;
         }
       case SEPARATOR:{
-        jj_consume_token(SEPARATOR);
+        t = jj_consume_token(SEPARATOR);
+System.out.println("<SEPARATOR>: " + t.image);
         break;
         }
       case PARENTHESIS_LEFT:{
-        jj_consume_token(PARENTHESIS_LEFT);
+        t = jj_consume_token(PARENTHESIS_LEFT);
+System.out.println("<PARENTHESIS_LEFT>: " + t.image);
         break;
         }
       case PARENTHESIS_RIGHT:{
-        jj_consume_token(PARENTHESIS_RIGHT);
+        t = jj_consume_token(PARENTHESIS_RIGHT);
+System.out.println("<PARENTHESIS_RIGHT>: " + t.image);
         break;
         }
       case SQUARE_LEFT:{
-        jj_consume_token(SQUARE_LEFT);
+        t = jj_consume_token(SQUARE_LEFT);
+System.out.println("<SQUARE_LEFT>: " + t.image);
         break;
         }
       case SQUARE_RIGHT:{
-        jj_consume_token(SQUARE_RIGHT);
+        t = jj_consume_token(SQUARE_RIGHT);
+System.out.println("<SQUARE_RIGHT>: " + t.image);
         break;
         }
       case BRACKET_LEFT:{
-        jj_consume_token(BRACKET_LEFT);
+        t = jj_consume_token(BRACKET_LEFT);
+System.out.println("<BRACKET_LEFT>: " + t.image);
         break;
         }
       case BRACKET_RIGHT:{
-        jj_consume_token(BRACKET_RIGHT);
+        t = jj_consume_token(BRACKET_RIGHT);
+System.out.println("<BRACKET_RIGHT>: " + t.image);
         break;
         }
       case PROCEDURE:{
-        jj_consume_token(PROCEDURE);
+        t = jj_consume_token(PROCEDURE);
+System.out.println("<PROCEDURE>: " + t.image);
         break;
         }
       case SET:{
-        jj_consume_token(SET);
+        t = jj_consume_token(SET);
+System.out.println("<SET>: " + t.image);
         break;
         }
       case SET_OPERATIONS:{
-        jj_consume_token(SET_OPERATIONS);
+        t = jj_consume_token(SET_OPERATIONS);
+System.out.println("<SET_OPERATIONS>: " + t.image);
         break;
         }
       case SET_COMPARISONS:{
-        jj_consume_token(SET_COMPARISONS);
+        t = jj_consume_token(SET_COMPARISONS);
+System.out.println("<SET_COMPARISONS>: " + t.image);
         break;
         }
       case MATH_CONSTANTS:{
-        jj_consume_token(MATH_CONSTANTS);
+        t = jj_consume_token(MATH_CONSTANTS);
+System.out.println("<MATH_CONSTANTS>: " + t.image);
         break;
         }
       case TRIG_FUNCTIONS:{
-        jj_consume_token(TRIG_FUNCTIONS);
+        t = jj_consume_token(TRIG_FUNCTIONS);
+System.out.println("<TRIG_FUNCTIONS>: " + t.image);
         break;
         }
       case ASSIGN_OPERATORS:{
-        jj_consume_token(ASSIGN_OPERATORS);
+        t = jj_consume_token(ASSIGN_OPERATORS);
+System.out.println("<ASSIGN_OPERATORS>: " + t.image);
         break;
         }
       case ARITHMETIC_FUNCTIONS:{
-        jj_consume_token(ARITHMETIC_FUNCTIONS);
+        t = jj_consume_token(ARITHMETIC_FUNCTIONS);
+System.out.println("<ARITHMETIC_FUNCTIONS>: " + t.image);
         break;
         }
       case ID:{
-        jj_consume_token(ID);
+        t = jj_consume_token(ID);
+System.out.println("<ID>: " + t.image + " " + "(" + ID_counter + ")");
+      ID_counter++;
         break;
         }
       default:
@@ -391,10 +447,10 @@ System.out.println("\nNo invalid strings found.");
 	   jj_la1_init_2();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0xffffffc0,0xffffffc0,};
+	   jj_la1_0 = new int[] {0xcfffffc0,0xcfffffc0,};
 	}
 	private static void jj_la1_init_1() {
-	   jj_la1_1 = new int[] {0xffffffff,0xffffffff,};
+	   jj_la1_1 = new int[] {0xffffbfff,0xffffbfff,};
 	}
 	private static void jj_la1_init_2() {
 	   jj_la1_2 = new int[] {0x4ff,0x4ff,};

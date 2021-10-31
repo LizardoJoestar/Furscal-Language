@@ -53,8 +53,6 @@ SKIP :
   | "\t" 
 }
 
-
-
 TOKEN : 
 {
   < COMMENT : "/" "*" (~[])* "*" "/" >
@@ -67,12 +65,12 @@ TOKEN :
 
 TOKEN :
 {
-  < INTDEF : (<DIGIT>) + >
+  < INTDEF : ( <DIGIT> ) + >
 }
 
 TOKEN : 
 {
-  < DECIMALDEF : <DIGIT> ( ~[] )* "f" >
+  < DECIMALDEF : ( <DIGIT> )+ "." ( <DIGIT> )+ "f" >
 }
 
 TOKEN : 
@@ -88,7 +86,7 @@ TOKEN :
 
 TOKEN : 
 {
-  < STRINGDEF : "'"  (~["\n","\r"])*  "'" >
+  < STRINGDEF : "'"  (~["'","\n","\r"])*  "'" >
 }
 
 TOKEN : 
@@ -98,7 +96,7 @@ TOKEN :
 
 TOKEN : 
 {
-  < TIMEDEF : "&" (<DIGIT>){0,2} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> "&" >
+  < TIMEDEF : "&" (<DIGIT>){0,2} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT>"&" >
 }
 
 TOKEN : 
@@ -119,7 +117,7 @@ TOKEN :
 
 TOKEN : 
 {
-  < ARRAYSETDEF : "#(" ( ~[] )* ")" >
+  < ARRAYSETDEF : "#(" ( ( <INTDEF> | <DECIMALDEF> ) (",")? )+ ")" >
 }
 
 TOKEN : 
@@ -333,97 +331,61 @@ TOKEN :
 TOKEN : 
 {
   < REQUIRE : "require" >
-  {
-    System.out.println("<REQUIRE>");
-  }
 }
 
 TOKEN : 
 {
   < FROM : "from" >
-  {
-    System.out.println("<FROM>");
-  }
 }
 
 TOKEN : 
 {
   < LINE_END : ";" >
-  {
-    System.out.println("<LINE_END>");
-  }
 }
 
 TOKEN :
 {
   < SEPARATOR : "," >
-  {
-    System.out.println("<SEPARATOR>");
-  }
 }
 
 TOKEN : 
 {
   < PARENTHESIS_LEFT : "(" >
-  {
-    System.out.println("<PARENTHESIS_LEFT>");
-  }
 }
 
 TOKEN : 
 {
   < PARENTHESIS_RIGHT: ")" >
-  {
-    System.out.println("<PARENTHESIS_RIGHT>");
-  }
 }
 
 TOKEN : 
 {
   < SQUARE_LEFT : "[" >
-  {
-    System.out.println("<SQUARE_LEFT>");
-  }
 }
 
 TOKEN : 
 {
   < SQUARE_RIGHT : "]" >
-  {
-    System.out.println("<SQUARE_RIGHT>");
-  }
 }
 
 TOKEN : 
 {
   < BRACKET_LEFT : "{" >
-  {
-    System.out.println("<BRACKET_LEFT>");
-  }
 }
 
 TOKEN : 
 {
   < BRACKET_RIGHT : "}" >
-  {
-    System.out.println("<BRACKET_RIGHT>");
-  }
 }
 
 TOKEN : 
 {
   < PROCEDURE : "procedure" >
-  {
-    System.out.println("<PROCEDURE>");
-  }
 }
 
 TOKEN : 
 {
   < SET : "set" >
-  {
-    System.out.println("<SET>");
-  }
 }
 
 TOKEN :
@@ -435,9 +397,6 @@ TOKEN :
   | "include" 
   | "exclude" 
   >
-  {
-    System.out.println("<SET_OPERATIONS>");
-  }
 }
 
 TOKEN : 
@@ -448,9 +407,6 @@ TOKEN :
   | "<>" 
   | "contains" 
   >
-  {
-    System.out.println("<SET_COMPARISONS>");
-  }
 }
 
 TOKEN :
@@ -458,16 +414,13 @@ TOKEN :
   < MATH_CONSTANTS : 
   "Math.PI" 
   | "Math.E" 
-  | "Math.SQRT2" 
+  | "Math.SQRT2"
   | "Math.SQRT2_2" 
   | "Math.LN2" 
   | "Math.LN10" 
   | "Math.LOG2E" 
   | "Math.LOG10E" 
   >
-  {
-    System.out.println("<MATH_CONSTANTS>");
-  }
 }
 
 TOKEN : 
@@ -487,9 +440,6 @@ TOKEN :
   | "Math.tan" 
   | "Math.tanh" 
   >
-  {
-    System.out.println("<TRIG_FUNCTIONS>");
-  }
 }
 
 TOKEN : 
@@ -507,9 +457,6 @@ TOKEN :
   | "|=" 
   | "**=" 
   >
-  {
-    System.out.println("<ASSIGN_OPERATORS>");
-  }
 }
 
 TOKEN : 
@@ -533,9 +480,6 @@ TOKEN :
   | "Math.expm1" 
   | "Math.sign" 
   >
-  {
-    System.out.println("<ARITHMETIC_FUNCTIONS>");
-  }
 }
 
 /** General tokens. ALWAYS put after more specific tokens
@@ -555,9 +499,6 @@ TOKEN :
 TOKEN :
 {
   < ID : <LETTER> ( <LETTER> | <DIGIT> )* > 
-  {
-    System.out.println("<ID>");
-  }
 }
 
 
@@ -608,6 +549,11 @@ void Input() :
       {
         System.out.println("<STRINGDEF>: " + t.image);
       }
+    |
+    t = <TIMEDEF>
+    {
+      System.out.println("<TIMEDEF>: " + t.image);
+    }  
     |
     t = <DATEDEF>
       {
@@ -668,6 +614,26 @@ void Input() :
       {
         System.out.println("<POSTFIXDEC>: " + t.image);
       }
+    |
+    t = <MODULUS>
+    {
+      System.out.println("<MODULUS>: " + t.image);
+    }  
+    |
+    t = <ASSIGN>
+    {
+      System.out.println("<ASSIGN>: " + t.image);
+    }
+    |
+    t = <SHIFTLEFT>
+    {
+      System.out.println("<SHIFTLEFT>: " + t.image);
+    }
+    |
+    t = <SHIFTRIGHT>
+    {
+      System.out.println("<SHIFTRIGHT>: " + t.image);
+    }
     |
     t = <RELATIONALOPERATOR>
       {
@@ -789,7 +755,6 @@ void Input() :
         System.out.println("<AFTERALLL>: " + t.image);
       }
     |
-
     t = <REQUIRE>
       {
         System.out.println("<REQUIRE>: " + t.image);
