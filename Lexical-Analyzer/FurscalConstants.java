@@ -147,11 +147,19 @@ public interface FurscalConstants {
   /** RegularExpression Id. */
   int VERSION = 74;
   /** RegularExpression Id. */
-  int DIGIT = 75;
+  int EMPTY = 75;
   /** RegularExpression Id. */
-  int LETTER = 76;
+  int MATRIX_FUNCTIONS = 76;
   /** RegularExpression Id. */
-  int ID = 77;
+  int COMPLEX = 77;
+  /** RegularExpression Id. */
+  int COMPLEX_FUNCTIONS = 78;
+  /** RegularExpression Id. */
+  int DIGIT = 79;
+  /** RegularExpression Id. */
+  int LETTER = 80;
+  /** RegularExpression Id. */
+  int ID = 81;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -233,6 +241,10 @@ public interface FurscalConstants {
     "<ARRMETHODS>",
     "\"--help\"",
     "\"--version\"",
+    "\"empty\"",
+    "<MATRIX_FUNCTIONS>",
+    "\"complex\"",
+    "<COMPLEX_FUNCTIONS>",
     "<DIGIT>",
     "<LETTER>",
     "<ID>",
