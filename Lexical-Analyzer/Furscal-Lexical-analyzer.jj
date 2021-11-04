@@ -24,6 +24,8 @@ options
   
 PARSER_BEGIN(Furscal)
 
+import java.util.ArrayList;
+import java.util.List;
 /** Simple brace matcher. */
 public class Furscal 
 {
@@ -605,7 +607,7 @@ TOKEN :
 void Input() :
 {
   Token t;
-  int ID_counter = 0;
+  ArrayList<String> ID_list = new ArrayList<String>();
 }
 {
   (
@@ -975,8 +977,15 @@ void Input() :
     |
     t = <ID>
     {
-      System.out.println("<ID>:\t\t\t\t" + "(" + ID_counter + ")");
-      ID_counter++;
+      if(ID_list.contains(t.image) == false)
+      {
+        ID_list.add(t.image);
+        System.out.println("<ID>:\t\t\t\t" + "(" + ID_list.indexOf(t.image) + ")");
+      }
+      else
+      {
+        System.out.println("<ID>:\t\t\t\t" + "(" + ID_list.indexOf(t.image) + ")");
+      }
     }
   )*
   <EOF>
