@@ -155,23 +155,11 @@ public interface FurscalConstants {
   /** RegularExpression Id. */
   int COMPLEX_FUNCTIONS = 78;
   /** RegularExpression Id. */
-  int ARR_TYPE = 79;
+  int DIGIT = 79;
   /** RegularExpression Id. */
-  int ARROW_FUNCTIONS = 80;
+  int LETTER = 80;
   /** RegularExpression Id. */
-  int SYM_FUNCTIONS = 81;
-  /** RegularExpression Id. */
-  int OS_FUNCTIONS = 82;
-  /** RegularExpression Id. */
-  int ARR_FUNCTIONS = 83;
-  /** RegularExpression Id. */
-  int SIMPLE_ARITHMETIC = 84;
-  /** RegularExpression Id. */
-  int DIGIT = 85;
-  /** RegularExpression Id. */
-  int LETTER = 86;
-  /** RegularExpression Id. */
-  int ID = 87;
+  int ID = 81;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -257,12 +245,6 @@ public interface FurscalConstants {
     "<MATRIX_FUNCTIONS>",
     "\"complex\"",
     "<COMPLEX_FUNCTIONS>",
-    "<ARR_TYPE>",
-    "<ARROW_FUNCTIONS>",
-    "<SYM_FUNCTIONS>",
-    "<OS_FUNCTIONS>",
-    "<ARR_FUNCTIONS>",
-    "<SIMPLE_ARITHMETIC>",
     "<DIGIT>",
     "<LETTER>",
     "<ID>",

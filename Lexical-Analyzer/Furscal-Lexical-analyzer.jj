@@ -1,3 +1,6 @@
+/** By Medina Peraza Caleb, Control No. 18212219 */
+/** By Verjan Santoyo Edgar, Control No. 19211750 */
+
 /** These are the default options.
  * If left as is, can be omitted.
  */
@@ -39,7 +42,8 @@ public class Furscal
 
 PARSER_END(Furscal)
 
-/** Lexical analyzer specification. */ 
+/** LEXICAL ANALYZER SPECIFICATION */ 
+/** BEGINS HERE */
 
 /** These separate tokens from each other!
  * If you don't want them to be counted as part of a token
@@ -578,85 +582,89 @@ TOKEN :
   >
 }
 
-TOKEN :
-{
-  < ARR_TYPE : 
-  "dtype"
-  | "astype"
-  >
-}
+/** These extra tokens, if added, generate error "code too large"
+ * when compiling java files with javac
+ */
 
-TOKEN :
-{
-  < ARROW_FUNCTIONS : 
-  "now"
-  | "get"
-  | "arrow"
-  >
-}
+// TOKEN :
+// {
+//   < ARR_TYPE : 
+//   "dtype"
+//   | "astype"
+//   >
+// }
 
-TOKEN :
-{
-  < SYM_FUNCTIONS : 
-  "sym.symbol" 
-  | "sym.pi" 
-  | "sym.pi.evalf" 
-  | "sym.expand" 
-  | "sym.simplify" 
-  | "sym.limit" 
-  | "sym.diff" 
-  | "sym.series" 
-  | "sym.integrate" 
-  | "sym.solveset" 
-  | "sym.solve" 
-  | "sym.satisfiable" 
-  | "sym.Matrix" 
-  >
-}
+// TOKEN :
+// {
+//   < ARROW_FUNCTIONS : 
+//   "now"
+//   | "get"
+//   | "arrow"
+//   >
+// }
 
-TOKEN : 
-{
-  < OS_FUNCTIONS : 
-  "os.getcwd" 
-  | "os.chdir" 
-  | "os.mkdir" 
-  | "os.listdir" 
-  | "os.walk" 
-  | "os.startfile" 
-  | "os.popen" 
-  | "os.close" 
-  | "os.rename" 
-  | "os.getlogin" 
-  >
-}
+// TOKEN :
+// {
+//   < SYM_FUNCTIONS : 
+//   "sym.symbol" 
+//   | "sym.pi" 
+//   | "sym.pi.evalf" 
+//   | "sym.expand" 
+//   | "sym.simplify" 
+//   | "sym.limit" 
+//   | "sym.diff" 
+//   | "sym.series" 
+//   | "sym.integrate" 
+//   | "sym.solveset" 
+//   | "sym.solve" 
+//   | "sym.satisfiable" 
+//   | "sym.Matrix" 
+//   >
+// }
 
-TOKEN : 
-{
-  < ARR_FUNCTIONS : 
-  "copy" 
-  | "view" 
-  | "shape" 
-  | "reshape" 
-  | "concatenate" 
-  | "array_slpit" 
-  | "where" 
-  | "out" 
-  >
-}
+// TOKEN : 
+// {
+//   < OS_FUNCTIONS : 
+//   "os.getcwd" 
+//   | "os.chdir" 
+//   | "os.mkdir" 
+//   | "os.listdir" 
+//   | "os.walk" 
+//   | "os.startfile" 
+//   | "os.popen" 
+//   | "os.close" 
+//   | "os.rename" 
+//   | "os.getlogin" 
+//   >
+// }
 
-TOKEN : 
-{
-  < SIMPLE_ARITHMETIC : 
-  "subtract" 
-  | "multiply" 
-  | "divide" 
-  | "power" 
-  | "remainder" 
-  | "mod" 
-  | "divmod" 
-  | "absolute" 
-  >
-}
+// TOKEN : 
+// {
+//   < ARR_FUNCTIONS : 
+//   "copy" 
+//   | "view" 
+//   | "shape" 
+//   | "reshape" 
+//   | "concatenate" 
+//   | "array_slpit" 
+//   | "where" 
+//   | "out" 
+//   >
+// }
+
+// TOKEN : 
+// {
+//   < SIMPLE_ARITHMETIC : 
+//   "subtract" 
+//   | "multiply" 
+//   | "divide" 
+//   | "power" 
+//   | "remainder" 
+//   | "mod" 
+//   | "divmod" 
+//   | "absolute" 
+//   >
+// }
 
 /** General tokens. ALWAYS put after more specific tokens
  * Such as < VAR : "var" >, otherwise these will match to general tokens
@@ -679,11 +687,11 @@ TOKEN :
 
 
 
-/** Parser/Syntax analyzer specification! */ 
+/** PARSER/GRAMMAR/SYNTAX SPECIFICATION */
+/** BEGINS HERE */ 
+
 /** Root production. */
-/** This only checks that there are no errors. 
- * It outputs nothing, except errors if any.
-*/
+
 void Input() :
 {
   Token t;
@@ -1054,36 +1062,41 @@ void Input() :
     {
       System.out.println("<COMPLEX_FUNCTIONS>:\t\t" + t.image);
     }
-    |
-    t = <ARR_TYPE>
-    {
-      System.out.println("<ARR_TYPE>:\t\t" + t.image);
-    }
-    |
-    t = <ARROW_FUNCTIONS>
-    {
-      System.out.println("<ARROW_FUNCTIONS>:\t\t" + t.image);
-    }
-    |
-    t = <SYM_FUNCTIONS>
-    {
-      System.out.println("<SYM_FUNCTIONS>:\t\t" + t.image);
-    }
-    |
-    t = <OS_FUNCTIONS>
-    {
-      System.out.println("<OS_FUNCTIONS>:\t\t" + t.image);
-    }
-    |
-    t = <ARR_FUNCTIONS>
-    {
-      System.out.println("<ARR_FUNCTIONS>:\t\t" + t.image);
-    }
-    |
-    t = <SIMPLE_ARITHMETIC>
-    {
-      System.out.println("<SIMPLE_ARITHMETIC>:\t\t" + t.image);
-    }
+
+    /** These extra tokens, if added, generate error "code too large"
+    * when compiling java files with javac
+    */
+
+    // |
+    // t = <ARR_TYPE>
+    // {
+    //   System.out.println("<ARR_TYPE>:\t\t" + t.image);
+    // }
+    // |
+    // t = <ARROW_FUNCTIONS>
+    // {
+    //   System.out.println("<ARROW_FUNCTIONS>:\t\t" + t.image);
+    // }
+    // |
+    // t = <SYM_FUNCTIONS>
+    // {
+    //   System.out.println("<SYM_FUNCTIONS>:\t\t" + t.image);
+    // }
+    // |
+    // t = <OS_FUNCTIONS>
+    // {
+    //   System.out.println("<OS_FUNCTIONS>:\t\t" + t.image);
+    // }
+    // |
+    // t = <ARR_FUNCTIONS>
+    // {
+    //   System.out.println("<ARR_FUNCTIONS>:\t\t" + t.image);
+    // }
+    // |
+    // t = <SIMPLE_ARITHMETIC>
+    // {
+    //   System.out.println("<SIMPLE_ARITHMETIC>:\t\t" + t.image);
+    // }
     |
     t = <ID>
     {
@@ -1099,7 +1112,4 @@ void Input() :
     }
   )*
   <EOF>
-  {
-    System.out.println("\nNo invalid strings found.");
-  }
 }
