@@ -578,6 +578,86 @@ TOKEN :
   >
 }
 
+TOKEN :
+{
+  < ARR_TYPE : 
+  "dtype"
+  | "astype"
+  >
+}
+
+TOKEN :
+{
+  < ARROW_FUNCTIONS : 
+  "now"
+  | "get"
+  | "arrow"
+  >
+}
+
+TOKEN :
+{
+  < SYM_FUNCTIONS : 
+  "sym.symbol" 
+  | "sym.pi" 
+  | "sym.pi.evalf" 
+  | "sym.expand" 
+  | "sym.simplify" 
+  | "sym.limit" 
+  | "sym.diff" 
+  | "sym.series" 
+  | "sym.integrate" 
+  | "sym.solveset" 
+  | "sym.solve" 
+  | "sym.satisfiable" 
+  | "sym.Matrix" 
+  >
+}
+
+TOKEN : 
+{
+  < OS_FUNCTIONS : 
+  "os.getcwd" 
+  | "os.chdir" 
+  | "os.mkdir" 
+  | "os.listdir" 
+  | "os.walk" 
+  | "os.startfile" 
+  | "os.popen" 
+  | "os.close" 
+  | "os.rename" 
+  | "os.getlogin" 
+  >
+}
+
+TOKEN : 
+{
+  < ARR_FUNCTIONS : 
+  "copy" 
+  | "view" 
+  | "shape" 
+  | "reshape" 
+  | "concatenate" 
+  | "array_slpit" 
+  | "where" 
+  | "out" 
+  >
+}
+
+TOKEN : 
+{
+  < SIMPLE_ARITHMETIC : 
+  "subtract" 
+  | "multiply" 
+  | "divide" 
+  | "power" 
+  | "remainder" 
+  | "mod" 
+  | "divmod" 
+  | "absolute" 
+  >
+}
+
 /** General tokens. ALWAYS put after more specific tokens
  * Such as < VAR : "var" >, otherwise these will match to general tokens
  * like <ID>. Order of Token declaration matters!!
@@ -973,6 +1053,36 @@ void Input() :
     t = <COMPLEX_FUNCTIONS>
     {
       System.out.println("<COMPLEX_FUNCTIONS>:\t\t" + t.image);
+    }
+    |
+    t = <ARR_TYPE>
+    {
+      System.out.println("<ARR_TYPE>:\t\t" + t.image);
+    }
+    |
+    t = <ARROW_FUNCTIONS>
+    {
+      System.out.println("<ARROW_FUNCTIONS>:\t\t" + t.image);
+    }
+    |
+    t = <SYM_FUNCTIONS>
+    {
+      System.out.println("<SYM_FUNCTIONS>:\t\t" + t.image);
+    }
+    |
+    t = <OS_FUNCTIONS>
+    {
+      System.out.println("<OS_FUNCTIONS>:\t\t" + t.image);
+    }
+    |
+    t = <ARR_FUNCTIONS>
+    {
+      System.out.println("<ARR_FUNCTIONS>:\t\t" + t.image);
+    }
+    |
+    t = <SIMPLE_ARITHMETIC>
+    {
+      System.out.println("<SIMPLE_ARITHMETIC>:\t\t" + t.image);
     }
     |
     t = <ID>

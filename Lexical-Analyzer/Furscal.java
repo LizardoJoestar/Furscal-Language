@@ -17,7 +17,6 @@ public class Furscal implements FurscalConstants {
  * It outputs nothing, except errors if any.
 */
   static final public void Input() throws ParseException {Token t;
-  int ID_counter = 0;
   ArrayList<String> ID_list = new ArrayList<String>();
     label_1:
     while (true) {
@@ -94,6 +93,12 @@ public class Furscal implements FurscalConstants {
       case MATRIX_FUNCTIONS:
       case COMPLEX:
       case COMPLEX_FUNCTIONS:
+      case ARR_TYPE:
+      case ARROW_FUNCTIONS:
+      case SYM_FUNCTIONS:
+      case OS_FUNCTIONS:
+      case ARR_FUNCTIONS:
+      case SIMPLE_ARITHMETIC:
       case ID:{
         ;
         break;
@@ -465,12 +470,39 @@ System.out.println("<COMPLEX>:");
 System.out.println("<COMPLEX_FUNCTIONS>:\t\t" + t.image);
         break;
         }
+      case ARR_TYPE:{
+        t = jj_consume_token(ARR_TYPE);
+System.out.println("<ARR_TYPE>:\t\t" + t.image);
+        break;
+        }
+      case ARROW_FUNCTIONS:{
+        t = jj_consume_token(ARROW_FUNCTIONS);
+System.out.println("<ARROW_FUNCTIONS>:\t\t" + t.image);
+        break;
+        }
+      case SYM_FUNCTIONS:{
+        t = jj_consume_token(SYM_FUNCTIONS);
+System.out.println("<SYM_FUNCTIONS>:\t\t" + t.image);
+        break;
+        }
+      case OS_FUNCTIONS:{
+        t = jj_consume_token(OS_FUNCTIONS);
+System.out.println("<OS_FUNCTIONS>:\t\t" + t.image);
+        break;
+        }
+      case ARR_FUNCTIONS:{
+        t = jj_consume_token(ARR_FUNCTIONS);
+System.out.println("<ARR_FUNCTIONS>:\t\t" + t.image);
+        break;
+        }
+      case SIMPLE_ARITHMETIC:{
+        t = jj_consume_token(SIMPLE_ARITHMETIC);
+System.out.println("<SIMPLE_ARITHMETIC>:\t\t" + t.image);
+        break;
+        }
       case ID:{
         t = jj_consume_token(ID);
-// System.out.println("<ID>:\t\t\t\t" + "(" + ID_counter + ")");
-      // ID_counter++;
-
-      if(ID_list.contains(t.image) == false)
+if(ID_list.contains(t.image) == false)
       {
         ID_list.add(t.image);
         System.out.println("<ID>:\t\t\t\t" + "(" + ID_list.indexOf(t.image) + ")");
@@ -479,15 +511,6 @@ System.out.println("<COMPLEX_FUNCTIONS>:\t\t" + t.image);
       {
         System.out.println("<ID>:\t\t\t\t" + "(" + ID_list.indexOf(t.image) + ")");
       }
-
-      // for(int i = 0; i < ID_list.size(); i++)
-      // {
-      //   if(ID_list.get(i) == t.image)
-      //   {
-      //     System.out.println("<ID>:\t\t\t\t" + "(" + i + ")");
-      //   }
-      // }
-
         break;
         }
       default:
@@ -526,7 +549,7 @@ System.out.println("\nNo invalid strings found.");
 	   jj_la1_1 = new int[] {0xffffffff,0xffffffff,};
 	}
 	private static void jj_la1_init_2() {
-	   jj_la1_2 = new int[] {0x27bff,0x27bff,};
+	   jj_la1_2 = new int[] {0x9ffbff,0x9ffbff,};
 	}
 
   /** Constructor with InputStream. */
@@ -672,7 +695,7 @@ System.out.println("\nNo invalid strings found.");
   /** Generate ParseException. */
   static public ParseException generateParseException() {
 	 jj_expentries.clear();
-	 boolean[] la1tokens = new boolean[82];
+	 boolean[] la1tokens = new boolean[88];
 	 if (jj_kind >= 0) {
 	   la1tokens[jj_kind] = true;
 	   jj_kind = -1;
@@ -692,7 +715,7 @@ System.out.println("\nNo invalid strings found.");
 		 }
 	   }
 	 }
-	 for (int i = 0; i < 82; i++) {
+	 for (int i = 0; i < 88; i++) {
 	   if (la1tokens[i]) {
 		 jj_expentry = new int[1];
 		 jj_expentry[0] = i;
