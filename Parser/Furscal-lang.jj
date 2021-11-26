@@ -682,9 +682,7 @@ void Start() :
 }
 
 void Expression() :
-{
-  Token t;
-}
+{}
 {
   // Functions are non-terminals, tokens are terminals
   Imports()
@@ -700,9 +698,7 @@ void Expression() :
 }
 
 void Imports() :
-{
-  Token t;
-}
+{}
 {
   Term_From()
   Term_ID()
@@ -714,9 +710,7 @@ void Imports() :
 }
 
 void Inst_Class() : 
-{
-  Token t;
-}
+{}
 {
   Term_ClassDeclare()
   Term_ID()
@@ -746,8 +740,117 @@ void Inst_Class() :
   Term_LineEnd()
 }
 
+void Inst_Function() :
+{
+  Term_FuncDeclare()
+  Term_ID()
+  Term_ParLeft()
+  ( Args() )?
+  Term_ParRight()
+  Term_BracketLeft()
+  ( Block() )?
+  Term_BracketRight()
+  Term_LineEnd()
+}
+
+void Inst_Loop() :
+{}
+{
+  Term_Perform()
+  (
+    Term_IntDef()
+    Term_LoopCounter()
+    |
+    Term_LoopTestBefore()
+    Term_LoopUntil()
+    Term_ParLeft()
+    Condition()
+    Term_ParRight()
+    |
+    Term_LoopTestAfter()
+    Term_LoopUntil()
+    Term_ParLeft()
+    Condition()
+    Term_ParRight()
+  )
+  Term_BracketLeft()
+  ( Block() )?
+  Term_BracketRight()
+  Term_LineEnd()
+}
 
 
+
+
+
+
+// Special non-terminals, for ease of maintenance and understanding
+
+void Args() :
+{}
+{
+  (
+    Term_ID()
+    | Term_IntDef()
+    | Term_DecDef()
+    | Term_StrDef()
+  )
+  (
+    "," 
+    (
+      Term_ID()
+      | Term_IntDef()
+      | Term_DecDef()
+      | Term_StrDef()
+    )
+  )*
+}
+
+void Block_Class() :
+{}
+{
+  Inst_Assign()
+  | Inst_Loop()
+  | Inst_Check()
+  | Inst_Object()
+  | Inst_Complex()
+  | Inst_Function()
+  | Inst_Show()
+  | Term_Comment()
+}
+
+void Block() :
+{}
+{
+  Inst_Assign()
+  | Inst_Loop()
+  | Inst_Check()
+  | Inst_Object()
+  | Inst_Complex()
+  | Inst_Show()
+  | Term_Comment()
+}
+
+void Condition() :
+{}
+{
+  (
+    Term_IntDef()
+    | Term_DecDef()
+    | Term_StrDef()
+    | Term_ID()
+  )
+  (
+    Term_RelOp()
+    | Term_LogicOp()
+  )
+  (
+    Term_IntDef()
+    | Term_DecDef()
+    | Term_StrDef()
+    | Term_ID()
+  )
+}
 
 // Terminal BNFs (TOKENs), for easier maintenance
 
@@ -856,7 +959,7 @@ void Term_Type() :
 }
 {
   t = <TYPE>
-  { System.out.println("<TYPE>: "); }
+  { System.out.println("<TYPE>: " + t.image); }
 }
 
 void Term_Assign() :
@@ -875,4 +978,85 @@ void Term_PassAll() :
 {
   t = <PASSALL>
   { System.out.println("<PASSALL>: "); }
+}
+
+void Term_FuncDeclare() :
+{
+  Token t;
+}
+{
+  t = <FUNCTIONDECLARE>
+  { System.out.println("<FUNCTIONDECLARE>: "); }
+}
+
+void Term_IntDef() :
+{
+  Token t;
+}
+{
+  t = <INTDEF>
+  { System.out.println("<INTDEF>: "); }
+}
+
+void Term_DecDef() :
+{
+  Token t;
+}
+{
+  t = <DECIMALDEF>
+  { System.out.println("<DECIMALDEF>: "); }
+}
+
+void Term_StrDef() :
+{
+  Token t;
+}
+{
+  t = <STRINGDEF>
+  { System.out.println("<STRINGDEF>: "); }
+}
+
+void Term_Perform() :
+{
+  Token t;
+}
+{
+  t = <LOOP>
+  { System.out.println("<LOOP>: "); }
+}
+
+void Term_LoopCounter() :
+{
+  Token t;
+}
+{
+  t = <LOOPCOUNTER>
+  { System.out.println("<LOOPCOUNTER>: "); }
+}
+
+void Term_LoopTestBefore() :
+{
+  Token t;
+}
+{
+  t = <LOOPTESTBEFORE>
+  { System.out.println("<LOOPTESTBEFORE>: "); }
+}
+
+void Term_LoopTestAfter() :
+{
+  Token t;
+}
+{
+  t = <LOOPTESTAFTER>
+  { System.out.println("<LOOPTESTAFTER>: "); }
+}
+
+void Term_LoopUntil() :
+{
+  Token t;
+}
+{
+  t = <LOOPUNTIL>
+  { System.out.println("<LOOPUNTIL>: "); }
 }

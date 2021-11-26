@@ -39,7 +39,7 @@
     <LINE_END>
 
 <INST_LOOP> ::= 
-    <PERFORM> 
+    <LOOP> 
     ( 
         <INT_DEF> <LOOPCOUNTER> 
         | <LOOPTESTBEFORE> <LOOPUNTIL> <PARENTHESIS_LEFT> <CONDITION> <PARENTHESIS_RIGHT> 
@@ -106,7 +106,7 @@
         | <INST_OBJECT>
         | <INST_COMPLEX>
         | <INST_FUNCTION>
-        | <SHOW>
+        | <INST_SHOW>
         | <COMMENT>
     )+
 
@@ -121,9 +121,14 @@
         | <INST_CHECK>
         | <INST_OBJECT>
         | <INST_COMPLEX>
-        | <SHOW>
+        | <INST_SHOW>
         | <COMMENT>
     )+
+
+<CONDITION> ::=
+    (<INT_DEF>|<DECIMAL_DEF>|<ID>|<STRING_DEF>) 
+    (<RELATIONAL_OPERATOR>|<LOGICAL_OPERATOR>) 
+    (<INT_DEF>|<DECIMAL_DEF>|<ID>|<STRING_DEF>)
 
 <COMPLEX_DEF> ::= 
     <PARENTHESIS_LEFT>
