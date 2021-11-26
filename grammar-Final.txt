@@ -135,7 +135,6 @@
     ( <INT_DEF> | <DECIMAL_DEF> )
     ","
     ( <INT_DEF> | <DECIMAL_DEF> )
-    "i"
     <PARENTHESIS_RIGHT>
 
 <INST_COMPLEX_FUNC> ::= 

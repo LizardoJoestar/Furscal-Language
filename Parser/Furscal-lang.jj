@@ -741,6 +741,7 @@ void Inst_Class() :
 }
 
 void Inst_Function() :
+{}
 {
   Term_FuncDeclare()
   Term_ID()
@@ -817,7 +818,6 @@ void Inst_Complex() :
   Term_Assign()
   (
     Complex_Def()
-    |
     Inst_Complex_Func()
   )
   Term_LineEnd()
@@ -935,31 +935,10 @@ void Condition() :
   )
 }
 
-void Complex_Def() :
-{}
-{
-  Term_ParLeft()
-  (
-    Term_IntDef()
-    |
-    Term_DecDef()
-  )
-  ","
-  (
-    Term_IntDef()
-    |
-    Term_DecDef()
-  )
-  "i"
-  Term_ParRight()
-}
-
-void Inst_Complex_Func() :
+void Complex_Def() : // Applied left factorization to the following 2:
 {}
 {
   (
-    Term_ID()
-    |
     Term_ParLeft()
     (
       Term_IntDef()
@@ -972,11 +951,19 @@ void Inst_Complex_Func() :
       |
       Term_DecDef()
     )
-    "i"
     Term_ParRight()
   )
-  ":"
-  Term_ComplexFunc()
+  |
+  Term_ID()
+}
+
+void Inst_Complex_Func() :
+{}
+{
+  (
+    ":"
+    Term_ComplexFunc()
+  )?
 }
 
 void Type_Def() :
