@@ -684,7 +684,7 @@ void Start() :
 void Expression() :
 {}
 {
-  // Functions are non-terminals, tokens are terminals
+  // "Term_" functions are terminals, every other function are non-terminals
   Imports()
   | Inst_Class()
   | Inst_Function()
@@ -897,7 +897,7 @@ void Block_Class() :
   | Inst_Check()
   | Inst_Object()
   | Inst_Complex()
-  | Inst_Function()
+  | Inst_Function() // Included in Block_Class
   | Inst_Show()
   | Term_Comment()
 }
