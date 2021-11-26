@@ -823,6 +823,32 @@ void Inst_Complex() :
   Term_LineEnd()
 }
 
+void Inst_Assign() :
+{}
+{
+  (
+    Term_Global()
+    |
+    Term_Const()
+  )?
+  (
+    Term_Type()
+    | Term_Arr()
+    | Term_Matrix()
+    | Term_Set()
+  )
+  Term_ID()
+  (
+    Term_Assign()
+    | Term_AssignOp()
+  )
+  (
+    Type_Def()
+    | Term_ID()
+  )
+  Term_LineEnd()
+}
+
 
 
 // Special non-terminals, for ease of maintenance and understanding
@@ -935,6 +961,20 @@ void Inst_Complex_Func() :
   )
   ":"
   Term_ComplexFunc()
+}
+
+void Type_Def() :
+{}
+{
+  Term_IntDef()
+  | Term_DecDef()
+  | Term_BoolDef()
+  | Term_CharDef()
+  | Term_StrDef()
+  | Term_DateDef()
+  | Term_TimeDef()
+  | Term_DateTimeDef()
+  | Term_ArraySetDef()
 }
 
 
@@ -1209,4 +1249,112 @@ void Term_ComplexFunc() :
 {
   t = <COMPLEX_FUNCTIONS>
   { System.out.println("<COMPLEX_FUNCTIONS>: " + t.image); }
+}
+
+void Term_Global() :
+{
+  Token t;
+}
+{
+  t = <GLOBAL>
+  { System.out.println("<GLOBAL>: "); }
+}
+
+void Term_Const() :
+{
+  Token t;
+}
+{
+  t = <CONSTANT>
+  { System.out.println("<CONSTANT>: "); }
+}
+
+void Term_Arr() :
+{
+  Token t;
+}
+{
+  t = <ARR>
+  { System.out.println("<ARR>: "); }
+}
+
+void Term_Matrix() :
+{
+  Token t;
+}
+{
+  t = <MATRIX>
+  { System.out.println("<MATRIX>: "); }
+}
+
+void Term_Set() :
+{
+  Token t;
+}
+{
+  t = <SET>
+  { System.out.println("<SET>: "); }
+}
+
+void Term_AssignOp() :
+{
+  Token t;
+}
+{
+  t = <ASSIGN_OPERATORS>
+  { System.out.println("<ASSIGN_OPERATORS>: " + t.image); }
+}
+
+void Term_BoolDef() :
+{
+  Token t;
+}
+{
+  t = <BOOLDEF>
+  { System.out.println("<BOOLDEF>: "); }
+}
+
+void Term_CharDef() :
+{
+  Token t;
+}
+{
+  t = <CHARDEF>
+  { System.out.println("<CHARDEF>: "); }
+}
+
+void Term_DateDef() :
+{
+  Token t;
+}
+{
+  t = <DATEDEF>
+  { System.out.println("<DATEDEF>: "); }
+}
+
+void Term_TimeDef() :
+{
+  Token t;
+}
+{
+  t = <TIMEDEF>
+  { System.out.println("<TIMEDEF>: "); }
+}
+
+void Term_DateTimeDef() :
+{
+  Token t;
+}
+{
+  t = <DATETIMEDEF>
+  { System.out.println("<DATETIMEDEF>: "); }
+}
+
+void Term_ArraySetDef() :
+{
+  Token t;
+}
+{
+  t = <ARRAYSETDEF>
+  { System.out.println("<ARRAYSETDEF>: "); }
 }
