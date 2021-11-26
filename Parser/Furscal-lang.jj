@@ -779,8 +779,49 @@ void Inst_Loop() :
   Term_LineEnd()
 }
 
+void Inst_Check() :
+{}
+{
+  Term_Check()
+  Term_BracketLeft()
+  ( Block() )?
+  Term_BracketRight()
+  Term_OnError()
+  Term_ParLeft()
+  ( Args() )?
+  Term_ParRight()
+  Term_BracketLeft()
+  ( Block() )?
+  Term_BracketRight()
+  Term_LineEnd()
+}
 
+void Inst_Object() :
+{}
+{
+  Term_ID()
+  Term_Assign()
+  Term_ObjDeclare()
+  Term_ID()
+  Term_ParLeft()
+  ( Args() )?
+  Term_ParRight()
+  Term_LineEnd()
+}
 
+void Inst_Complex() :
+{}
+{
+  Term_Complex()
+  Term_ID()
+  Term_Assign()
+  (
+    Complex_Def()
+    |
+    Inst_Complex_Func()
+  )
+  Term_LineEnd()
+}
 
 
 
@@ -851,6 +892,52 @@ void Condition() :
     | Term_ID()
   )
 }
+
+void Complex_Def() :
+{}
+{
+  Term_ParLeft()
+  (
+    Term_IntDef()
+    |
+    Term_DecDef()
+  )
+  ","
+  (
+    Term_IntDef()
+    |
+    Term_DecDef()
+  )
+  "i"
+  Term_ParRight()
+}
+
+void Inst_Complex_Func() :
+{}
+{
+  (
+    Term_ID()
+    |
+    Term_ParLeft()
+    (
+      Term_IntDef()
+      |
+      Term_DecDef()
+    )
+    ","
+    (
+      Term_IntDef()
+      |
+      Term_DecDef()
+    )
+    "i"
+    Term_ParRight()
+  )
+  ":"
+  Term_ComplexFunc()
+}
+
+
 
 // Terminal BNFs (TOKENs), for easier maintenance
 
@@ -1059,4 +1146,67 @@ void Term_LoopUntil() :
 {
   t = <LOOPUNTIL>
   { System.out.println("<LOOPUNTIL>: "); }
+}
+
+void Term_RelOp() :
+{
+  Token t;
+}
+{
+  t = <RELATIONALOPERATOR>
+  { System.out.println("<RELATIONALOPERATOR>: "); }
+}
+
+void Term_LogicOp() :
+{
+  Token t;
+}
+{
+  t = <LOGICALOPERATOR>
+  { System.out.println("<LOGICALOPERATOR>: "); }
+}
+
+void Term_Check() :
+{
+  Token t;
+}
+{
+  t = <CHECK>
+  { System.out.println("<CHECK>: "); }
+}
+
+void Term_OnError() :
+{
+  Token t;
+}
+{
+  t = <ONERROR>
+  { System.out.println("<ONERROR>: "); }
+}
+
+void Term_ObjDeclare() :
+{
+  Token t;
+}
+{
+  t = <OBJECTDECLARE>
+  { System.out.println("<OBJECTDECLARE>: "); }
+}
+
+void Term_Complex() :
+{
+  Token t;
+}
+{
+  t = <COMPLEX>
+  { System.out.println("<COMPLEX>: "); }
+}
+
+void Term_ComplexFunc() :
+{
+  Token t;
+}
+{
+  t = <COMPLEX_FUNCTIONS>
+  { System.out.println("<COMPLEX_FUNCTIONS>: " + t.image); }
 }
