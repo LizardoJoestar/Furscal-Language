@@ -66,7 +66,7 @@
     <COMPLEX> 
     <ID> 
     <ASSIGN> 
-    ( <COMPLEX_DEF> | <INST_COMPLEX_FUNC> )
+    ( <COMPLEX_DEF> <INST_COMPLEX_FUNC> )
     <LINE_END>
 
 <INST_ASSIGN> ::=
@@ -136,17 +136,11 @@
     ","
     ( <INT_DEF> | <DECIMAL_DEF> )
     <PARENTHESIS_RIGHT>
+    |
+    <ID>
 
 <INST_COMPLEX_FUNC> ::= 
-    ( 
-        <ID> 
-        |
-        <PARENTHESIS_LEFT>
-        ( <INT_DEF> | <DECIMAL_DEF> )
-        ","
-        ( <INT_DEF> | <DECIMAL_DEF> )
-        "i"
-        <PARENTHESIS_RIGHT>
-    )
-    ":"
-    <COMPLEX_FUNCTIONS>
+    (
+        ":"
+        <COMPLEX_FUNCTIONS>
+    )?
