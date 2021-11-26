@@ -849,6 +849,22 @@ void Inst_Assign() :
   Term_LineEnd()
 }
 
+void Inst_Show() :
+{}
+{
+  Term_Show()
+  Term_ParLeft()
+  (
+    Term_ID()
+    | Term_StrDef()
+    | Term_DateDef()
+    | Term_TimeDef()
+    | Term_DateTimeDef()
+  )
+  Term_ParRight()
+  Term_LineEnd()
+}
+
 
 
 // Special non-terminals, for ease of maintenance and understanding
@@ -1357,4 +1373,13 @@ void Term_ArraySetDef() :
 {
   t = <ARRAYSETDEF>
   { System.out.println("<ARRAYSETDEF>: "); }
+}
+
+void Term_Show() :
+{
+  Token t;
+}
+{
+  t = <SHOW>
+  { System.out.println("<SHOW>: " + t.image); }
 }
