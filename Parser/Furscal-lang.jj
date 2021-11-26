@@ -6,7 +6,7 @@ PARSER_BEGIN(Furscal)
 
 import java.util.ArrayList;
 import java.util.List;
-/** Simple brace matcher. */
+
 public class Furscal 
 {
   /** Main entry point. */
