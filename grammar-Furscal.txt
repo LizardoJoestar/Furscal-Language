@@ -1,0 +1,224 @@
+/** Extended BNF notation **/
+
+/** 
+    TOKENS to define:
+    *<ARGS>
+    *<CONDITION>
+    *<BLOCK>
+    *<TYPE_DEF> Must be added to tokens!!!
+**/
+
+<CONDITION> ::=
+    (<INT_DEF>|<DECIMAL_DEF>|<ID>|<STRING_DEF>) 
+    (<RELATIONAL_OPERATOR>|<LOGICAL_OPERATOR>) 
+    (<INT_DEF>|<DECIMAL_DEF>|<ID>|<STRING_DEF>)
+
+<ARGS> ::= ( ( <ID> | <INT_DEF> | <DECIMAL_DEF> | <STRING_DEF> ) (",")? )+
+
+
+<BLOCK> ::= 
+
+/* Add this to tokens!! in next revision (syntaxis analyzer)
+<TYPE_DEF> ::= 
+    <INT_DEF> 
+    | <DECIMAL_DEF> 
+    | <BOOL_DEF> 
+    | <CHAR_DEF> 
+    | <STRING_DEF> 
+    | <DATE_DEF> 
+    | <TIME_DEF> 
+    | <DATETIME_DEF> 
+    | <ARRAYSET_DEF>
+
+
+
+*************************************************************************************************
+
+def AddPlusTwo("hey", "y")
+{
+    int x = 6;
+};
+
+<INST-FUNCTION> ::= 
+    <FUNCTION_DECLARE> 
+    <ID> 
+    <PARENTHESIS_LEFT> 
+    (<ARGS>)?
+    <PARENTHESIS_RIGHT> 
+    <BRACKET_LEFT> 
+    <BLOCK> 
+    <BRACKET_RIGHT> 
+    <LINE_END>
+
+*************************************************************************************************
+
+perform 5 times
+{
+    print('y');
+};
+
+perform with test before until ( counter == 5 )
+{
+    print('y');
+};
+
+perform with test after until ( i > 10 )
+{
+    print(x);
+};
+
+
+<INST-LOOP> ::= <PERFORM> 
+( 
+    <INT_DEF> <LOOPCOUNTER> 
+    | <LOOPTESTBEFORE> <LOOPUNTIL> <PARENTHESIS_LEFT> <CONDITION> <PARENTHESIS_RIGHT> 
+    | <LOOPTESTAFTER> <LOOPUNTIL> <PARENTHESIS_LEFT> <CONDITION> <PARENTHESIS_RIGHT> 
+) 
+<BRACKET_LEFT> <BLOCK> <BRACKET_RIGHT> <LINE_END>
+
+*************************************************************************************************
+
+// These 2 go together! Which means a single production rule!
+
+check
+{
+    print(x);
+}
+onError(x)
+{
+    print(y);
+};
+
+<INST-CHECK> ::= 
+    <CHECK> <BRACKET_LEFT> <BLOCK> BRACKET_RIGHT> 
+    <ONERROR> <PARENTHESIS_LEFT> <ARGS> <PARENTHESIS_RIGHT> 
+    <BRACKET_LEFT> <BLOCK> <BRACKET_RIGHT> <LINE_END>
+
+*************************************************************************************************
+
+print(counter);
+show(counter);
+echo(counter);
+display(counter);
+
+<INST_SHOW> ::= <SHOW> <PARENTHESIS_LEFT> ( <ID>  | <STRING_DEF> ) <PARENTHESIS_RIGHT> <LINE_END>
+
+*************************************************************************************************
+
+class Animal
+{
+    self int x := 5;
+    self int y := 10;
+
+    print('g');
+};
+
+class Mammal(Animal)
+{
+    pass;
+};
+
+<INST_CLASS> ::= 
+    <CLASS_DECLARE> <ID>
+    ( <PARENTHESIS_LEFT> <ID> <PARENTHESIS_RIGHT> )?
+    <BRACKET_LEFT>
+    (
+        ( <SELF> <TYPE> <ID> <ASSIGN> <TYPE_DEF> <LINE_END> )*
+        ( <BLOCK> )?
+        |
+        <PASS_ALL> <LINE_END>
+    )
+    <BRACKET_RIGHT>
+    <LINE_END>
+
+
+*************************************************************************************************
+
+raccoon := summon Animal();
+
+raccoon := summon Animal(3,7);
+
+<INST_OBJECT> ::=
+    <ID>
+    <ASSIGN>
+    <OBJECT_DECLARE>
+    <ID>
+    <PARENTHESIS_LEFT>
+    ( <ARGS> )?
+    <PARENTHESIS_RIGHT>
+    <LINE_END>
+
+*************************************************************************************************
+
+from graphic2d;
+from graphic2d require lin_interpol;
+
+<IMPORTS> ::= <FROM> <ID> ( <REQUIRE> <ID> )? <LINE_END>
+
+*************************************************************************************************
+
+complex a := (5,3i);
+
+
+<INST_COMPLEX> ::= 
+    <COMPLEX> 
+    <ID> 
+    <ASSIGN> 
+    <PARENTHESIS_LEFT>
+    ( <INT_DEF> | <DECIMAL_DEF> )
+    ","
+    ( <INT_DEF> | <DECIMAL_DEF> )
+    "i"
+    <PARENTHESIS_RIGHT>
+    <LINE_END>
+
+*************************************************************************************************
+
+/* Single use, non-stored complex value (unless stored in set or array) */
+
+(5,3i)
+(4.3,7i)
+
+/* Uses: */
+print((5,3i));
+
+
+<COMPLEX_DEF> ::= 
+    <PARENTHESIS_LEFT>
+    ( <INT_DEF> | <DECIMAL_DEF> )
+    ","
+    ( <INT_DEF> | <DECIMAL_DEF> )
+    "i"
+    <PARENTHESIS_RIGHT>
+
+
+*************************************************************************************************
+
+/* <LINE_END> is added if it's a single instruction, but doesn't count for the rule */
+/* ":" denotes "property of" in Furscal
+a:real;
+a:imaginary;
+a:conjugate;
+
+(5,3i):real;
+(5,3i):imaginary;
+(5,3i):conjugate;
+
+/* Uses: */
+print(a:real);
+print((5,3i):imaginary);
+
+<INST_COMPLEX_FUNC> ::= 
+    ( 
+        <ID> 
+        |
+        <PARENTHESIS_LEFT>
+        ( <INT_DEF> | <DECIMAL_DEF> )
+        ","
+        ( <INT_DEF> | <DECIMAL_DEF> )
+        "i"
+        <PARENTHESIS_RIGHT>
+    )
+    ":"
+    <COMPLEX_FUNCTIONS>
+
