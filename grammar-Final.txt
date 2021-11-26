@@ -2,13 +2,140 @@
 
 <EXPRESSION> ::= 
     <IMPORTS>
-    | <COMMENT>
     | <INST_CLASS>
     | <INST_FUNCTION>
-    | <SHOW>
     | <INST_LOOP>
     | <INST_CHECK>
     | <INST_OBJECT>
     | <INST_COMPLEX>
     | <INST_ASSIGN>
+    | <COMMENT>
+    | <SHOW>
 
+<IMPORTS> ::= <FROM> <ID> ( <REQUIRE> <ID> )? <LINE_END>
+
+<INST_CLASS> ::= 
+    <CLASS_DECLARE> <ID>
+    ( <PARENTHESIS_LEFT> <ID> <PARENTHESIS_RIGHT> )?
+    <BRACKET_LEFT>
+    (
+        ( <SELF> <TYPE> <ID> <ASSIGN> <TYPE_DEF> <LINE_END> )*
+        ( <BLOCK_CLASS> )?
+        |
+        <PASS_ALL> <LINE_END>
+    )
+    <BRACKET_RIGHT>
+    <LINE_END>
+
+<INST_FUNCTION> ::= 
+    <FUNCTION_DECLARE> 
+    <ID> 
+    <PARENTHESIS_LEFT> 
+    (<ARGS>)?
+    <PARENTHESIS_RIGHT> 
+    <BRACKET_LEFT> 
+    <BLOCK> 
+    <BRACKET_RIGHT> 
+    <LINE_END>
+
+<INST_LOOP> ::= 
+    <PERFORM> 
+    ( 
+        <INT_DEF> <LOOPCOUNTER> 
+        | <LOOPTESTBEFORE> <LOOPUNTIL> <PARENTHESIS_LEFT> <CONDITION> <PARENTHESIS_RIGHT> 
+        | <LOOPTESTAFTER> <LOOPUNTIL> <PARENTHESIS_LEFT> <CONDITION> <PARENTHESIS_RIGHT> 
+    ) 
+    <BRACKET_LEFT> <BLOCK> <BRACKET_RIGHT> <LINE_END>
+
+<INST_CHECK> ::= 
+    <CHECK> <BRACKET_LEFT> <BLOCK> BRACKET_RIGHT> 
+    <ONERROR> <PARENTHESIS_LEFT> <ARGS> <PARENTHESIS_RIGHT> 
+    <BRACKET_LEFT> <BLOCK> <BRACKET_RIGHT> <LINE_END>
+
+<INST_OBJECT> ::=
+    <ID>
+    <ASSIGN>
+    <OBJECT_DECLARE>
+    <ID>
+    <PARENTHESIS_LEFT>
+    ( <ARGS> )?
+    <PARENTHESIS_RIGHT>
+    <LINE_END>
+
+<INST_COMPLEX> ::= 
+    <COMPLEX> 
+    <ID> 
+    <ASSIGN> 
+    ( <COMPLEX_DEF> | <INST_COMPLEX_FUNC> )
+    <LINE_END>
+
+<INST_ASSIGN> ::=
+    ( <GLOBAL> | <CONSTANT> )?
+    ( <TYPE> | <ARR> | <MATRIX> | <SET> )
+    <ID>
+    ( <ASSIGN> | <ASSIGN_OPERATORS> )
+    (
+        <TYPE_DEF>
+        | <ID>
+    )
+    <LINE_END>
+
+<TYPE_DEF> ::= 
+    <INT_DEF> 
+    | <DECIMAL_DEF> 
+    | <BOOL_DEF> 
+    | <CHAR_DEF> 
+    | <STRING_DEF> 
+    | <DATE_DEF> 
+    | <TIME_DEF> 
+    | <DATETIME_DEF> 
+    | <ARRAYSET_DEF>
+
+<BLOCK_CLASS> ::=
+    (
+        <INST_ASSIGN>
+        | <INST_LOOP>
+        | <INST_CHECK>
+        | <INST_OBJECT>
+        | <INST_COMPLEX>
+        | <INST_FUNCTION>
+        | <SHOW>
+        | <COMMENT>
+    )+
+
+<ARGS> ::= 
+    ( <ID> | <INT_DEF> | <DECIMAL_DEF> | <STRING_DEF> ) 
+    ( "," ( <ID> | <INT_DEF> | <DECIMAL_DEF> | <STRING_DEF> ) )*
+
+<BLOCK> ::= 
+    (
+        <INST_ASSIGN>
+        | <INST_LOOP>
+        | <INST_CHECK>
+        | <INST_OBJECT>
+        | <INST_COMPLEX>
+        | <SHOW>
+        | <COMMENT>
+    )+
+
+<COMPLEX_DEF> ::= 
+    <PARENTHESIS_LEFT>
+    ( <INT_DEF> | <DECIMAL_DEF> )
+    ","
+    ( <INT_DEF> | <DECIMAL_DEF> )
+    "i"
+    <PARENTHESIS_RIGHT>
+
+<INST_COMPLEX_FUNC> ::= 
+    ( 
+        <ID> 
+        |
+        <PARENTHESIS_LEFT>
+        ( <INT_DEF> | <DECIMAL_DEF> )
+        ","
+        ( <INT_DEF> | <DECIMAL_DEF> )
+        "i"
+        <PARENTHESIS_RIGHT>
+    )
+    ":"
+    <COMPLEX_FUNCTIONS>

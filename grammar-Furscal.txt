@@ -18,23 +18,27 @@
 <ARGS> ::= ( <ID> | <INT_DEF> | <DECIMAL_DEF> | <STRING_DEF> ) ( "," ( <ID> | <INT_DEF> | <DECIMAL_DEF> | <STRING_DEF> ) )*
 
 <BLOCK> ::= 
-    <INST_ASSIGN>
-    | <SHOW>
-    | <COMMENT>
-    | <INST_LOOP>
-    | <INST_CHECK>
-    | <INST_OBJECT>
-    | <INST_COMPLEX>
+    (
+        <INST_ASSIGN>
+        | <SHOW>
+        | <COMMENT>
+        | <INST_LOOP>
+        | <INST_CHECK>
+        | <INST_OBJECT>
+        | <INST_COMPLEX>
+    )+
 
 <BLOCK_CLASS> ::=
-    <INST_ASSIGN>
-    | <SHOW>
-    | <COMMENT>
-    | <INST_LOOP>
-    | <INST_CHECK>
-    | <INST_OBJECT>
-    | <INST_COMPLEX>
-    | <INST_FUNCTION>
+    (
+        <INST_ASSIGN>
+        | <SHOW>
+        | <COMMENT>
+        | <INST_LOOP>
+        | <INST_CHECK>
+        | <INST_OBJECT>
+        | <INST_COMPLEX>
+        | <INST_FUNCTION>
+    )+
 
 /* Add this to tokens!! in next revision (syntaxis analyzer)
 <TYPE_DEF> ::= 
