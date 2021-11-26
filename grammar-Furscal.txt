@@ -124,7 +124,12 @@ show(counter);
 echo(counter);
 display(counter);
 
-<INST_SHOW> ::= <SHOW> <PARENTHESIS_LEFT> ( <ID>  | <STRING_DEF> ) <PARENTHESIS_RIGHT> <LINE_END>
+<INST_SHOW> ::= 
+    <SHOW> 
+    <PARENTHESIS_LEFT> 
+    ( <ID>  | <STRING_DEF> | <DATE_DEF> | <TIME_DEF> | <DATETIME_DEF> ) 
+    <PARENTHESIS_RIGHT> 
+    <LINE_END>
 
 *************************************************************************************************
 
