@@ -1,0 +1,1093 @@
+/** By Medina Peraza Caleb, Control No. 18212219 */
+/** By Verjan Santoyo Edgar, Control No. 19211750 */
+
+  
+PARSER_BEGIN(Furscal)
+
+import java.util.ArrayList;
+import java.util.List;
+/** Simple brace matcher. */
+public class Furscal 
+{
+  /** Main entry point. */
+  public static void main(String args[]) throws ParseException, TokenMgrError 
+  {
+    Furscal parser = new Furscal(System.in);
+    parser.Input();
+  }
+}
+
+PARSER_END(Furscal)
+
+/** LEXICAL ANALYZER SPECIFICATION */ 
+/** BEGINS HERE */
+
+/** These separate tokens from each other!
+ * If you don't want them to be counted as part of a token
+ * (e.g., "xyz 123" would be counted as token despite being wrong)
+ * put them as tokens to be skipped.
+ */
+SKIP : 
+{ 
+  " "
+  | "\n" 
+  | "\r" 
+  | "\r\n" 
+  | "\t" 
+}
+
+TOKEN : 
+{
+  < COMMENT : "/" "*" (~[])* "*" "/" >
+}
+
+TOKEN : 
+{
+  < TYPE : "int" | "decimal" | "bool" | "char" | "string" | "date" | "time" | "datetime" >
+}
+
+TOKEN :
+{
+  < INTDEF : ( <DIGIT> ) + >
+}
+
+TOKEN : 
+{
+  < DECIMALDEF : ( <DIGIT> )+ "." ( <DIGIT> )+ "f" >
+}
+
+TOKEN : 
+{
+  < BOOLDEF: "True" | "False" >
+}
+
+TOKEN : 
+{
+  < CHARDEF: "$" <LETTER> >
+}
+
+
+TOKEN : 
+{
+  < STRINGDEF : "'"  (~["'","\n","\r"])*  "'" >
+}
+
+TOKEN : 
+{
+  < DATEDEF : "&" <DIGIT> <DIGIT> <DIGIT> <DIGIT> "-" (<DIGIT>){0,1} <DIGIT> "-" (<DIGIT>){0,3} <DIGIT> "&" >
+}
+
+TOKEN : 
+{
+  < TIMEDEF : "&" (<DIGIT>){0,2} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT>"&" >
+}
+
+TOKEN : 
+{
+  < DATETIMEDEF : "&" <DIGIT> <DIGIT> <DIGIT> <DIGIT> "-" (<DIGIT>){0,1} <DIGIT> "-" (<DIGIT>){0,3} <DIGIT> (" ")
+  (<DIGIT>){0,2} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> "&" >
+}
+
+TOKEN : 
+{
+  < ARR : "arr" >
+}
+
+TOKEN : 
+{
+  < MATRIX : "matrix" >
+}
+
+TOKEN : 
+{
+  < ARRAYSETDEF : "#(" ( <INTDEF> | <DECIMALDEF> ) ( "," ( <INTDEF> | <DECIMALDEF> ) )* ")" >
+}
+
+TOKEN : 
+{
+  < CONSTANT : "const" >
+}
+
+TOKEN : 
+{
+  < NULL : "null" >
+}
+
+TOKEN : 
+{
+  < GLOBAL : "global" >
+}
+
+TOKEN : 
+{
+  < ARITHMETICOPERATOR : 
+  "+" 
+  | "-" 
+  | "*" 
+  | "/" 
+  >
+}
+
+TOKEN : 
+{
+  < POWER : "**" >
+}
+
+TOKEN : 
+{
+  < POSTFIXINC : "++" >
+}
+
+TOKEN : 
+{
+  < POSTFIXDEC : "--" >
+}
+
+TOKEN : 
+{
+  < MODULUS : "%" >
+}
+
+TOKEN : 
+{
+  < ASSIGN : ":=" >
+}
+
+TOKEN : 
+{
+  < SHIFTLEFT : "<<" >
+}
+
+TOKEN : 
+{
+  < SHIFTRIGHT : ">>" >
+}
+
+TOKEN : 
+{
+  < RELATIONALOPERATOR : 
+  "<" 
+  | ">" 
+  | ">=" 
+  | "<=" 
+  | "==" 
+  | "!=" 
+  >
+}
+
+TOKEN : 
+{
+  < LOGICALOPERATOR : 
+  "and" 
+  | "or" 
+  | "not" 
+  >
+}
+
+TOKEN : 
+{
+  < FUNCTIONDECLARE : "def" >
+}
+
+TOKEN : 
+{
+  < RETURN : "return" >
+}
+
+TOKEN : 
+{
+  < QUESTION : "inquire" >
+}
+
+TOKEN : 
+{
+  < DEFAULT_ : 
+  "otherwise" 
+  | "otherwise if" 
+  >
+}
+
+TOKEN : 
+{
+  < LOOP : "perform" > 
+}
+
+TOKEN : 
+{
+  < LOOPCOUNTER : "times" >
+}
+
+TOKEN : 
+{
+  < LOOPUNTIL : "until" >
+}
+
+TOKEN : 
+{
+  < LOOPTESTBEFORE : "with test before" >
+}
+
+TOKEN : 
+{
+  < LOOPTESTAFTER : "with test after" >
+}
+
+TOKEN : 
+{
+  < SHOW : 
+  "show" 
+  | "print" 
+  | "echo" 
+  | "display" 
+  >
+}
+
+TOKEN : 
+{
+  < CLEAR : 
+  "clear" 
+  | "clean" 
+  >
+}
+
+TOKEN : 
+{
+  < EXIT : "exit" >
+}
+
+TOKEN : 
+{
+  < TYPEOF : "typeof" >
+}
+
+TOKEN : 
+{
+  < HALT : "halt" >
+}
+
+TOKEN : 
+{
+  < PROCEED : "proceed" >
+}
+
+// TOKEN : 
+// {
+//   < CALLING : <ID> "(" (~[])* ")" >
+// }
+
+TOKEN : 
+{
+  < CLASSDECLARE : "class" >
+}
+
+TOKEN : 
+{
+  < OBJECTDECLARE : "summon" >
+}
+
+TOKEN : 
+{
+  < SELF : "self" >
+}
+
+TOKEN : 
+{
+  < PASSALL : "pass" >
+}
+
+TOKEN : 
+{
+  < CHECK : "check" >
+}
+
+TOKEN : 
+{
+  < ONERROR : "onError" >
+}
+
+TOKEN : 
+{
+  < AFTERALL : "after all" >
+}
+
+/** Beastman1972's half: */
+TOKEN : 
+{
+  < REQUIRE : "require" >
+}
+
+TOKEN : 
+{
+  < FROM : "from" >
+}
+
+TOKEN : 
+{
+  < LINE_END : ";" >
+}
+
+TOKEN :
+{
+  < SEPARATOR : "," >
+}
+
+TOKEN : 
+{
+  < PARENTHESIS_LEFT : "(" >
+}
+
+TOKEN : 
+{
+  < PARENTHESIS_RIGHT: ")" >
+}
+
+TOKEN : 
+{
+  < SQUARE_LEFT : "[" >
+}
+
+TOKEN : 
+{
+  < SQUARE_RIGHT : "]" >
+}
+
+TOKEN : 
+{
+  < BRACKET_LEFT : "{" >
+}
+
+TOKEN : 
+{
+  < BRACKET_RIGHT : "}" >
+}
+
+TOKEN : 
+{
+  < PROCEDURE : "procedure" >
+}
+
+TOKEN : 
+{
+  < SET : "set" >
+}
+
+TOKEN :
+{
+  < SET_OPERATIONS : 
+  "union" 
+  | "diff" 
+  | "intersect" 
+  | "include" 
+  | "exclude" 
+  >
+}
+
+TOKEN : 
+{
+  < SET_COMPARISONS : 
+  "><" 
+  | "=" 
+  | "<>" 
+  | "contains" 
+  >
+}
+
+TOKEN :
+{
+  < MATH_CONSTANTS : 
+  "Math.PI" 
+  | "Math.E" 
+  | "Math.SQRT2"
+  | "Math.SQRT1_2" 
+  | "Math.LN2" 
+  | "Math.LN10" 
+  | "Math.LOG2E" 
+  | "Math.LOG10E" 
+  >
+}
+
+TOKEN : 
+{
+  < TRIG_FUNCTIONS : 
+  "Math.acos" 
+  | "Math.acosh" 
+  | "Math.asin" 
+  | "Math.asinh" 
+  | "Math.atan" 
+  | "Math.atan2"
+  | "Math.atanh" 
+  | "Math.cos" 
+  | "Math.cosh" 
+  | "Math.sin" 
+  | "Math.sinh" 
+  | "Math.tan" 
+  | "Math.tanh" 
+  >
+}
+
+TOKEN : 
+{
+  < ASSIGN_OPERATORS : 
+  "+=" 
+  | "-=" 
+  | "*=" 
+  | "/=" 
+  | "<<=" 
+  | ">>=" 
+  | ">>>=" 
+  | "&=" 
+  | "^=" 
+  | "|=" 
+  | "**=" 
+  >
+}
+
+TOKEN : 
+{
+  < ARITHMETIC_FUNCTIONS : 
+  "Math.abs" 
+  | "Math.exp" 
+  | "Math.log" 
+  | "Math.log10" 
+  | "Math.log1p" 
+  | "Math.log2" 
+  | "Math.max" 
+  | "Math.min" 
+  | "Math.random" 
+  | "Math.sort"
+  | "Math.shuffle"
+  | "Math.choice"
+  | "Math.round" 
+  | "Math.sqrt" 
+  | "Math.pow" 
+  | "Math.ceil" 
+  | "Math.floor" 
+  | "Math.cbrt" 
+  | "Math.expm1" 
+  | "Math.sign" 
+  | "Math.randint"
+  | "Math.random.normal"
+  | "Math.random.binomial"
+  | "Math.random.poisson"
+  | "Math.random.uniform"
+  | "Math.random.logistic"
+  | "Math.random.multinomial"
+  | "Math.random.exponential"
+  | "Math.random.chisquare"
+  | "Math.random.rayleigh"
+  | "Math.random.pareto"
+  | "Math.random.zipf"
+  | "Math.lcm"
+  | "Math.gcd"
+  | "Math.trunc"
+  | "Math.fix"
+  | "Math.around"
+  | "Math.hypot"
+  | "Math.deg2rad"
+  | "Math.rad2deg"
+  | "Math.quadratic"
+  | "Math.cubic"
+  | "Math.squareArea"
+  | "Math.rectArea"
+  | "Math.circleArea"
+  | "Math.triangleArea"
+  | "Math.trapArea"
+  | "Math.regpolyArea"
+  >
+}
+
+TOKEN :
+{
+  < ARRMETHODS : 
+  "index" 
+  | "pop" 
+  | "append" 
+  | "count" 
+  | "remove" 
+  >
+}
+
+TOKEN : 
+{
+  < HELP : "--help" >
+}
+
+TOKEN : 
+{
+  < VERSION : "--version" >
+}
+
+TOKEN : 
+{
+  < EMPTY : "empty" >
+}
+
+TOKEN : 
+{
+  < MATRIX_FUNCTIONS : 
+  "matrix.zeros"
+  | "matrix.ones"
+  | "matrix.eye"
+  | "matrix.identity"
+  | "matrix.rand"
+  | "matrix.randn"
+  | "matrix.lcm.reduce"
+  | "matrix.gcd.reduce"
+  | "matrix.add"
+  | "matrix.subtract"
+  | "matrix.multiply"
+  | "matrix.divide"
+  | "matrix.sum"
+  | "matrix.cumsum"
+  | "matrix.prod"
+  | "matrix.cumprod"
+  | "matrix.diff"
+  >
+}
+
+TOKEN : 
+{
+  < COMPLEX : "complex" >
+}
+
+TOKEN : 
+{
+  < COMPLEX_FUNCTIONS : 
+  "real"
+  | "imag"
+  | "conjugate"
+  >
+}
+
+/** These extra tokens, if added, generate error "code too large"
+ * when compiling java files with javac
+ */
+
+// TOKEN :
+// {
+//   < ARR_TYPE : 
+//   "dtype"
+//   | "astype"
+//   >
+// }
+
+// TOKEN :
+// {
+//   < ARROW_FUNCTIONS : 
+//   "now"
+//   | "get"
+//   | "arrow"
+//   >
+// }
+
+// TOKEN :
+// {
+//   < SYM_FUNCTIONS : 
+//   "sym.symbol" 
+//   | "sym.pi" 
+//   | "sym.pi.evalf" 
+//   | "sym.expand" 
+//   | "sym.simplify" 
+//   | "sym.limit" 
+//   | "sym.diff" 
+//   | "sym.series" 
+//   | "sym.integrate" 
+//   | "sym.solveset" 
+//   | "sym.solve" 
+//   | "sym.satisfiable" 
+//   | "sym.Matrix" 
+//   >
+// }
+
+// TOKEN : 
+// {
+//   < OS_FUNCTIONS : 
+//   "os.getcwd" 
+//   | "os.chdir" 
+//   | "os.mkdir" 
+//   | "os.listdir" 
+//   | "os.walk" 
+//   | "os.startfile" 
+//   | "os.popen" 
+//   | "os.close" 
+//   | "os.rename" 
+//   | "os.getlogin" 
+//   >
+// }
+
+// TOKEN : 
+// {
+//   < ARR_FUNCTIONS : 
+//   "copy" 
+//   | "view" 
+//   | "shape" 
+//   | "reshape" 
+//   | "concatenate" 
+//   | "array_slpit" 
+//   | "where" 
+//   | "out" 
+//   >
+// }
+
+// TOKEN : 
+// {
+//   < SIMPLE_ARITHMETIC : 
+//   "subtract" 
+//   | "multiply" 
+//   | "divide" 
+//   | "power" 
+//   | "remainder" 
+//   | "mod" 
+//   | "divmod" 
+//   | "absolute" 
+//   >
+// }
+
+/** General tokens. ALWAYS put after more specific tokens
+ * Such as < VAR : "var" >, otherwise these will match to general tokens
+ * like <ID>. Order of Token declaration matters!!
+ */
+TOKEN :
+{
+  < #DIGIT : ( ["0"-"9"] ) >
+}
+
+TOKEN : 
+{
+  < #LETTER : ( ["a"-"z","A"-"Z"] ) >
+}
+
+TOKEN :
+{
+  < ID : <LETTER> ( <LETTER> | <DIGIT> )* > 
+}
+
+
+
+
+/** PARSER/GRAMMAR/SYNTAX SPECIFICATION */
+/** BEGINS HERE */ 
+
+/** Root production. */
+
+void Input() :
+{
+  Token t;
+  ArrayList<String> ID_list = new ArrayList<String>();
+}
+{
+  (
+    t = <COMMENT>
+      {
+        System.out.println("<COMMENT>:");
+      }
+    |
+    t = <TYPE>
+      {
+        System.out.println("<TYPE>:\t\t\t\t" + t.image);
+      }
+    |
+    t = <INTDEF>
+      {
+        System.out.println("<INTDEF>:");
+      }
+    |
+    t = <DECIMALDEF>
+      {
+        System.out.println("<DECIMALDEF>:");
+      }
+    |
+    t = <BOOLDEF>
+      {
+        System.out.println("<BOOLDEF>:");
+      }
+    |
+    t = <CHARDEF>
+      {
+        System.out.println("<CHARDEF>:");
+      }
+    |
+    t = <STRINGDEF>
+      {
+        System.out.println("<STRINGDEF>:");
+      }
+    |
+    t = <TIMEDEF>
+    {
+      System.out.println("<TIMEDEF>:");
+    }  
+    |
+    t = <DATEDEF>
+      {
+        System.out.println("<DATEDEF>:");
+      }
+    |
+    t = <DATETIMEDEF>
+      {
+        System.out.println("<DATETIMEDEF>:");
+      }
+    |
+    t = <ARR>
+      {
+        System.out.println("<ARR>:");
+      }
+    |
+    t = <MATRIX>
+      {
+        System.out.println("<MATRIX>:");
+      }
+    |
+    t = <ARRAYSETDEF>
+      {
+        System.out.println("<ARRAYSETDEF>:");
+      }
+    |
+    t = <CONSTANT>
+      {
+        System.out.println("<CONSTANT>:");
+      }
+    |
+    t = <NULL>
+      {
+        System.out.println("<NULL>:");
+      }
+    |
+    t = <GLOBAL>
+      {
+        System.out.println("<GLOBAL>:");
+      }
+    |
+    t = <ARITHMETICOPERATOR>
+      {
+        System.out.println("<ARITHMETICOPERATOR>:\t\t" + t.image);
+      }
+    |
+    t = <POWER>
+      {
+        System.out.println("<POWER>:");
+      }
+    |
+    t = <POSTFIXINC>
+      {
+        System.out.println("<POSTFIXINC>:");
+      }
+    |
+    t = <POSTFIXDEC>
+      {
+        System.out.println("<POSTFIXDEC>:");
+      }
+    |
+    t = <MODULUS>
+    {
+      System.out.println("<MODULUS>:");
+    }  
+    |
+    t = <ASSIGN>
+    {
+      System.out.println("<ASSIGN>:");
+    }
+    |
+    t = <SHIFTLEFT>
+    {
+      System.out.println("<SHIFTLEFT>:");
+    }
+    |
+    t = <SHIFTRIGHT>
+    {
+      System.out.println("<SHIFTRIGHT>:");
+    }
+    |
+    t = <RELATIONALOPERATOR>
+      {
+        System.out.println("<RELATIONALOPERATOR>:\t\t" + t.image);
+      }
+    |
+    t = <LOGICALOPERATOR>
+      {
+        System.out.println("<LOGICALOPERATOR>:\t\t" + t.image);
+      }
+    |
+    t = <FUNCTIONDECLARE>
+      {
+        System.out.println("<FUNCTIONDECLARE>:");
+      }
+    |
+    t = <RETURN>
+      {
+        System.out.println("<RETURN>:");
+      }
+    |
+    t = <QUESTION>
+      {
+        System.out.println("<QUESTION>:");
+      }
+    |
+    t = <DEFAULT_>
+      {
+        System.out.println("<DEFAULT_>:\t\t\t" + t.image);
+      }
+    |
+    t = <LOOP>
+      {
+        System.out.println("<LOOP>:");
+      }
+    |
+    t = <LOOPCOUNTER>
+      {
+        System.out.println("<LOOPCOUNTER>:");
+      }
+    |
+    t = <LOOPUNTIL>
+      {
+        System.out.println("<LOOPUNTIL>:");
+      }
+    |
+    t = <LOOPTESTAFTER>
+      {
+        System.out.println("<LOOPTESTAFTER>:");
+      }
+    |
+    t = <LOOPTESTBEFORE>
+      {
+        System.out.println("<LOOPTESTBEFORE>:");
+      }
+    |
+    t = <SHOW>
+      {
+        System.out.println("<SHOW>:\t\t\t\t" + t.image);
+      }
+    |
+    t = <CLEAR>
+      {
+        System.out.println("<CLEAR>:\t\t\t" + t.image);
+      }
+    |
+    t = <EXIT>
+      {
+        System.out.println("<EXIT>:");
+      }
+    |
+    t = <TYPEOF>
+      {
+        System.out.println("<TYPEOF>:");
+      }
+    |
+    t = <HALT>
+      {
+        System.out.println("<HALT>:");
+      }
+    |
+    t = <PROCEED>
+    {
+      System.out.println("<PROCEED>:");
+    }
+    |
+    t = <CLASSDECLARE>
+      {
+        System.out.println("<CLASSDECLARE>:");
+      }
+    |
+    t = <OBJECTDECLARE>
+      {
+        System.out.println("<OBJECTDECLARE>:");
+      }
+    |
+    t = <SELF>
+      {
+        System.out.println("<SELF>:");
+      }
+    |
+    t = <PASSALL>
+      {
+        System.out.println("<PASSALL>:");
+      }
+    |
+    t = <CHECK>
+      {
+        System.out.println("<CHECK>:");
+      }
+    |
+    t = <ONERROR>
+      {
+        System.out.println("<ONERROR>:");
+      }
+    |
+    t = <AFTERALL>
+      {
+        System.out.println("<AFTERALLL>:");
+      }
+    |
+    t = <REQUIRE>
+      {
+        System.out.println("<REQUIRE>:");
+      }
+    |
+    t = <FROM>
+      {
+        System.out.println("<FROM>:");
+      }
+    |
+    t = <LINE_END>
+      {
+        System.out.println("<LINE_END>:");
+      }
+    |
+    t = <SEPARATOR>
+      {
+        System.out.println("<SEPARATOR>:");
+      }
+    |
+    t = <PARENTHESIS_LEFT>
+      {
+        System.out.println("<PARENTHESIS_LEFT>:");
+      }
+    | 
+    t = <PARENTHESIS_RIGHT>
+    {
+      System.out.println("<PARENTHESIS_RIGHT>:");
+    }
+    | 
+    t = <SQUARE_LEFT>
+    {
+      System.out.println("<SQUARE_LEFT>:");
+    }
+    | 
+    t = <SQUARE_RIGHT>
+    {
+      System.out.println("<SQUARE_RIGHT>:");
+    }
+    | 
+    t = <BRACKET_LEFT>
+    {
+      System.out.println("<BRACKET_LEFT>:");
+    }
+    | 
+    t = <BRACKET_RIGHT>
+    {
+      System.out.println("<BRACKET_RIGHT>:");
+    }
+    | 
+    t = <PROCEDURE>
+    {
+      System.out.println("<PROCEDURE>:");
+    }
+    | 
+    t = <SET>
+    {
+      System.out.println("<SET>:");
+    }
+    | 
+    t = <SET_OPERATIONS>
+    {
+      System.out.println("<SET_OPERATIONS>:\t\t" + t.image);
+    }
+    | 
+    t = <SET_COMPARISONS>
+    {
+      System.out.println("<SET_COMPARISONS>:\t\t" + t.image);
+    }
+    | 
+    t = <MATH_CONSTANTS>
+    {
+      System.out.println("<MATH_CONSTANTS>:\t\t" + t.image);
+    }
+    | 
+    t = <TRIG_FUNCTIONS>
+    {
+      System.out.println("<TRIG_FUNCTIONS>:\t\t" + t.image);
+    }
+    | 
+    t = <ASSIGN_OPERATORS>
+    {
+      System.out.println("<ASSIGN_OPERATORS>:\t\t" + t.image);
+    }
+    | 
+    t = <ARITHMETIC_FUNCTIONS>
+    {
+      System.out.println("<ARITHMETIC_FUNCTIONS>:\t\t" + t.image);
+    }
+    | 
+    t = <ARRMETHODS>
+    {
+      System.out.println("<ARRMETHODS>:\t\t\t" + t.image);
+    }
+    | 
+    t = <HELP>
+    {
+      System.out.println("<HELP>:");
+    }
+    t = <VERSION>
+    {
+      System.out.println("<VERSION>:");
+    }
+    |
+    t = <EMPTY>
+    {
+      System.out.println("<EMPTY>:");
+    }
+    |
+    t = <MATRIX_FUNCTIONS>
+    {
+      System.out.println("<MATRIX_FUNCTIONS>:\t\t" + t.image);
+    }
+    |
+    t = <COMPLEX>
+    {
+      System.out.println("<COMPLEX>:");
+    }
+    |
+    t = <COMPLEX_FUNCTIONS>
+    {
+      System.out.println("<COMPLEX_FUNCTIONS>:\t\t" + t.image);
+    }
+
+    /** These extra tokens, if added, generate error "code too large"
+    * when compiling java files with javac
+    */
+
+    // |
+    // t = <ARR_TYPE>
+    // {
+    //   System.out.println("<ARR_TYPE>:\t\t" + t.image);
+    // }
+    // |
+    // t = <ARROW_FUNCTIONS>
+    // {
+    //   System.out.println("<ARROW_FUNCTIONS>:\t\t" + t.image);
+    // }
+    // |
+    // t = <SYM_FUNCTIONS>
+    // {
+    //   System.out.println("<SYM_FUNCTIONS>:\t\t" + t.image);
+    // }
+    // |
+    // t = <OS_FUNCTIONS>
+    // {
+    //   System.out.println("<OS_FUNCTIONS>:\t\t" + t.image);
+    // }
+    // |
+    // t = <ARR_FUNCTIONS>
+    // {
+    //   System.out.println("<ARR_FUNCTIONS>:\t\t" + t.image);
+    // }
+    // |
+    // t = <SIMPLE_ARITHMETIC>
+    // {
+    //   System.out.println("<SIMPLE_ARITHMETIC>:\t\t" + t.image);
+    // }
+    |
+    t = <ID>
+    {
+      if(ID_list.contains(t.image) == false)
+      {
+        ID_list.add(t.image);
+        System.out.println("<ID>:\t\t\t\t" + "(" + ID_list.indexOf(t.image) + ")");
+      }
+      else
+      {
+        System.out.println("<ID>:\t\t\t\t" + "(" + ID_list.indexOf(t.image) + ")");
+      }
+    }
+  )*
+  <EOF>
+}

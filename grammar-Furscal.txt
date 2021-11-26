@@ -8,12 +8,13 @@
     *<TYPE_DEF> Must be added to tokens!!!
 **/
 
+// <CONDITION> and <ARGS> go into their own production rules! NOT tokens!
 <CONDITION> ::=
     (<INT_DEF>|<DECIMAL_DEF>|<ID>|<STRING_DEF>) 
     (<RELATIONAL_OPERATOR>|<LOGICAL_OPERATOR>) 
     (<INT_DEF>|<DECIMAL_DEF>|<ID>|<STRING_DEF>)
 
-<ARGS> ::= ( ( <ID> | <INT_DEF> | <DECIMAL_DEF> | <STRING_DEF> ) (",")? )+
+<ARGS> ::= ( <ID> | <INT_DEF> | <DECIMAL_DEF> | <STRING_DEF> ) ( "," ( <ID> | <INT_DEF> | <DECIMAL_DEF> | <STRING_DEF> ) )*
 
 
 <BLOCK> ::= 
