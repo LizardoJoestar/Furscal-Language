@@ -682,7 +682,9 @@ void Start() :
 }
 
 void Expression() :
-{}
+{
+  Token t;
+}
 {
   // Functions are non-terminals, tokens are terminals
   Imports()
@@ -693,6 +695,184 @@ void Expression() :
   | Inst_Object()
   | Inst_Complex()
   | Inst_Assign()
-  | <COMMENT>
-  | <SHOW>
+  | Inst_Show()
+  | Term_Comment()
+}
+
+void Imports() :
+{
+  Token t;
+}
+{
+  Term_From()
+  Term_ID()
+  (
+    Term_Require()
+    Term_ID()
+  )?
+  Term_LineEnd()
+}
+
+void Inst_Class() : 
+{
+  Token t;
+}
+{
+  Term_ClassDeclare()
+  Term_ID()
+  (
+    Term_ParLeft()
+    Term_ID()
+    Term_ParRight()
+  )? 
+  Term_BracketLeft()
+  (
+    (
+      Term_Self()
+      Term_Type()
+      Term_ID()
+      Term_Assign()
+      Type_Def()
+      Term_LineEnd()
+    )*
+    (
+      Block_Class()
+    )?
+    |
+    Term_PassAll()
+    Term_LineEnd()
+  )
+  Term_BracketRight()
+  Term_LineEnd()
+}
+
+
+
+
+// Terminal BNFs (TOKENs), for easier maintenance
+
+void Term_Comment() :
+{ 
+  Token t; 
+}
+{
+  t = <COMMENT>
+  { System.out.println("<COMMENT>: "); }
+}
+
+void Term_From() :
+{
+  Token t;
+}
+{
+  t = <FROM>
+  { System.out.println("<FROM>: "); }
+}
+
+void Term_ID() :
+{
+  Token t;
+}
+{
+  t = <ID>
+  { System.out.println("<ID>: "); }
+}
+
+void Term_Require() :
+{
+  Token t;
+}
+{
+  t = <REQUIRE>
+  { System.out.println("<REQUIRE>: "); }
+}
+
+void Term_LineEnd() :
+{
+  Token t;
+}
+{
+  t = <LINE_END>
+  { System.out.println("<LINE_END>: "); }
+}
+
+void Term_ClassDeclare() :
+{
+  Token t;
+}
+{
+  t = <CLASSDECLARE>
+  { System.out.println("<CLASSDECLARE>: "); }
+}
+
+void Term_ParLeft() :
+{
+  Token t;
+}
+{
+  t = <PARENTHESIS_LEFT>
+  { System.out.println("<PARENTHESIS_LEFT>: "); }
+}
+
+void Term_ParRight() :
+{
+  Token t;
+}
+{
+  t = <PARENTHESIS_RIGHT>
+  { System.out.println("<PARENTHESIS_RIGHT>: "); }
+}
+
+void Term_BracketLeft() :
+{
+  Token t;
+}
+{
+  t = <BRACKET_LEFT>
+  { System.out.println("<BRACKET_LEFT>: "); }
+}
+
+void Term_BracketRight() :
+{
+  Token t;
+}
+{
+  t = <BRACKET_RIGHT>
+  { System.out.println("<BRACKET_RIGHT>: "); }
+}
+
+void Term_Self() :
+{
+  Token t;
+}
+{
+  t = <SELF>
+  { System.out.println("<SELF>: "); }
+}
+
+void Term_Type() :
+{
+  Token t;
+}
+{
+  t = <TYPE>
+  { System.out.println("<TYPE>: "); }
+}
+
+void Term_Assign() :
+{
+  Token t;
+}
+{
+  t = <ASSIGN>
+  { System.out.println("<ASSIGN>: "); }
+}
+
+void Term_PassAll() :
+{
+  Token t;
+}
+{
+  t = <PASSALL>
+  { System.out.println("<PASSALL>: "); }
 }
