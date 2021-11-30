@@ -38,7 +38,7 @@ SKIP :
 
 TOKEN : 
 {
-  < COMMENT : "/" "*" (~[])* "*" "/" >
+  < COMMENT : "/" "*" (~["'","\n","\r"])* "*" "/" >
 }
 
 TOKEN : 
@@ -554,7 +554,7 @@ TOKEN :
 {
   < COMPLEX_FUNCTIONS : 
   "real"
-  | "imag"
+  | "imaginary"
   | "conjugate"
   >
 }
@@ -659,7 +659,7 @@ TOKEN :
 
 TOKEN :
 {
-  < ID : <LETTER> ( <LETTER> | <DIGIT> )* > 
+  < ID : <LETTER> ( <LETTER> | <DIGIT> | "_" )* > 
 }
 
 
@@ -722,19 +722,23 @@ void Inst_Class() :
   Term_BracketLeft()
   (
     (
-      Term_Self()
-      Term_Type()
-      Term_ID()
-      Term_Assign()
-      Type_Def()
+      Term_PassAll()
       Term_LineEnd()
-    )*
-    (
-      Block_Class()
-    )?
+    )
     |
-    Term_PassAll()
-    Term_LineEnd()
+    (
+      (
+        Term_Self()
+        Term_Type()
+        Term_ID()
+        Term_Assign()
+        Type_Def()
+        Term_LineEnd()
+      )*
+      (
+        Block_Class()
+      )?
+    )
   )
   Term_BracketRight()
   Term_LineEnd()
@@ -818,7 +822,6 @@ void Inst_Complex() :
   Term_Assign()
   (
     Complex_Def()
-    Inst_Complex_Func()
   )
   Term_LineEnd()
 }
@@ -855,11 +858,12 @@ void Inst_Show() :
   Term_Show()
   Term_ParLeft()
   (
-    Term_ID()
+    Term_ID() Property_Complex_Func()
     | Term_StrDef()
     | Term_DateDef()
     | Term_TimeDef()
     | Term_DateTimeDef()
+    | ( Complex_Def() Property_Complex_Func() )
   )
   Term_ParRight()
   Term_LineEnd()
@@ -892,26 +896,30 @@ void Args() :
 void Block_Class() :
 {}
 {
-  Inst_Assign()
-  | Inst_Loop()
-  | Inst_Check()
-  | Inst_Object()
-  | Inst_Complex()
-  | Inst_Function() // Included in Block_Class
-  | Inst_Show()
-  | Term_Comment()
+  (
+    Inst_Assign()
+    | Inst_Loop()
+    | Inst_Check()
+    | Inst_Object()
+    | Inst_Complex()
+    | Inst_Function() // Included in Block_Class
+    | Inst_Show()
+    | Term_Comment()
+  )+
 }
 
 void Block() :
 {}
 {
-  Inst_Assign()
-  | Inst_Loop()
-  | Inst_Check()
-  | Inst_Object()
-  | Inst_Complex()
-  | Inst_Show()
-  | Term_Comment()
+  (
+    Inst_Assign()
+    | Inst_Loop()
+    | Inst_Check()
+    | Inst_Object()
+    | Inst_Complex()
+    | Inst_Show()
+    | Term_Comment()
+  )+
 }
 
 void Condition() :
@@ -953,11 +961,9 @@ void Complex_Def() : // Applied left factorization to the following 2:
     )
     Term_ParRight()
   )
-  |
-  Term_ID()
 }
 
-void Inst_Complex_Func() :
+void Property_Complex_Func() :
 {}
 {
   (

@@ -19,10 +19,12 @@
     ( <PARENTHESIS_LEFT> <ID> <PARENTHESIS_RIGHT> )?
     <BRACKET_LEFT>
     (
-        ( <SELF> <TYPE> <ID> <ASSIGN> <TYPE_DEF> <LINE_END> )*
-        ( <BLOCK_CLASS> )?
+        (<PASS_ALL> <LINE_END>)
         |
-        <PASS_ALL> <LINE_END>
+        (
+            ( <SELF> <TYPE> <ID> <ASSIGN> <TYPE_DEF> <LINE_END> )*
+            ( <BLOCK_CLASS> )?
+        )
     )
     <BRACKET_RIGHT>
     <LINE_END>
@@ -66,7 +68,7 @@
     <COMPLEX> 
     <ID> 
     <ASSIGN> 
-    ( <COMPLEX_DEF> <INST_COMPLEX_FUNC> )
+    ( <COMPLEX_DEF> )
     <LINE_END>
 
 <INST_ASSIGN> ::=
@@ -83,7 +85,7 @@
 <INST_SHOW> ::= 
     <SHOW> 
     <PARENTHESIS_LEFT> 
-    ( <ID>  | <STRING_DEF> | <DATE_DEF> | <TIME_DEF> | <DATETIME_DEF> ) 
+    ( <ID>  | <STRING_DEF> | <DATE_DEF> | <TIME_DEF> | <DATETIME_DEF> | ( <COMPLEX_DEF> <INST_COMPLEX_FUNC> ) ) 
     <PARENTHESIS_RIGHT> 
     <LINE_END>
 
@@ -136,11 +138,20 @@
     ","
     ( <INT_DEF> | <DECIMAL_DEF> )
     <PARENTHESIS_RIGHT>
-    |
-    <ID>
 
-<INST_COMPLEX_FUNC> ::= 
+<PROPERTY_COMPLEX_FUNC> ::= 
     (
         ":"
         <COMPLEX_FUNCTIONS>
     )?
+
+
+// For future consideration: A 'Properties' rule, of the form ':<property>'
+<PROPERTY> ::=
+    ( ":" <COMPLEX_FUNCTIONS> )?
+    |
+    ( ":" <>)?
+    |
+    ( ":" <>)?
+    |
+    ...
