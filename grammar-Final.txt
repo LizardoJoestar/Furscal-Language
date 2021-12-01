@@ -148,10 +148,12 @@
 
 // For future consideration: A 'Properties' rule, of the form ':<property>'
 <PROPERTY> ::=
-    ( ":" <COMPLEX_FUNCTIONS> )?
-    |
-    ( ":" <>)?
-    |
-    ( ":" <>)?
-    |
-    ...
+    (
+        ( ":" <COMPLEX_FUNCTIONS> )
+        |
+        ( ":" <...>)
+        |
+        ( ":" <...>)
+        |
+        ...
+    )?

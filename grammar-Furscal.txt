@@ -263,3 +263,19 @@ string name := 'Hello World';
     )
     <LINE_END>
 
+*************************************************************************************************
+
+<MATH_REFERENCE> ::=
+    <MATH_CONSTANTS> <LINE_END>
+    |
+    (
+        <ARITHMETIC_FUNCTIONS>
+        |
+        <TRIG_FUNCTIONS>
+    )
+    (
+        <PARENTHESIS_LEFT>
+        <ARGS>
+        <PARENTHESIS_RIGHT>
+        <LINE_END>
+    )
