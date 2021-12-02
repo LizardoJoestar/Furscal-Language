@@ -559,6 +559,11 @@ TOKEN :
   >
 }
 
+TOKEN :
+{
+  < OBJECT : "obj" >
+}
+
 /** These extra tokens, if added, generate error "code too large"
  * when compiling java files with javac
  */
@@ -819,17 +824,21 @@ void Inst_Object() :
 void Inst_ID() :
 {}
 {
-  Inst_Tags()
-  Term_ID()
-  Inst_Assign()
-  Property_Alt() // this stores non-furscal rules
+  ( 
+    ( Inst_Tags() )?
+    Term_ID() Property_Alt() // this stores non-furscal rules
+    ( Inst_Assign() )?
+    (
+      Term_ID() 
+      Property_Alt() // this stores non-furscal rules
+    )?
+  )
   Term_LineEnd()
 }
 
 void Inst_Tags() :
 {}
 {
-  (
     (
       Term_Global()
       | Term_Const()
@@ -840,26 +849,23 @@ void Inst_Tags() :
       | Term_Matrix()
       | Term_Set()
       | Term_Complex()
+      | Term_Obj()
     )
-  )?
 }
 
 void Inst_Assign() :
 {}
 {
-  (
     (
       Term_Assign()
       | Term_AssignOp()
     )
     (
       Type_Def()
-      | Term_ID() Property_Alt() // Property_Alt includes non-Furscal rules
       | Complex_Def()
       | Inst_Object()
       | Math_Reference()
-    )
-  )?
+    )?
 }
 
 void Inst_Show() :
@@ -1521,4 +1527,13 @@ void Term_SquareRight() :
 {
   t = <SQUARE_RIGHT>
   { System.out.println("<SQUARE_RIGHT>: "); }    
+}
+
+void Term_Obj() :
+{
+  Token t;
+}
+{
+  t = <OBJECT>
+  { System.out.println("<OBJECT>: "); }    
 }

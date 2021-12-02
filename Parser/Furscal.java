@@ -39,6 +39,7 @@ void Start() throws ParseException {
       case TRIG_FUNCTIONS:
       case ARITHMETIC_FUNCTIONS:
       case COMPLEX:
+      case OBJECT:
       case ID:{
         ;
         break;
@@ -81,6 +82,7 @@ void Start() throws ParseException {
     case GLOBAL:
     case SET:
     case COMPLEX:
+    case OBJECT:
     case ID:{
       Inst_ID();
       break;
@@ -186,6 +188,7 @@ void Start() throws ParseException {
       case CHECK:
       case SET:
       case COMPLEX:
+      case OBJECT:
       case ID:{
         Block_Class();
         break;
@@ -229,6 +232,7 @@ void Start() throws ParseException {
     case CHECK:
     case SET:
     case COMPLEX:
+    case OBJECT:
     case ID:{
       Block();
       break;
@@ -283,6 +287,7 @@ void Start() throws ParseException {
     case CHECK:
     case SET:
     case COMPLEX:
+    case OBJECT:
     case ID:{
       Block();
       break;
@@ -310,6 +315,7 @@ void Start() throws ParseException {
     case CHECK:
     case SET:
     case COMPLEX:
+    case OBJECT:
     case ID:{
       Block();
       break;
@@ -347,6 +353,7 @@ void Start() throws ParseException {
     case CHECK:
     case SET:
     case COMPLEX:
+    case OBJECT:
     case ID:{
       Block();
       break;
@@ -379,14 +386,6 @@ void Start() throws ParseException {
 }
 
   static final public void Inst_ID() throws ParseException {
-    Inst_Tags();
-    Term_ID();
-    Inst_Assign();
-    Property_Alt();
-    Term_LineEnd();
-}
-
-  static final public void Inst_Tags() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case TYPE:
     case ARR:
@@ -394,82 +393,126 @@ void Start() throws ParseException {
     case CONSTANT:
     case GLOBAL:
     case SET:
-    case COMPLEX:{
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case CONSTANT:
-      case GLOBAL:{
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case GLOBAL:{
-          Term_Global();
-          break;
-          }
-        case CONSTANT:{
-          Term_Const();
-          break;
-          }
-        default:
-          jj_la1[15] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-        break;
-        }
-      default:
-        jj_la1[16] = jj_gen;
-        ;
+    case COMPLEX:
+    case OBJECT:{
+      Inst_Tags();
+      break;
       }
+    default:
+      jj_la1[15] = jj_gen;
+      ;
+    }
+    Term_ID();
+    Property_Alt();
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case ASSIGN:
+    case ASSIGN_OPERATORS:{
+      Inst_Assign();
+      break;
+      }
+    default:
+      jj_la1[16] = jj_gen;
+      ;
+    }
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case ID:{
+      Term_ID();
+      Property_Alt();
+      break;
+      }
+    default:
+      jj_la1[17] = jj_gen;
+      ;
+    }
+    Term_LineEnd();
+}
+
+  static final public void Inst_Tags() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case CONSTANT:
+    case GLOBAL:{
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case TYPE:{
-        Term_Type();
+      case GLOBAL:{
+        Term_Global();
         break;
         }
-      case ARR:{
-        Term_Arr();
-        break;
-        }
-      case MATRIX:{
-        Term_Matrix();
-        break;
-        }
-      case SET:{
-        Term_Set();
-        break;
-        }
-      case COMPLEX:{
-        Term_Complex();
+      case CONSTANT:{
+        Term_Const();
         break;
         }
       default:
-        jj_la1[17] = jj_gen;
+        jj_la1[18] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
       break;
       }
     default:
-      jj_la1[18] = jj_gen;
+      jj_la1[19] = jj_gen;
       ;
+    }
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case TYPE:{
+      Term_Type();
+      break;
+      }
+    case ARR:{
+      Term_Arr();
+      break;
+      }
+    case MATRIX:{
+      Term_Matrix();
+      break;
+      }
+    case SET:{
+      Term_Set();
+      break;
+      }
+    case COMPLEX:{
+      Term_Complex();
+      break;
+      }
+    case OBJECT:{
+      Term_Obj();
+      break;
+      }
+    default:
+      jj_la1[20] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
     }
 }
 
   static final public void Inst_Assign() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-    case ASSIGN:
-    case ASSIGN_OPERATORS:{
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case ASSIGN:{
-        Term_Assign();
-        break;
-        }
-      case ASSIGN_OPERATORS:{
-        Term_AssignOp();
-        break;
-        }
-      default:
-        jj_la1[19] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
+    case ASSIGN:{
+      Term_Assign();
+      break;
       }
+    case ASSIGN_OPERATORS:{
+      Term_AssignOp();
+      break;
+      }
+    default:
+      jj_la1[21] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case INTDEF:
+    case DECIMALDEF:
+    case BOOLDEF:
+    case CHARDEF:
+    case STRINGDEF:
+    case DATEDEF:
+    case TIMEDEF:
+    case DATETIMEDEF:
+    case ARRAYSETDEF:
+    case OBJECTDECLARE:
+    case PARENTHESIS_LEFT:
+    case MATH_CONSTANTS:
+    case TRIG_FUNCTIONS:
+    case ARITHMETIC_FUNCTIONS:{
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case INTDEF:
       case DECIMALDEF:
@@ -481,11 +524,6 @@ void Start() throws ParseException {
       case DATETIMEDEF:
       case ARRAYSETDEF:{
         Type_Def();
-        break;
-        }
-      case ID:{
-        Term_ID();
-        Property_Alt();
         break;
         }
       case PARENTHESIS_LEFT:{
@@ -503,14 +541,14 @@ void Start() throws ParseException {
         break;
         }
       default:
-        jj_la1[20] = jj_gen;
+        jj_la1[22] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
       break;
       }
     default:
-      jj_la1[21] = jj_gen;
+      jj_la1[23] = jj_gen;
       ;
     }
 }
@@ -546,7 +584,7 @@ void Start() throws ParseException {
       break;
       }
     default:
-      jj_la1[22] = jj_gen;
+      jj_la1[24] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -559,8 +597,8 @@ void Start() throws ParseException {
 // General
   static final public void Property_Alt() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-    case 82:{
-      jj_consume_token(82);
+    case 83:{
+      jj_consume_token(83);
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case SET_OPERATIONS:{
         Inst_Set_Ops();
@@ -571,14 +609,14 @@ void Start() throws ParseException {
         break;
         }
       default:
-        jj_la1[23] = jj_gen;
+        jj_la1[25] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
       break;
       }
     default:
-      jj_la1[24] = jj_gen;
+      jj_la1[26] = jj_gen;
       ;
     }
 }
@@ -602,7 +640,7 @@ void Start() throws ParseException {
         break;
         }
       default:
-        jj_la1[25] = jj_gen;
+        jj_la1[27] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -612,7 +650,7 @@ void Start() throws ParseException {
       break;
       }
     default:
-      jj_la1[26] = jj_gen;
+      jj_la1[28] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -640,7 +678,7 @@ void Start() throws ParseException {
       break;
       }
     default:
-      jj_la1[27] = jj_gen;
+      jj_la1[29] = jj_gen;
       ;
     }
     Term_SquareRight();
@@ -657,9 +695,9 @@ void Start() throws ParseException {
 // Smalltalk
   static final public void Index_Smalltalk() throws ParseException {
     Term_StrDef();
-    jj_consume_token(83);
-    Term_CharDef();
     jj_consume_token(84);
+    Term_CharDef();
+    jj_consume_token(85);
     Term_IntDef();
 }
 
@@ -684,7 +722,7 @@ void Args() throws ParseException {
       break;
       }
     default:
-      jj_la1[28] = jj_gen;
+      jj_la1[30] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -696,7 +734,7 @@ void Args() throws ParseException {
         break;
         }
       default:
-        jj_la1[29] = jj_gen;
+        jj_la1[31] = jj_gen;
         break label_3;
       }
       jj_consume_token(SEPARATOR);
@@ -718,7 +756,7 @@ void Args() throws ParseException {
         break;
         }
       default:
-        jj_la1[30] = jj_gen;
+        jj_la1[32] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -736,6 +774,7 @@ void Args() throws ParseException {
       case GLOBAL:
       case SET:
       case COMPLEX:
+      case OBJECT:
       case ID:{
         Inst_ID();
         break;
@@ -761,7 +800,7 @@ void Args() throws ParseException {
         break;
         }
       default:
-        jj_la1[31] = jj_gen;
+        jj_la1[33] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -778,12 +817,13 @@ void Args() throws ParseException {
       case CHECK:
       case SET:
       case COMPLEX:
+      case OBJECT:
       case ID:{
         ;
         break;
         }
       default:
-        jj_la1[32] = jj_gen;
+        jj_la1[34] = jj_gen;
         break label_4;
       }
     }
@@ -800,6 +840,7 @@ void Args() throws ParseException {
       case GLOBAL:
       case SET:
       case COMPLEX:
+      case OBJECT:
       case ID:{
         Inst_ID();
         break;
@@ -821,7 +862,7 @@ void Args() throws ParseException {
         break;
         }
       default:
-        jj_la1[33] = jj_gen;
+        jj_la1[35] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -837,12 +878,13 @@ void Args() throws ParseException {
       case CHECK:
       case SET:
       case COMPLEX:
+      case OBJECT:
       case ID:{
         ;
         break;
         }
       default:
-        jj_la1[34] = jj_gen;
+        jj_la1[36] = jj_gen;
         break label_5;
       }
     }
@@ -867,7 +909,7 @@ void Args() throws ParseException {
       break;
       }
     default:
-      jj_la1[35] = jj_gen;
+      jj_la1[37] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -881,7 +923,7 @@ void Args() throws ParseException {
       break;
       }
     default:
-      jj_la1[36] = jj_gen;
+      jj_la1[38] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -903,7 +945,7 @@ void Args() throws ParseException {
       break;
       }
     default:
-      jj_la1[37] = jj_gen;
+      jj_la1[39] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -921,7 +963,7 @@ void Args() throws ParseException {
       break;
       }
     default:
-      jj_la1[38] = jj_gen;
+      jj_la1[40] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -936,7 +978,7 @@ void Args() throws ParseException {
       break;
       }
     default:
-      jj_la1[39] = jj_gen;
+      jj_la1[41] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -945,13 +987,13 @@ void Args() throws ParseException {
 
   static final public void Property_Complex_Func() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-    case 85:{
-      jj_consume_token(85);
+    case 86:{
+      jj_consume_token(86);
       Term_ComplexFunc();
       break;
       }
     default:
-      jj_la1[40] = jj_gen;
+      jj_la1[42] = jj_gen;
       ;
     }
 }
@@ -995,7 +1037,7 @@ void Args() throws ParseException {
       break;
       }
     default:
-      jj_la1[41] = jj_gen;
+      jj_la1[43] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1253,6 +1295,11 @@ System.out.println("<SQUARE_LEFT>: ");
 System.out.println("<SQUARE_RIGHT>: ");
 }
 
+  static final public void Term_Obj() throws ParseException {Token t;
+    t = jj_consume_token(OBJECT);
+System.out.println("<OBJECT>: ");
+}
+
   static private boolean jj_initialized_once = false;
   /** Generated Token Manager. */
   static public FurscalTokenManager token_source;
@@ -1263,7 +1310,7 @@ System.out.println("<SQUARE_RIGHT>: ");
   static public Token jj_nt;
   static private int jj_ntk;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[42];
+  static final private int[] jj_la1 = new int[44];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static private int[] jj_la1_2;
@@ -1273,13 +1320,13 @@ System.out.println("<SQUARE_RIGHT>: ");
 	   jj_la1_init_2();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0x2b10c0,0x2b10c0,0x0,0x0,0x0,0x2b00c0,0x0,0x1300,0x2b00c0,0x100,0x2b00c0,0x2b00c0,0x1300,0x2b00c0,0x1300,0x280000,0x280000,0x30080,0x2b0080,0x8000000,0x4ff00,0x8000000,0xf000,0x0,0x0,0x0,0x0,0x1300,0x1300,0x0,0x1300,0x2b00c0,0x2b00c0,0x2b00c0,0x2b00c0,0x1300,0xc0000000,0x1300,0x300,0x300,0x0,0x4ff00,};
+	   jj_la1_0 = new int[] {0x2b10c0,0x2b10c0,0x0,0x0,0x0,0x2b00c0,0x0,0x1300,0x2b00c0,0x100,0x2b00c0,0x2b00c0,0x1300,0x2b00c0,0x1300,0x2b0080,0x8000000,0x0,0x280000,0x280000,0x30080,0x8000000,0x4ff00,0x4ff00,0xf000,0x0,0x0,0x0,0x0,0x1300,0x1300,0x0,0x1300,0x2b00c0,0x2b00c0,0x2b00c0,0x2b00c0,0x1300,0xc0000000,0x1300,0x300,0x300,0x0,0x4ff00,};
 	}
 	private static void jj_la1_init_1() {
-	   jj_la1_1 = new int[] {0x10888211,0x10888211,0x400000,0x4000000,0x20000,0x80211,0x40000,0x0,0x80210,0x180,0x80210,0x80210,0x0,0x80210,0x0,0x0,0x0,0x0,0x0,0x0,0x4010000,0x0,0x4000000,0x0,0x0,0x0,0x0,0x0,0x0,0x2000000,0x0,0x80211,0x80211,0x80210,0x80210,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
+	   jj_la1_1 = new int[] {0x10888211,0x10888211,0x400000,0x4000000,0x20000,0x80211,0x40000,0x0,0x80210,0x180,0x80210,0x80210,0x0,0x80210,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x4010000,0x4010000,0x4000000,0x0,0x0,0x0,0x0,0x0,0x0,0x2000000,0x0,0x80211,0x80211,0x80210,0x80210,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
 	}
 	private static void jj_la1_init_2() {
-	   jj_la1_2 = new int[] {0x220b2,0x220b2,0x0,0x0,0x0,0x22002,0x0,0x20000,0x22002,0x0,0x22002,0x22002,0x20000,0x22002,0x20000,0x0,0x0,0x2002,0x2002,0x40,0x200b0,0x40,0x20000,0x104,0x40000,0xa0,0xb0,0x20000,0x20000,0x0,0x20000,0x22002,0x22002,0x22002,0x22002,0x20000,0x0,0x20000,0x0,0x0,0x200000,0x0,};
+	   jj_la1_2 = new int[] {0x4a0b2,0x4a0b2,0x0,0x0,0x0,0x4a002,0x0,0x40000,0x4a002,0x0,0x4a002,0x4a002,0x40000,0x4a002,0x40000,0xa002,0x40,0x40000,0x0,0x0,0xa002,0x40,0xb0,0xb0,0x40000,0x104,0x80000,0xa0,0xb0,0x40000,0x40000,0x0,0x40000,0x4a002,0x4a002,0x4a002,0x4a002,0x40000,0x0,0x40000,0x0,0x0,0x400000,0x0,};
 	}
 
   /** Constructor with InputStream. */
@@ -1300,7 +1347,7 @@ System.out.println("<SQUARE_RIGHT>: ");
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 42; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 44; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -1314,7 +1361,7 @@ System.out.println("<SQUARE_RIGHT>: ");
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 42; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 44; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -1331,7 +1378,7 @@ System.out.println("<SQUARE_RIGHT>: ");
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 42; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 44; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -1349,7 +1396,7 @@ System.out.println("<SQUARE_RIGHT>: ");
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 42; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 44; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -1365,7 +1412,7 @@ System.out.println("<SQUARE_RIGHT>: ");
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 42; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 44; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -1374,7 +1421,7 @@ System.out.println("<SQUARE_RIGHT>: ");
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 42; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 44; i++) jj_la1[i] = -1;
   }
 
   static private Token jj_consume_token(int kind) throws ParseException {
@@ -1425,12 +1472,12 @@ System.out.println("<SQUARE_RIGHT>: ");
   /** Generate ParseException. */
   static public ParseException generateParseException() {
 	 jj_expentries.clear();
-	 boolean[] la1tokens = new boolean[86];
+	 boolean[] la1tokens = new boolean[87];
 	 if (jj_kind >= 0) {
 	   la1tokens[jj_kind] = true;
 	   jj_kind = -1;
 	 }
-	 for (int i = 0; i < 42; i++) {
+	 for (int i = 0; i < 44; i++) {
 	   if (jj_la1[i] == jj_gen) {
 		 for (int j = 0; j < 32; j++) {
 		   if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -1445,7 +1492,7 @@ System.out.println("<SQUARE_RIGHT>: ");
 		 }
 	   }
 	 }
-	 for (int i = 0; i < 86; i++) {
+	 for (int i = 0; i < 87; i++) {
 	   if (la1tokens[i]) {
 		 jj_expentry = new int[1];
 		 jj_expentry[0] = i;
