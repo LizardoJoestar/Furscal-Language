@@ -1,16 +1,22 @@
 <START> ::= <EXPRESSION>* <EOF>
 
 <EXPRESSION> ::= 
+    // Furscal instructions
     <IMPORTS>
     | <INST_CLASS>
     | <INST_FUNCTION>
     | <INST_LOOP>
     | <INST_CHECK>
-    | <INST_OBJECT>
-    | <INST_COMPLEX>
-    | <INST_ASSIGN>
+    | <INST_ID> // this stores more non-terminal rules
     | <INST_SHOW>
     | <COMMENT>
+    // Non-Furscal instructions
+    | <MATH_REFERENCE>
+    | <ARRAY_JS>
+    | <INDEX_SMALLTALK>
+
+
+// Furscal instructions
 
 <IMPORTS> ::= <FROM> <ID> ( <REQUIRE> <ID> )? <LINE_END>
 
@@ -55,8 +61,6 @@
     <BRACKET_LEFT> ( <BLOCK> )? <BRACKET_RIGHT> <LINE_END>
 
 <INST_OBJECT> ::=
-    <ID>
-    <ASSIGN>
     <OBJECT_DECLARE>
     <ID>
     <PARENTHESIS_LEFT>
@@ -64,28 +68,50 @@
     <PARENTHESIS_RIGHT>
     <LINE_END>
 
-<INST_COMPLEX> ::= 
+{% comment %} <INST_COMPLEX> ::= 
     <COMPLEX> 
     <ID> 
     <ASSIGN> 
     ( <COMPLEX_DEF> )
+    <LINE_END> {% endcomment %}
+
+<INST_ID> ::=
+    <INST_TAGS>
+    <ID>
+    <INST_ASSIGN>
+    <PROPERTY_ALT>
     <LINE_END>
 
-<INST_ASSIGN> ::=
-    ( <GLOBAL> | <CONSTANT> )?
-    ( <TYPE> | <ARR> | <MATRIX> | <SET> )
-    <ID>
-    ( <ASSIGN> | <ASSIGN_OPERATORS> )
+
+<INST_TAGS> ::=
     (
-        <TYPE_DEF>
-        | <ID>
-    )
-    <LINE_END>
+        ( <GLOBAL> | <CONSTANT> )?
+        ( <TYPE> | <ARR> | <MATRIX> | <SET> | <COMPLEX> )?
+    )?
+
+<INST_ASSIGN> ::=    
+    (
+        ( <ASSIGN> | <ASSIGN_OPERATORS> )
+        (
+            <TYPE_DEF>
+            | <ID> <PROPERTY_ALT>
+            | <COMPLEX_DEF>
+            | <INST_OBJECT>
+            | <MATH_REFERENCE>
+        )
+    )?
 
 <INST_SHOW> ::= 
     <SHOW> 
     <PARENTHESIS_LEFT> 
-    ( <ID>  | <STRING_DEF> | <DATE_DEF> | <TIME_DEF> | <DATETIME_DEF> | ( <COMPLEX_DEF> <INST_COMPLEX_FUNC> ) ) 
+    ( 
+        <ID> <PROPERTY_COMPLEX_FUNC> 
+        | <STRING_DEF> 
+        | <DATE_DEF> 
+        | <TIME_DEF> 
+        | <DATETIME_DEF> 
+        | ( <COMPLEX_DEF> <PROPERTY_COMPLEX_FUNC> ) 
+    ) 
     <PARENTHESIS_RIGHT> 
     <LINE_END>
 
@@ -102,11 +128,9 @@
 
 <BLOCK_CLASS> ::=
     (
-        <INST_ASSIGN>
+        <INST_ID>
         | <INST_LOOP>
         | <INST_CHECK>
-        | <INST_OBJECT>
-        | <INST_COMPLEX>
         | <INST_FUNCTION>
         | <INST_SHOW>
         | <COMMENT>
@@ -118,11 +142,9 @@
 
 <BLOCK> ::= 
     (
-        <INST_ASSIGN>
+        <INST_ID>
         | <INST_LOOP>
         | <INST_CHECK>
-        | <INST_OBJECT>
-        | <INST_COMPLEX>
         | <INST_SHOW>
         | <COMMENT>
     )+
@@ -146,14 +168,76 @@
     )?
 
 
+
+// Non-Furscal instructions
+
+// Python:
+<MATH_REFERENCE> ::=
+    <MATH_CONSTANTS> (<LINE_END>)?
+    |
+    (
+        <ARITHMETIC_FUNCTIONS>
+        |
+        <TRIG_FUNCTIONS>
+    )
+    (
+        <PARENTHESIS_LEFT>
+        <ARGS>
+        <PARENTHESIS_RIGHT>
+        (<LINE_END>)?
+    )
+
+// Python:
+<INST_SET_OPS> ::=
+    <SET_OPERATIONS>
+    <PARENTHESIS_LEFT>
+    <ID>
+    ","
+    <ID>
+    <PARENTHESIS_RIGHT>
+
+// Javascript:
+<ARRAY_JS> ::=
+    <BRACKET_LEFT>
+    (<ARGS>)?
+    <BRACKET_RIGHT>
+    <LINE_END>
+
+// Javascript
+<ARR_FUNCS_JS> ::=
+    <ARRMETHODS>
+    <PARENTHESIS_LEFT>
+    <PARENTHESIS_RIGHT>
+
+// Smalltalk
+<INDEX_SMALLTALK> ::=
+    <STRING_DEF>
+    "indexOf:"
+    <CHAR_DEF>
+    "startingAt:"
+    <INT_DEF>
+
+// General
+<PROPERTY_ALT> ::=
+    (
+        "."
+        (
+            <INST_SET_OPS>
+            | <ARR_FUNCS_JS>
+        )
+    )?
+
 // For future consideration: A 'Properties' rule, of the form ':<property>'
 <PROPERTY> ::=
     (
-        ( ":" <COMPLEX_FUNCTIONS> )
-        |
-        ( ":" <...>)
-        |
-        ( ":" <...>)
-        |
-        ...
+        ":"
+        (
+            <COMPLEX_FUNCTIONS>
+            |
+            <...>
+            |
+            <...>
+            |
+            ...
+        )
     )?

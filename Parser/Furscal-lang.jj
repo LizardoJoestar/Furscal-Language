@@ -685,18 +685,23 @@ void Expression() :
 {}
 {
   // "Term_" functions are terminals, every other function are non-terminals
+  // Furscal instructions
   Imports()
   | Inst_Class()
   | Inst_Function()
   | Inst_Loop()
   | Inst_Check()
-  | Inst_Object()
-  | Inst_Complex()
-  | Inst_Assign()
+  | Inst_ID() // this stores more non-terminal rules & non-furscal rules
   | Inst_Show()
   | Term_Comment()
+  // Non-Furscal instructions
+  | Math_Reference() Term_LineEnd()
+  | Array_JS()
+  | Index_Smalltalk()
 }
 
+
+// Furscal instructions
 void Imports() :
 {}
 {
@@ -804,52 +809,57 @@ void Inst_Check() :
 void Inst_Object() :
 {}
 {
-  Term_ID()
-  Term_Assign()
   Term_ObjDeclare()
   Term_ID()
   Term_ParLeft()
   ( Args() )?
   Term_ParRight()
+}
+
+void Inst_ID() :
+{}
+{
+  Inst_Tags()
+  Term_ID()
+  Inst_Assign()
+  Property_Alt() // this stores non-furscal rules
   Term_LineEnd()
 }
 
-void Inst_Complex() :
+void Inst_Tags() :
 {}
 {
-  Term_Complex()
-  Term_ID()
-  Term_Assign()
   (
-    Complex_Def()
-  )
-  Term_LineEnd()
+    (
+      Term_Global()
+      | Term_Const()
+    )?
+    (
+      Term_Type()
+      | Term_Arr()
+      | Term_Matrix()
+      | Term_Set()
+      | Term_Complex()
+    )
+  )?
 }
 
 void Inst_Assign() :
 {}
 {
   (
-    Term_Global()
-    |
-    Term_Const()
+    (
+      Term_Assign()
+      | Term_AssignOp()
+    )
+    (
+      Type_Def()
+      | Term_ID() Property_Alt() // Property_Alt includes non-Furscal rules
+      | Complex_Def()
+      | Inst_Object()
+      | Math_Reference()
+    )
   )?
-  (
-    Term_Type()
-    | Term_Arr()
-    | Term_Matrix()
-    | Term_Set()
-  )
-  Term_ID()
-  (
-    Term_Assign()
-    | Term_AssignOp()
-  )
-  (
-    Type_Def()
-    | Term_ID()
-  )
-  Term_LineEnd()
 }
 
 void Inst_Show() :
@@ -868,6 +878,83 @@ void Inst_Show() :
   Term_ParRight()
   Term_LineEnd()
 }
+
+
+// Non-Furscal instructions
+
+// General
+void Property_Alt() :
+{}
+{
+  (
+    "."
+    ( 
+      Inst_Set_Ops() 
+      | Arr_Funcs_JS() 
+    )
+  )?
+}
+
+// Python
+void Math_Reference() :
+{}
+{
+    Term_Math_Const()
+    |
+    (
+      Term_Arithmetic_Func()
+      |
+      Term_Trig_Func()
+    )
+    (
+      Term_ParLeft()
+      Args()
+      Term_ParRight()
+    )
+}
+
+// Python
+void Inst_Set_Ops() :
+{}
+{
+  Term_Set_Ops()
+  Term_ParLeft()
+  Term_ID()
+  ","
+  Term_ID()
+  Term_ParRight()
+}
+
+// Javascript
+void Array_JS() :
+{}
+{
+  Term_SquareLeft()
+  (Args())?
+  Term_SquareRight()
+  Term_LineEnd()
+}
+
+// Javascript
+void Arr_Funcs_JS() :
+{}
+{
+  Term_Arr_Func()
+  Term_ParLeft()
+  Term_ParRight()
+}
+
+// Smalltalk
+void Index_Smalltalk() :
+{}
+{
+  Term_StrDef()
+  "indexOf:"
+  Term_CharDef()
+  "startingAt:"
+  Term_IntDef()
+}
+
 
 
 
@@ -897,11 +984,9 @@ void Block_Class() :
 {}
 {
   (
-    Inst_Assign()
+    Inst_ID()
     | Inst_Loop()
     | Inst_Check()
-    | Inst_Object()
-    | Inst_Complex()
     | Inst_Function() // Included in Block_Class
     | Inst_Show()
     | Term_Comment()
@@ -912,11 +997,9 @@ void Block() :
 {}
 {
   (
-    Inst_Assign()
+    Inst_ID()
     | Inst_Loop()
     | Inst_Check()
-    | Inst_Object()
-    | Inst_Complex()
     | Inst_Show()
     | Term_Comment()
   )+
@@ -1375,4 +1458,67 @@ void Term_Show() :
 {
   t = <SHOW>
   { System.out.println("<SHOW>: " + t.image); }
+}
+
+void Term_Math_Const() :
+{
+  Token t;
+}
+{
+  t = <MATH_CONSTANTS>
+  { System.out.println("<MATH_CONSTANTS>: " + t.image); }
+}
+
+void Term_Arithmetic_Func() :
+{
+  Token t;
+}
+{
+  t = <ARITHMETIC_FUNCTIONS>
+  { System.out.println("<ARITHMETIC_FUNCTIONS>: " + t.image); }
+}
+
+void Term_Trig_Func() :
+{
+  Token t;
+}
+{
+  t = <TRIG_FUNCTIONS>
+  { System.out.println("<TRIG_FUNCTIONS>: " + t.image); }  
+}
+
+void Term_Set_Ops() :
+{
+  Token t;
+}
+{
+  t = <SET_OPERATIONS>
+  { System.out.println("<SET_OPERATIONS>: " + t.image); }    
+}
+
+void Term_Arr_Func() :
+{
+  Token t;
+}
+{
+  t = <ARRMETHODS>
+  { System.out.println("<ARRMETHODS>: " + t.image); }    
+}
+
+void Term_SquareLeft() :
+{
+  Token t;
+}
+{
+  t = <SQUARE_LEFT>
+  { System.out.println("<SQUARE_LEFT>: "); }    
+}
+
+void Term_SquareRight() :
+{
+  Token t;
+}
+{
+  t = <SQUARE_RIGHT>
+  { System.out.println("<SQUARE_RIGHT>: "); }    
 }

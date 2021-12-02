@@ -1,3 +1,5 @@
+/* FURSCAL INSTRUCTIONS */
+
 /* Functions */
 
 def AddPlusTwo('hey', 'y')
@@ -80,3 +82,23 @@ complex a := (5,3);
 print((5,3));
 print(a:real);
 print((5,3):imaginary);
+
+
+/* NON-FURSCAL INSTRUCTIONS */
+
+/* Python */
+Math.sin(2);
+Math.log(14);
+a := Math.E;
+
+/* Python */
+z := x.union(y, x);
+
+/* Javascript */
+['Banana', 'Orange', 'Apple', 'Mango'];
+
+/* Javascript */
+fruits.pop();
+
+/* Smalltalk */
+'hello world' indexOf: $o startingAt: 6

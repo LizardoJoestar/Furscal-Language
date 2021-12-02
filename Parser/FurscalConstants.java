@@ -248,6 +248,9 @@ public interface FurscalConstants {
     "<DIGIT>",
     "<LETTER>",
     "<ID>",
+    "\".\"",
+    "\"indexOf:\"",
+    "\"startingAt:\"",
     "\":\"",
   };
 
