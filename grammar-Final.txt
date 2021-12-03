@@ -68,29 +68,21 @@
     <PARENTHESIS_RIGHT>
     <LINE_END>
 
-{% comment %} <INST_COMPLEX> ::= 
-    <COMPLEX> 
-    <ID> 
-    <ASSIGN> 
-    ( <COMPLEX_DEF> )
-    <LINE_END> {% endcomment %}
-
 <INST_ID> ::=
-    <INST_TAGS>
-    <ID>
-    <INST_ASSIGN>
-    <PROPERTY_ALT>
+    (
+        ( <INST_TAGS> )?
+        <ID> <PROPERTY_ALT>
+        ( <INST_ASSIGN> )?
+        ( <ID> <PROPERTY_ALT> )?
+    )
     <LINE_END>
-
+            
 
 <INST_TAGS> ::=
-    (
         ( <GLOBAL> | <CONSTANT> )?
-        ( <TYPE> | <ARR> | <MATRIX> | <SET> | <COMPLEX> )?
-    )?
+        ( <TYPE> | <ARR> | <MATRIX> | <SET> | <COMPLEX> | <OBJECT> )
 
 <INST_ASSIGN> ::=    
-    (
         ( <ASSIGN> | <ASSIGN_OPERATORS> )
         (
             <TYPE_DEF>
@@ -98,8 +90,7 @@
             | <COMPLEX_DEF>
             | <INST_OBJECT>
             | <MATH_REFERENCE>
-        )
-    )?
+        )?
 
 <INST_SHOW> ::= 
     <SHOW> 
