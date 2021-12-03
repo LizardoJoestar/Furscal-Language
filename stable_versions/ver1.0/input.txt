@@ -1,0 +1,109 @@
+/* FURSCAL INSTRUCTIONS */
+
+/* Functions */
+
+def AddPlusTwo('hey', 'y')
+{
+    global int x := 6;
+    const decimal y := 8.9f;
+};
+
+
+/* Loops */
+
+perform 5 times
+{
+    print('y');
+};
+
+perform with test before until ( counter == 5 )
+{
+    show('y');
+};
+
+perform with test after until ( i > 10 )
+{
+    echo(x);
+};
+
+
+/* Checking and On Error */
+
+check
+{
+    print(x);
+}
+onError(x)
+{
+    print(y);
+};
+
+
+/* Show */
+
+print(counter);
+show(counter);
+echo(counter);
+display(counter);
+
+
+/* Class definition */
+
+class Animal
+{
+    self int x := 5;
+    self int y := 10;
+
+    print('g');
+};
+
+class Mammal(Animal)
+{
+    pass;
+};
+
+
+/* Objects */
+
+obj raccoon := summon Animal();
+
+obj raccoon := summon Animal(3,7);
+
+
+/* Importing modules */
+
+from graphic2d;
+from graphic2d require lin_interpol;
+
+
+/* Complex numbers */
+
+complex a := (5,3);
+print((5,3));
+print(a:real);
+print((5,3):imaginary);
+
+/* Assign statements */
+int x := y.pop();
+y.pop();
+
+
+
+/* NON-FURSCAL INSTRUCTIONS */
+
+/* Python */
+Math.sin(2);
+Math.log(14);
+a := Math.E;
+
+/* Python */
+z := x.union(y, x);
+
+/* Javascript */
+['Banana', 'Orange', 'Apple', 'Mango'];
+
+/* Javascript */
+fruits.pop();
+
+/* Smalltalk */
+'hello world' indexOf: $o startingAt: 6
