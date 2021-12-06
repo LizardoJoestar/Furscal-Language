@@ -107,3 +107,52 @@ fruits.pop();
 
 /* Smalltalk */
 'hello world' indexOf: $o startingAt: 6
+
+/* Smalltalk */
+[:x | show(counter); ] 
+
+/* Smalltalk */
+(result) := a > b
+    ifTrue:[ show(counter); ]
+    ifFalse:[ show(counter); ]
+
+/* Visual Basic .NET */
+Function Multiply(a,b) As int
+    print(a);
+    Return b
+End Function
+
+/* Visual Basic .NET */
+Module Module1
+	print('Hello World');
+End Module
+
+/* Visual Basic .NET */
+Sub Instruction1()
+	print('Hello World');
+End Sub
+
+/* BASIC (unstructured) */
+PRINT 'Hello World'
+END 
+
+/* BASIC (unstructured) */
+LET N := 10
+FOR K := 1 TO N
+print('Hello World');
+NEXT K
+END 
+
+/* BASIC (unstructured) */
+INPUT 'How much do you love me, Little Star?' ; U$
+INPUT 'How many fingers do you see?:' ; K
+
+/* Fortran */
+do K := 10, stop 100
+	print(K);
+end do
+
+/* Fortran */
+if (a>b) then 
+	print('Hello World');
+end if

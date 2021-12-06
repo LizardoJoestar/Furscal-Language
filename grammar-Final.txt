@@ -12,7 +12,7 @@
     | <COMMENT>
     // Non-Furscal instructions
     | <MATH_REFERENCE>
-    | <ARRAY_JS>
+    | <SQUARE_ENTRY>
     | <INDEX_SMALLTALK>
 
 
@@ -189,9 +189,8 @@
 
 // Javascript:
 <ARRAY_JS> ::=
-    <BRACKET_LEFT>
     (<ARGS>)?
-    <BRACKET_RIGHT>
+    <SQUARE_RIGHT>
     <LINE_END>
 
 // Javascript
@@ -208,6 +207,117 @@
     "startingAt:"
     <INT_DEF>
 
+// Smalltalk
+<ANON_FUNC_SMALLTALK> ::=
+    ":" <ARGS>
+    "|"
+    <BLOCK>
+    <SQUARE_RIGHT>
+
+// Smalltalk
+<QUESTION_SMALLTALK> ::=
+    <PARENTHESIS_LEFT>
+    <ID> 
+    <PARENTHESIS_RIGHT>
+    <ASSIGN> 
+    <CONDITION>
+    "ifTrue:"
+    <SQUARE_LEFT>
+    <BLOCK>
+    <SQUARE_RIGHT>
+    "ifFalse:"
+    <SQUARE_LEFT>
+    <BLOCK>
+    <SQUARE_RIGHT>
+
+// Visual Basic .NET
+<INST_FUNCTION_VB> ::=
+    "Function "
+    <ID>
+    <PARENTHESIS_LEFT>
+    (<ARGS>)?
+    <PARENTHESIS_RIGHT>
+    ( "As " <TYPE> )?
+    <BLOCK>
+    "Return " <ID>
+    "End Function"
+
+// Visual Basic .NET
+<INST_MODULE_VB> ::=
+    "Module " 
+    <ID>
+    <BLOCK>
+    "End Module"
+
+// Visal Basic .NET
+<INST_SUB_VB> ::=
+    "Sub "
+    <ID>
+    <PARENTHESIS_LEFT>
+    (<ARGS>)?
+    <PARENTHESIS_RIGHT>
+    <BLOCK>
+    "End Sub"
+
+// BASIC (unstructered)
+<PRINT_BASIC> ::=
+    "PRINT "
+    <STRING_DEF>
+    ( "END " )?
+
+// BASIC (unstructered)
+<LOOP_BASIC> ::=
+    "LET " 
+    <ID> 
+    <ASSIGN> 
+    <INT_DEF>
+    "FOR "
+    <ID>
+    <ASSIGN>
+    <INT_DEF>
+    "TO "
+    (<ID> | <INT_DEF>)
+    <BLOCK>
+    "NEXT "
+    <ID>
+    ( "END " )?
+
+        
+// BASIC (unstructered)
+<INPUT_BASIC> ::=
+    "INPUT "
+    ( <STRING_DEF> )?
+    <LINE_END>
+    ( "U$" | <ID> )
+
+// Fortran
+<DO_LOOP_FORTRAN> ::=
+    "do "
+    <ID>
+    <ASSIGN>
+    <INT_DEF>
+    ","
+    "stop "
+    <INT_DEF>
+    <BLOCK>
+    "end do"
+
+// Fortran
+<QUESTION_FORTRAN> ::=
+    ( <ID> ":" )?
+    "if "
+    <PARENTHESIS_LEFT>
+    <CONDITION>
+    <PARENTHESIS_RIGHT>
+    "then "
+    <BLOCK>
+    "end if"
+    ( <ID> )?
+
+
+
+
+
 // General
 <PROPERTY_ALT> ::=
     (
@@ -217,6 +327,14 @@
             | <ARR_FUNCS_JS>
         )
     )?
+
+// General (because Array_JS and Anon_Func_Smalltalk have a common initial symbol)
+<SQUARE_ENTRY> ::=
+    <SQUARE_LEFT>
+    ( <ARRAY_JS> | <ANON_FUNC_SMALLTALK> )
+
+
+
 
 // For future consideration: A 'Properties' rule, of the form ':<property>'
 <PROPERTY> ::=

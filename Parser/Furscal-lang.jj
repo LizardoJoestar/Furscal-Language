@@ -9,6 +9,8 @@ import java.util.List;
 
 public class Furscal 
 {
+  public static ArrayList<String> ID_list = new ArrayList<String>();
+
   /** Main entry point. */
   public static void main(String args[]) throws ParseException, TokenMgrError 
   {
@@ -564,6 +566,30 @@ TOKEN :
   < OBJECT : "obj" >
 }
 
+// TOKEN :
+// {
+//   // Non-Furscal keywords. Cannot have them in separate tokens, otherwise java compiler will
+//   // give a 'too big to compile' error if there are too many tokens (max about 200 words)
+//   <NON_FURSCAL_KW :
+//   "TO"
+//   | "if"
+//   | "do"
+//   | "As"
+//   | "END"
+//   | "FOR"
+//   | "LET"
+//   | "Sub"
+//   | "NEXT"
+//   | "then"
+//   | "stop"
+//   | "PRINT"
+//   | "INPUT"
+//   | "Module"
+//   | "Return"
+//   | "Function"
+//   >
+// }
+
 /** These extra tokens, if added, generate error "code too large"
  * when compiling java files with javac
  */
@@ -676,9 +702,7 @@ TOKEN :
 /** Root production. */
 
 void Start() :
-{
-  // ArrayList<String> ID_list = new ArrayList<String>();
-}
+{}
 {
   (
     Expression()
@@ -696,13 +720,22 @@ void Expression() :
   | Inst_Function()
   | Inst_Loop()
   | Inst_Check()
-  | Inst_ID() // this stores more non-terminal rules & non-furscal rules
+  | Inst_ID() // this stores several non-terminals rules & non-furscal rules
   | Inst_Show()
   | Term_Comment()
   // Non-Furscal instructions
   | Math_Reference() Term_LineEnd()
-  | Array_JS()
+  | Square_Entry() // Contains 2 non-Furscal rules
+  | Question_Smalltalk()
   | Index_Smalltalk()
+  | Inst_Function_VB()
+  | Inst_Module_VB()
+  | Inst_Sub_VB()
+  | Print_BASIC()
+  | Loop_Basic()
+  | Input_BASIC()
+  | Do_Loop_Fortran()
+  | Question_Fortran()
 }
 
 
@@ -864,7 +897,7 @@ void Inst_Assign() :
       Type_Def()
       | Complex_Def()
       | Inst_Object()
-      | Math_Reference()
+      | Math_Reference() // non-Furscal rule
     )?
 }
 
@@ -901,6 +934,16 @@ void Property_Alt() :
   )?
 }
 
+// General (because Array_JS and Anon_Func_Smalltalk have a common initial symbol)
+void Square_Entry() :
+{}
+{
+  Term_SquareLeft()
+  ( Array_JS() | Anon_Func_Smalltalk() )
+}
+
+
+
 // Python
 void Math_Reference() :
 {}
@@ -935,7 +978,7 @@ void Inst_Set_Ops() :
 void Array_JS() :
 {}
 {
-  Term_SquareLeft()
+  // Term_SquareLeft()
   (Args())?
   Term_SquareRight()
   Term_LineEnd()
@@ -961,10 +1004,137 @@ void Index_Smalltalk() :
   Term_IntDef()
 }
 
+// Smalltalk
+void Anon_Func_Smalltalk() :
+{}
+{
+  // Term_SquareLeft()
+  ":" Args()
+  "|"
+  Block()
+  Term_SquareRight()
+}
+
+// Smalltalk
+void Question_Smalltalk() :
+{}
+{
+  Term_ParLeft()
+  Term_ID()
+  Term_ParRight()
+  Term_Assign()
+  Condition()
+  "ifTrue:"
+  Term_SquareLeft()
+  Block()
+  Term_SquareRight()
+  "ifFalse:"
+  Term_SquareLeft()
+  Block()
+  Term_SquareRight()
+}
+
+// Visual Basic .NET
+void Inst_Function_VB() :
+{}
+{
+  "Function "
+  Term_ID()
+  Term_ParLeft()
+  ( Args() )?
+  Term_ParRight()
+  ( "As " Term_Type() )?
+  Block()
+  "Return " Term_ID()
+  "End Function"
+}
+
+// Visual Basic .NET
+void Inst_Module_VB() :
+{}
+{
+  "Module "
+  Term_ID()
+  Block()
+  "End Module"
+}
+
+// Visual Basic .NET
+void Inst_Sub_VB() :
+{}
+{
+  "Sub "
+  Term_ID()
+  Term_ParLeft()
+  ( Args() )?
+  Term_ParRight()
+  Block()
+  "End Sub"
+}
+
+// BASIC (unstructured)
+void Print_BASIC() :
+{}
+{
+  "PRINT "
+  Term_StrDef()
+  ( "END " )?
+}
+
+// BASIC (unstructured)
+void Loop_Basic() :
+{}
+{
+  "LET " Term_ID() Term_Assign() Term_IntDef()
+  "FOR " Term_ID() Term_Assign() Term_IntDef()
+  "TO " ( Term_IntDef() | Term_ID() )
+  Block()
+  "NEXT " Term_ID()
+  ( "END " )?
+} 
+
+// BASIC (unstructured)
+void Input_BASIC() :
+{}
+{
+  "INPUT "
+  ( Term_StrDef() )?
+  Term_LineEnd()
+  ( "U$" | Term_ID() )
+}
+
+// Fortran
+void Do_Loop_Fortran() :
+{}
+{
+  "do "
+  Term_ID()
+  Term_Assign()
+  Term_IntDef()
+  ","
+  "stop "
+  Term_IntDef()
+  Block()
+  "end do"
+}
+
+// Fortran
+void Question_Fortran() :
+{}
+{
+  // ( Term_ID() ":" )?
+  "if "
+  Term_ParLeft()
+  Condition()
+  Term_ParRight()
+  "then "
+  Block()
+  "end if"
+  // ( Term_ID() )?
+}
 
 
-
-// Special non-terminals, for ease of maintenance and understanding
+// Special (auxiliary) non-terminals, for ease of maintenance and understanding
 
 void Args() :
 {}
@@ -1085,7 +1255,7 @@ void Term_Comment() :
 }
 {
   t = <COMMENT>
-  { System.out.println("<COMMENT>: "); }
+  { System.out.println("<COMMENT>: \t\t\t" + t.image); }
 }
 
 void Term_From() :
@@ -1103,7 +1273,17 @@ void Term_ID() :
 }
 {
   t = <ID>
-  { System.out.println("<ID>: "); }
+  { 
+    if(ID_list.contains(t.image) == false)
+    {
+      ID_list.add(t.image);
+      System.out.println("<ID>:\t\t\t\t" + "(" + ID_list.indexOf(t.image) + ")");
+    }
+    else
+    {
+      System.out.println("<ID>:\t\t\t\t" + "(" + ID_list.indexOf(t.image) + ")");
+    }
+  }
 }
 
 void Term_Require() :
@@ -1184,7 +1364,7 @@ void Term_Type() :
 }
 {
   t = <TYPE>
-  { System.out.println("<TYPE>: " + t.image); }
+  { System.out.println("<TYPE>: \t\t\t" + t.image); }
 }
 
 void Term_Assign() :
@@ -1292,7 +1472,7 @@ void Term_RelOp() :
 }
 {
   t = <RELATIONALOPERATOR>
-  { System.out.println("<RELATIONALOPERATOR>: "); }
+  { System.out.println("<RELATIONALOPERATOR>: \t\t" + t.image); }
 }
 
 void Term_LogicOp() :
@@ -1301,7 +1481,7 @@ void Term_LogicOp() :
 }
 {
   t = <LOGICALOPERATOR>
-  { System.out.println("<LOGICALOPERATOR>: "); }
+  { System.out.println("<LOGICALOPERATOR>: \t\t\t" + t.image); }
 }
 
 void Term_Check() :
@@ -1346,7 +1526,7 @@ void Term_ComplexFunc() :
 }
 {
   t = <COMPLEX_FUNCTIONS>
-  { System.out.println("<COMPLEX_FUNCTIONS>: " + t.image); }
+  { System.out.println("<COMPLEX_FUNCTIONS>: \t\t" + t.image); }
 }
 
 void Term_Global() :
@@ -1400,7 +1580,7 @@ void Term_AssignOp() :
 }
 {
   t = <ASSIGN_OPERATORS>
-  { System.out.println("<ASSIGN_OPERATORS>: " + t.image); }
+  { System.out.println("<ASSIGN_OPERATORS>: \t\t\t" + t.image); }
 }
 
 void Term_BoolDef() :
@@ -1463,7 +1643,7 @@ void Term_Show() :
 }
 {
   t = <SHOW>
-  { System.out.println("<SHOW>: " + t.image); }
+  { System.out.println("<SHOW>: \t\t\t" + t.image); }
 }
 
 void Term_Math_Const() :
@@ -1472,7 +1652,7 @@ void Term_Math_Const() :
 }
 {
   t = <MATH_CONSTANTS>
-  { System.out.println("<MATH_CONSTANTS>: " + t.image); }
+  { System.out.println("<MATH_CONSTANTS>: \t\t" + t.image); }
 }
 
 void Term_Arithmetic_Func() :
@@ -1481,7 +1661,7 @@ void Term_Arithmetic_Func() :
 }
 {
   t = <ARITHMETIC_FUNCTIONS>
-  { System.out.println("<ARITHMETIC_FUNCTIONS>: " + t.image); }
+  { System.out.println("<ARITHMETIC_FUNCTIONS>: \t" + t.image); }
 }
 
 void Term_Trig_Func() :
@@ -1490,7 +1670,7 @@ void Term_Trig_Func() :
 }
 {
   t = <TRIG_FUNCTIONS>
-  { System.out.println("<TRIG_FUNCTIONS>: " + t.image); }  
+  { System.out.println("<TRIG_FUNCTIONS>: \t\t" + t.image); }  
 }
 
 void Term_Set_Ops() :
@@ -1499,7 +1679,7 @@ void Term_Set_Ops() :
 }
 {
   t = <SET_OPERATIONS>
-  { System.out.println("<SET_OPERATIONS>: " + t.image); }    
+  { System.out.println("<SET_OPERATIONS>: \t\t" + t.image); }    
 }
 
 void Term_Arr_Func() :
@@ -1508,7 +1688,7 @@ void Term_Arr_Func() :
 }
 {
   t = <ARRMETHODS>
-  { System.out.println("<ARRMETHODS>: " + t.image); }    
+  { System.out.println("<ARRMETHODS>: \t\t\t" + t.image); }    
 }
 
 void Term_SquareLeft() :
