@@ -1,0 +1,352 @@
+<START> ::= <EXPRESSION>* <EOF>
+
+<EXPRESSION> ::= 
+    // Furscal instructions
+    <IMPORTS>
+    | <INST_CLASS>
+    | <INST_FUNCTION>
+    | <INST_LOOP>
+    | <INST_CHECK>
+    | <INST_ID> // this stores more non-terminal rules
+    | <INST_SHOW>
+    | <COMMENT>
+    // Non-Furscal instructions
+    | <MATH_REFERENCE>
+    | <SQUARE_ENTRY>
+    | <INDEX_SMALLTALK>
+
+
+// Furscal instructions
+
+<IMPORTS> ::= <FROM> <ID> ( <REQUIRE> <ID> )? <LINE_END>
+
+<INST_CLASS> ::= 
+    <CLASS_DECLARE> <ID>
+    ( <PARENTHESIS_LEFT> <ID> <PARENTHESIS_RIGHT> )?
+    <BRACKET_LEFT>
+    (
+        (<PASS_ALL> <LINE_END>)
+        |
+        (
+            ( <SELF> <TYPE> <ID> <ASSIGN> <TYPE_DEF> <LINE_END> )*
+            ( <BLOCK_CLASS> )?
+        )
+    )
+    <BRACKET_RIGHT>
+    <LINE_END>
+
+<INST_FUNCTION> ::= 
+    <FUNCTION_DECLARE> 
+    <ID> 
+    <PARENTHESIS_LEFT> 
+    ( <ARGS> )?
+    <PARENTHESIS_RIGHT> 
+    <BRACKET_LEFT> 
+    ( <BLOCK> )? 
+    <BRACKET_RIGHT> 
+    <LINE_END>
+
+<INST_LOOP> ::= 
+    <LOOP> 
+    ( 
+        <INT_DEF> <LOOPCOUNTER> 
+        | <LOOPTESTBEFORE> <LOOPUNTIL> <PARENTHESIS_LEFT> <CONDITION> <PARENTHESIS_RIGHT> 
+        | <LOOPTESTAFTER> <LOOPUNTIL> <PARENTHESIS_LEFT> <CONDITION> <PARENTHESIS_RIGHT> 
+    ) 
+    <BRACKET_LEFT> ( <BLOCK> )? <BRACKET_RIGHT> <LINE_END>
+
+<INST_CHECK> ::= 
+    <CHECK> <BRACKET_LEFT> ( <BLOCK> )? BRACKET_RIGHT> 
+    <ONERROR> <PARENTHESIS_LEFT> ( <ARGS> )? <PARENTHESIS_RIGHT> 
+    <BRACKET_LEFT> ( <BLOCK> )? <BRACKET_RIGHT> <LINE_END>
+
+<INST_OBJECT> ::=
+    <OBJECT_DECLARE>
+    <ID>
+    <PARENTHESIS_LEFT>
+    ( <ARGS> )?
+    <PARENTHESIS_RIGHT>
+    <LINE_END>
+
+<INST_ID> ::=
+    (
+        ( <INST_TAGS> )?
+        <ID> <PROPERTY_ALT>
+        ( <INST_ASSIGN> )?
+        ( <ID> <PROPERTY_ALT> )?
+    )
+    <LINE_END>
+            
+
+<INST_TAGS> ::=
+        ( <GLOBAL> | <CONSTANT> )?
+        ( <TYPE> | <ARR> | <MATRIX> | <SET> | <COMPLEX> | <OBJECT> )
+
+<INST_ASSIGN> ::=    
+        ( <ASSIGN> | <ASSIGN_OPERATORS> )
+        (
+            <TYPE_DEF>
+            | <ID> <PROPERTY_ALT>
+            | <COMPLEX_DEF>
+            | <INST_OBJECT>
+            | <MATH_REFERENCE>
+        )?
+
+<INST_SHOW> ::= 
+    <SHOW> 
+    <PARENTHESIS_LEFT> 
+    ( 
+        <ID> <PROPERTY_COMPLEX_FUNC> 
+        | <STRING_DEF> 
+        | <DATE_DEF> 
+        | <TIME_DEF> 
+        | <DATETIME_DEF> 
+        | ( <COMPLEX_DEF> <PROPERTY_COMPLEX_FUNC> ) 
+    ) 
+    <PARENTHESIS_RIGHT> 
+    <LINE_END>
+
+<TYPE_DEF> ::= 
+    <INT_DEF> 
+    | <DECIMAL_DEF> 
+    | <BOOL_DEF> 
+    | <CHAR_DEF> 
+    | <STRING_DEF> 
+    | <DATE_DEF> 
+    | <TIME_DEF> 
+    | <DATETIME_DEF> 
+    | <ARRAYSET_DEF>
+
+<BLOCK_CLASS> ::=
+    (
+        <INST_ID>
+        | <INST_LOOP>
+        | <INST_CHECK>
+        | <INST_FUNCTION>
+        | <INST_SHOW>
+        | <COMMENT>
+    )+
+
+<ARGS> ::= 
+    ( <ID> | <INT_DEF> | <DECIMAL_DEF> | <STRING_DEF> ) 
+    ( "," ( <ID> | <INT_DEF> | <DECIMAL_DEF> | <STRING_DEF> ) )*
+
+<BLOCK> ::= 
+    (
+        <INST_ID>
+        | <INST_LOOP>
+        | <INST_CHECK>
+        | <INST_SHOW>
+        | <COMMENT>
+    )+
+
+<CONDITION> ::=
+    (<INT_DEF>|<DECIMAL_DEF>|<ID>|<STRING_DEF>) 
+    (<RELATIONAL_OPERATOR>|<LOGICAL_OPERATOR>) 
+    (<INT_DEF>|<DECIMAL_DEF>|<ID>|<STRING_DEF>)
+
+<COMPLEX_DEF> ::= 
+    <PARENTHESIS_LEFT>
+    ( <INT_DEF> | <DECIMAL_DEF> )
+    ","
+    ( <INT_DEF> | <DECIMAL_DEF> )
+    <PARENTHESIS_RIGHT>
+
+<PROPERTY_COMPLEX_FUNC> ::= 
+    (
+        ":"
+        <COMPLEX_FUNCTIONS>
+    )?
+
+
+
+// Non-Furscal instructions
+
+// Python:
+<MATH_REFERENCE> ::=
+    <MATH_CONSTANTS> (<LINE_END>)?
+    |
+    (
+        <ARITHMETIC_FUNCTIONS>
+        |
+        <TRIG_FUNCTIONS>
+    )
+    (
+        <PARENTHESIS_LEFT>
+        <ARGS>
+        <PARENTHESIS_RIGHT>
+        (<LINE_END>)?
+    )
+
+// Python:
+<INST_SET_OPS> ::=
+    <SET_OPERATIONS>
+    <PARENTHESIS_LEFT>
+    <ID>
+    ","
+    <ID>
+    <PARENTHESIS_RIGHT>
+
+// Javascript:
+<ARRAY_JS> ::=
+    (<ARGS>)?
+    <SQUARE_RIGHT>
+    <LINE_END>
+
+// Javascript
+<ARR_FUNCS_JS> ::=
+    <ARRMETHODS>
+    <PARENTHESIS_LEFT>
+    <PARENTHESIS_RIGHT>
+
+// Smalltalk
+<INDEX_SMALLTALK> ::=
+    <STRING_DEF>
+    "indexOf:"
+    <CHAR_DEF>
+    "startingAt:"
+    <INT_DEF>
+
+// Smalltalk
+<ANON_FUNC_SMALLTALK> ::=
+    ":" <ARGS>
+    "|"
+    <BLOCK>
+    <SQUARE_RIGHT>
+
+// Smalltalk
+<QUESTION_SMALLTALK> ::=
+    <PARENTHESIS_LEFT>
+    <ID> 
+    <PARENTHESIS_RIGHT>
+    <ASSIGN> 
+    <CONDITION>
+    "ifTrue:"
+    <SQUARE_LEFT>
+    <BLOCK>
+    <SQUARE_RIGHT>
+    "ifFalse:"
+    <SQUARE_LEFT>
+    <BLOCK>
+    <SQUARE_RIGHT>
+
+// Visual Basic .NET
+<INST_FUNCTION_VB> ::=
+    "Function "
+    <ID>
+    <PARENTHESIS_LEFT>
+    (<ARGS>)?
+    <PARENTHESIS_RIGHT>
+    ( "As " <TYPE> )?
+    <BLOCK>
+    "Return " <ID>
+    "End Function"
+
+// Visual Basic .NET
+<INST_MODULE_VB> ::=
+    "Module " 
+    <ID>
+    <BLOCK>
+    "End Module"
+
+// Visal Basic .NET
+<INST_SUB_VB> ::=
+    "Sub "
+    <ID>
+    <PARENTHESIS_LEFT>
+    (<ARGS>)?
+    <PARENTHESIS_RIGHT>
+    <BLOCK>
+    "End Sub"
+
+// BASIC (unstructered)
+<PRINT_BASIC> ::=
+    "PRINT "
+    <STRING_DEF>
+    ( "END " )?
+
+// BASIC (unstructered)
+<LOOP_BASIC> ::=
+    "LET " 
+    <ID> 
+    <ASSIGN> 
+    <INT_DEF>
+    "FOR "
+    <ID>
+    <ASSIGN>
+    <INT_DEF>
+    "TO "
+    (<ID> | <INT_DEF>)
+    <BLOCK>
+    "NEXT "
+    <ID>
+    ( "END " )?
+
+        
+// BASIC (unstructered)
+<INPUT_BASIC> ::=
+    "INPUT "
+    ( <STRING_DEF> )?
+    <LINE_END>
+    ( "U$" | <ID> )
+
+// Fortran
+<DO_LOOP_FORTRAN> ::=
+    "do "
+    <ID>
+    <ASSIGN>
+    <INT_DEF>
+    ","
+    "stop "
+    <INT_DEF>
+    <BLOCK>
+    "end do"
+
+// Fortran
+<QUESTION_FORTRAN> ::=
+    ( <ID> ":" )?
+    "if "
+    <PARENTHESIS_LEFT>
+    <CONDITION>
+    <PARENTHESIS_RIGHT>
+    "then "
+    <BLOCK>
+    "end if"
+    ( <ID> )?
+
+
+
+
+
+// General
+<PROPERTY_ALT> ::=
+    (
+        "."
+        (
+            <INST_SET_OPS>
+            | <ARR_FUNCS_JS>
+        )
+    )?
+
+// General (because Array_JS and Anon_Func_Smalltalk have a common initial symbol)
+<SQUARE_ENTRY> ::=
+    <SQUARE_LEFT>
+    ( <ARRAY_JS> | <ANON_FUNC_SMALLTALK> )
+
+
+
+
+// For future consideration: A 'Properties' rule, of the form ':<property>'
+<PROPERTY> ::=
+    (
+        ":"
+        (
+            <COMPLEX_FUNCTIONS>
+            |
+            <...>
+            |
+            <...>
+            |
+            ...
+        )
+    )?
