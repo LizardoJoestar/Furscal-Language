@@ -103,7 +103,7 @@
             | <ID> <PROPERTY_ALT>
             | <COMPLEX_DEF>
             | <INST_OBJECT>
-            | <MATH_REFERENCE>
+            | <MATH_REFERENCE> // Non-Furscal rule
         )?
 
 <INST_SHOW> ::= 

@@ -76,7 +76,7 @@ from graphic2d;
 from graphic2d require lin_interpol;
 
 
-/* Complex numbers */
+/* Complex numbers, Complex properties */
 
 complex a := (5,3);
 print((5,3));
