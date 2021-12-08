@@ -1,0 +1,1881 @@
+/** By Medina Peraza Caleb, Control No. 18212219 */
+/** By Verjan Santoyo Edgar, Control No. 19211750 */
+
+  
+PARSER_BEGIN(Furscal)
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Furscal 
+{
+  public static ArrayList<String> ID_list = new ArrayList<String>();
+
+  /** Main entry point. */
+  public static void main(String args[]) throws ParseException, TokenMgrError 
+  {
+    Furscal parser = new Furscal(System.in);
+    parser.Start();
+  }
+}
+
+PARSER_END(Furscal)
+
+/** LEXICAL ANALYZER SPECIFICATION */ 
+/** BEGINS HERE */
+
+/** These separate tokens from each other!
+ * If you don't want them to be counted as part of a token
+ * (e.g., "xyz 123" would be counted as token despite being wrong)
+ * put them as tokens to be skipped.
+ */
+SKIP : 
+{ 
+  " "
+  | "\n" 
+  | "\r" 
+  | "\r\n" 
+  | "\t" 
+}
+
+TOKEN : 
+{
+  < COMMENT : "/" "*" (~["'","\n","\r"])* "*" "/" >
+}
+
+TOKEN : 
+{
+  < TYPE : "int" | "decimal" | "bool" | "char" | "string" | "date" | "time" | "datetime" >
+}
+
+TOKEN :
+{
+  < INTDEF : ( <DIGIT> ) + >
+}
+
+TOKEN : 
+{
+  < DECIMALDEF : ( <DIGIT> )+ "." ( <DIGIT> )+ "f" >
+}
+
+TOKEN : 
+{
+  < BOOLDEF: "True" | "False" >
+}
+
+TOKEN : 
+{
+  < CHARDEF: "$" <LETTER> >
+}
+
+
+TOKEN : 
+{
+  < STRINGDEF : "'"  (~["'","\n","\r"])*  "'" >
+}
+
+TOKEN : 
+{
+  < DATEDEF : "&" <DIGIT> <DIGIT> <DIGIT> <DIGIT> "-" (<DIGIT>){0,1} <DIGIT> "-" (<DIGIT>){0,3} <DIGIT> "&" >
+}
+
+TOKEN : 
+{
+  < TIMEDEF : "&" (<DIGIT>){0,2} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT>"&" >
+}
+
+TOKEN : 
+{
+  < DATETIMEDEF : "&" <DIGIT> <DIGIT> <DIGIT> <DIGIT> "-" (<DIGIT>){0,1} <DIGIT> "-" (<DIGIT>){0,3} <DIGIT> (" ")
+  (<DIGIT>){0,2} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> ":" (<DIGIT>){0,5} <DIGIT> "&" >
+}
+
+TOKEN : 
+{
+  < ARR : "arr" >
+}
+
+TOKEN : 
+{
+  < MATRIX : "matrix" >
+}
+
+TOKEN : 
+{
+  < ARRAYSETDEF : "#(" ( <INTDEF> | <DECIMALDEF> ) ( "," ( <INTDEF> | <DECIMALDEF> ) )* ")" >
+}
+
+TOKEN : 
+{
+  < CONSTANT : "const" >
+}
+
+TOKEN : 
+{
+  < NULL : "null" >
+}
+
+TOKEN : 
+{
+  < GLOBAL : "global" >
+}
+
+TOKEN : 
+{
+  < ARITHMETICOPERATOR : 
+  "+" 
+  | "-" 
+  | "*" 
+  | "/" 
+  >
+}
+
+TOKEN : 
+{
+  < POWER : "**" >
+}
+
+TOKEN : 
+{
+  < POSTFIXINC : "++" >
+}
+
+TOKEN : 
+{
+  < POSTFIXDEC : "--" >
+}
+
+TOKEN : 
+{
+  < MODULUS : "%" >
+}
+
+TOKEN : 
+{
+  < ASSIGN : ":=" >
+}
+
+TOKEN : 
+{
+  < SHIFTLEFT : "<<" >
+}
+
+TOKEN : 
+{
+  < SHIFTRIGHT : ">>" >
+}
+
+TOKEN : 
+{
+  < RELATIONALOPERATOR : 
+  "<" 
+  | ">" 
+  | ">=" 
+  | "<=" 
+  | "==" 
+  | "!=" 
+  >
+}
+
+TOKEN : 
+{
+  < LOGICALOPERATOR : 
+  "and" 
+  | "or" 
+  | "not" 
+  >
+}
+
+TOKEN : 
+{
+  < FUNCTIONDECLARE : "def" >
+}
+
+TOKEN : 
+{
+  < RETURN : "return" >
+}
+
+TOKEN : 
+{
+  < QUESTION : "inquire" >
+}
+
+TOKEN : 
+{
+  < DEFAULT_ : 
+  "otherwise" 
+  | "otherwise if" 
+  >
+}
+
+TOKEN : 
+{
+  < LOOP : "perform" > 
+}
+
+TOKEN : 
+{
+  < LOOPCOUNTER : "times" >
+}
+
+TOKEN : 
+{
+  < LOOPUNTIL : "until" >
+}
+
+TOKEN : 
+{
+  < LOOPTESTBEFORE : "with test before" >
+}
+
+TOKEN : 
+{
+  < LOOPTESTAFTER : "with test after" >
+}
+
+TOKEN : 
+{
+  < SHOW : 
+  "show" 
+  | "print" 
+  | "echo" 
+  | "display" 
+  >
+}
+
+TOKEN : 
+{
+  < CLEAR : 
+  "clear" 
+  | "clean" 
+  >
+}
+
+TOKEN : 
+{
+  < EXIT : "exit" >
+}
+
+TOKEN : 
+{
+  < TYPEOF : "typeof" >
+}
+
+TOKEN : 
+{
+  < HALT : "halt" >
+}
+
+TOKEN : 
+{
+  < PROCEED : "proceed" >
+}
+
+// TOKEN : 
+// {
+//   < CALLING : <ID> "(" (~[])* ")" >
+// }
+
+TOKEN : 
+{
+  < CLASSDECLARE : "class" >
+}
+
+TOKEN : 
+{
+  < OBJECTDECLARE : "summon" >
+}
+
+TOKEN : 
+{
+  < SELF : "self" >
+}
+
+TOKEN : 
+{
+  < PASSALL : "pass" >
+}
+
+TOKEN : 
+{
+  < CHECK : "check" >
+}
+
+TOKEN : 
+{
+  < ONERROR : "onError" >
+}
+
+TOKEN : 
+{
+  < AFTERALL : "after all" >
+}
+
+/** Beastman1972's half: */
+TOKEN : 
+{
+  < REQUIRE : "require" >
+}
+
+TOKEN : 
+{
+  < FROM : "from" >
+}
+
+TOKEN : 
+{
+  < LINE_END : ";" >
+}
+
+TOKEN :
+{
+  < SEPARATOR : "," >
+}
+
+TOKEN : 
+{
+  < PARENTHESIS_LEFT : "(" >
+}
+
+TOKEN : 
+{
+  < PARENTHESIS_RIGHT: ")" >
+}
+
+TOKEN : 
+{
+  < SQUARE_LEFT : "[" >
+}
+
+TOKEN : 
+{
+  < SQUARE_RIGHT : "]" >
+}
+
+TOKEN : 
+{
+  < BRACKET_LEFT : "{" >
+}
+
+TOKEN : 
+{
+  < BRACKET_RIGHT : "}" >
+}
+
+TOKEN : 
+{
+  < PROCEDURE : "procedure" >
+}
+
+TOKEN : 
+{
+  < SET : "set" >
+}
+
+TOKEN :
+{
+  < SET_OPERATIONS : 
+  "union" 
+  | "diff" 
+  | "intersect" 
+  | "include" 
+  | "exclude" 
+  >
+}
+
+TOKEN : 
+{
+  < SET_COMPARISONS : 
+  "><" 
+  | "=" 
+  | "<>" 
+  | "contains" 
+  >
+}
+
+TOKEN :
+{
+  < MATH_CONSTANTS : 
+  "Math.PI" 
+  | "Math.E" 
+  | "Math.SQRT2"
+  | "Math.SQRT1_2" 
+  | "Math.LN2" 
+  | "Math.LN10" 
+  | "Math.LOG2E" 
+  | "Math.LOG10E" 
+  >
+}
+
+TOKEN : 
+{
+  < TRIG_FUNCTIONS : 
+  "Math.acos" 
+  | "Math.acosh" 
+  | "Math.asin" 
+  | "Math.asinh" 
+  | "Math.atan" 
+  | "Math.atan2"
+  | "Math.atanh" 
+  | "Math.cos" 
+  | "Math.cosh" 
+  | "Math.sin" 
+  | "Math.sinh" 
+  | "Math.tan" 
+  | "Math.tanh" 
+  >
+}
+
+TOKEN : 
+{
+  < ASSIGN_OPERATORS : 
+  "+=" 
+  | "-=" 
+  | "*=" 
+  | "/=" 
+  | "<<=" 
+  | ">>=" 
+  | ">>>=" 
+  | "&=" 
+  | "^=" 
+  | "|=" 
+  | "**=" 
+  >
+}
+
+TOKEN : 
+{
+  < ARITHMETIC_FUNCTIONS : 
+  "Math.abs" 
+  | "Math.exp" 
+  | "Math.log" 
+  | "Math.log10" 
+  | "Math.log1p" 
+  | "Math.log2" 
+  | "Math.max" 
+  | "Math.min" 
+  | "Math.random" 
+  | "Math.sort"
+  | "Math.shuffle"
+  | "Math.choice"
+  | "Math.round" 
+  | "Math.sqrt" 
+  | "Math.pow" 
+  | "Math.ceil" 
+  | "Math.floor" 
+  | "Math.cbrt" 
+  | "Math.expm1" 
+  | "Math.sign" 
+  | "Math.randint"
+  | "Math.random.normal"
+  | "Math.random.binomial"
+  | "Math.random.poisson"
+  | "Math.random.uniform"
+  | "Math.random.logistic"
+  | "Math.random.multinomial"
+  | "Math.random.exponential"
+  | "Math.random.chisquare"
+  | "Math.random.rayleigh"
+  | "Math.random.pareto"
+  | "Math.random.zipf"
+  | "Math.lcm"
+  | "Math.gcd"
+  | "Math.trunc"
+  | "Math.fix"
+  | "Math.around"
+  | "Math.hypot"
+  | "Math.deg2rad"
+  | "Math.rad2deg"
+  | "Math.quadratic"
+  | "Math.cubic"
+  | "Math.squareArea"
+  | "Math.rectArea"
+  | "Math.circleArea"
+  | "Math.triangleArea"
+  | "Math.trapArea"
+  | "Math.regpolyArea"
+  >
+}
+
+TOKEN :
+{
+  < ARRMETHODS : 
+  "index" 
+  | "pop" 
+  | "append" 
+  | "count" 
+  | "remove" 
+  >
+}
+
+TOKEN : 
+{
+  < HELP : "--help" >
+}
+
+TOKEN : 
+{
+  < VERSION : "--version" >
+}
+
+TOKEN : 
+{
+  < EMPTY : "empty" >
+}
+
+TOKEN : 
+{
+  < MATRIX_FUNCTIONS : 
+  "matrix.zeros"
+  | "matrix.ones"
+  | "matrix.eye"
+  | "matrix.identity"
+  | "matrix.rand"
+  | "matrix.randn"
+  | "matrix.lcm.reduce"
+  | "matrix.gcd.reduce"
+  | "matrix.add"
+  | "matrix.subtract"
+  | "matrix.multiply"
+  | "matrix.divide"
+  | "matrix.sum"
+  | "matrix.cumsum"
+  | "matrix.prod"
+  | "matrix.cumprod"
+  | "matrix.diff"
+  >
+}
+
+TOKEN : 
+{
+  < COMPLEX : "complex" >
+}
+
+TOKEN : 
+{
+  < COMPLEX_FUNCTIONS : 
+  "real"
+  | "imaginary"
+  | "conjugate"
+  >
+}
+
+TOKEN :
+{
+  < OBJECT : "obj" >
+}
+
+// TOKEN :
+// {
+//   // Non-Furscal keywords. Cannot have them in separate tokens, otherwise java compiler will
+//   // give a 'too big to compile' error if there are too many tokens (max about 200 words)
+//   <NON_FURSCAL_KW :
+//   "TO"
+//   | "if"
+//   | "do"
+//   | "As"
+//   | "END"
+//   | "FOR"
+//   | "LET"
+//   | "Sub"
+//   | "NEXT"
+//   | "then"
+//   | "stop"
+//   | "PRINT"
+//   | "INPUT"
+//   | "Module"
+//   | "Return"
+//   | "Function"
+//   >
+// }
+
+/** These extra tokens, if added, generate error "code too large"
+ * when compiling java files with javac
+ */
+
+// TOKEN :
+// {
+//   < ARR_TYPE : 
+//   "dtype"
+//   | "astype"
+//   >
+// }
+
+// TOKEN :
+// {
+//   < ARROW_FUNCTIONS : 
+//   "now"
+//   | "get"
+//   | "arrow"
+//   >
+// }
+
+// TOKEN :
+// {
+//   < SYM_FUNCTIONS : 
+//   "sym.symbol" 
+//   | "sym.pi" 
+//   | "sym.pi.evalf" 
+//   | "sym.expand" 
+//   | "sym.simplify" 
+//   | "sym.limit" 
+//   | "sym.diff" 
+//   | "sym.series" 
+//   | "sym.integrate" 
+//   | "sym.solveset" 
+//   | "sym.solve" 
+//   | "sym.satisfiable" 
+//   | "sym.Matrix" 
+//   >
+// }
+
+// TOKEN : 
+// {
+//   < OS_FUNCTIONS : 
+//   "os.getcwd" 
+//   | "os.chdir" 
+//   | "os.mkdir" 
+//   | "os.listdir" 
+//   | "os.walk" 
+//   | "os.startfile" 
+//   | "os.popen" 
+//   | "os.close" 
+//   | "os.rename" 
+//   | "os.getlogin" 
+//   >
+// }
+
+// TOKEN : 
+// {
+//   < ARR_FUNCTIONS : 
+//   "copy" 
+//   | "view" 
+//   | "shape" 
+//   | "reshape" 
+//   | "concatenate" 
+//   | "array_slpit" 
+//   | "where" 
+//   | "out" 
+//   >
+// }
+
+// TOKEN : 
+// {
+//   < SIMPLE_ARITHMETIC : 
+//   "subtract" 
+//   | "multiply" 
+//   | "divide" 
+//   | "power" 
+//   | "remainder" 
+//   | "mod" 
+//   | "divmod" 
+//   | "absolute" 
+//   >
+// }
+
+/** General tokens. ALWAYS put after more specific tokens
+ * Such as < VAR : "var" >, otherwise these will match to general tokens
+ * like <ID>. Order of Token declaration matters!!
+ */
+TOKEN :
+{
+  < #DIGIT : ( ["0"-"9"] ) >
+}
+
+TOKEN : 
+{
+  < #LETTER : ( ["a"-"z","A"-"Z"] ) >
+}
+
+TOKEN :
+{
+  < ID : <LETTER> ( <LETTER> | <DIGIT> | "_" )* > 
+}
+
+
+
+
+/** PARSER/GRAMMAR/SYNTAX SPECIFICATION */
+/** BEGINS HERE */ 
+
+/** Root production. */
+
+void Start() :
+{}
+{
+  ( Term_Comment() )*
+  ( Imports() )*
+  ( Expression() )*
+  <EOF>
+}
+
+void Expression() :
+{}
+{
+  // "Term_" functions are terminals, every other function are non-terminals
+  // Furscal instructions
+  Inst_Class()
+  | Inst_Function()
+  | Inst_Loop()
+  | Inst_Check()
+  | Inst_ID() // this stores several non-terminals rules & non-furscal rules
+  | Inst_ID_Applied()
+  | Inst_Show()
+  | Term_Comment()
+  // Non-Furscal instructions
+  | Math_Reference() Term_LineEnd()
+  | Square_Entry() // Contains 2 non-Furscal rules
+  | Index_Smalltalk()
+  | Inst_Function_VB()
+  | Inst_Module_VB()
+  | Inst_Sub_VB()
+  | Print_BASIC()
+  | Loop_Basic()
+  | Input_BASIC()
+  | Do_Loop_Fortran()
+  | Question_Fortran()
+  | Internal_Sort_COBOL()
+  | For_Loop_Python()
+  | Switch_CSharp()
+  | ParLeft_Entry() // Contains 2 non-Furscal rules
+  | Alert_AppleScript()
+}
+
+
+// Furscal instructions
+void Imports() :
+{}
+{
+  Term_From()
+  Term_ID()
+  (
+    Term_Require()
+    Term_ID()
+  )?
+  Term_LineEnd()
+}
+
+void Inst_Class() : 
+{}
+{
+  Term_ClassDeclare()
+  Term_ID()
+  (
+    Term_ParLeft()
+    Term_IDRight() // Parent class must already exist, been declared
+    Term_ParRight()
+  )? 
+  Term_BracketLeft()
+  (
+    (
+      Term_PassAll()
+      Term_LineEnd()
+    )
+    |
+    (
+      (
+        Term_Self()
+        Term_Type()
+        Term_ID()
+        Term_Assign()
+        Type_Def()
+        Term_LineEnd()
+      )*
+      (
+        Block_Class()
+      )?
+    )
+  )
+  Term_BracketRight()
+  Term_LineEnd()
+}
+
+void Inst_Function() :
+{}
+{
+  Term_FuncDeclare()
+  Term_ID()
+  Term_ParLeft()
+  ( Args() )?
+  Term_ParRight()
+  Term_BracketLeft()
+  ( Block() )?
+  Term_BracketRight()
+  Term_LineEnd()
+}
+
+void Inst_Loop() :
+{}
+{
+  Term_Perform()
+  (
+    Term_IntDef()
+    Term_LoopCounter()
+    |
+    Term_LoopTestBefore()
+    Term_LoopUntil()
+    Term_ParLeft()
+    Condition()
+    Term_ParRight()
+    |
+    Term_LoopTestAfter()
+    Term_LoopUntil()
+    Term_ParLeft()
+    Condition()
+    Term_ParRight()
+  )
+  Term_BracketLeft()
+  ( Block() )?
+  Term_BracketRight()
+  Term_LineEnd()
+}
+
+void Inst_Check() :
+{}
+{
+  Term_Check()
+  Term_BracketLeft()
+  ( Block() )?
+  Term_BracketRight()
+  Term_OnError()
+  Term_ParLeft()
+  ( Args() )?
+  Term_ParRight()
+  Term_BracketLeft()
+  ( Block() )?
+  Term_BracketRight()
+  Term_LineEnd()
+}
+
+void Inst_Object() :
+{}
+{
+  Term_ObjDeclare()
+  Term_IDRight() // Right side use of var/id: valid only if previously declared
+  Term_ParLeft()
+  ( Args() )?
+  Term_ParRight()
+}
+
+void Inst_ID() :
+{}
+{
+  ( 
+    Inst_Tags()
+    Term_ID()
+    ( Inst_Assign() )?
+    // (
+    //   Term_IDRight() // Right side use of var/id: valid only if previously declared 
+    //   Property_Alt() // this stores non-furscal rules
+    // )?
+  )
+  Term_LineEnd()
+}
+
+void Inst_ID_Applied() :
+{}
+{
+  // Not really on right side (by itself), but also valid only if previously declared
+  Term_IDRight() 
+  (
+    (
+      "."
+      ( 
+        Inst_Set_Ops() 
+        | Arr_Funcs_JS() 
+      )
+    )
+    |
+    (
+      // Inst_Assign, but forced
+      (
+        Term_Assign()
+        | Term_AssignOp()
+      )
+      (
+        Type_Def()
+        | Complex_Def()
+        | Inst_Object()
+        | Math_Reference() // non-Furscal rule
+        | Term_IDRight() Property_Alt()
+      )
+    )
+  )
+  Term_LineEnd()
+}
+
+void Inst_Tags() :
+{}
+{
+    (
+      Term_Global()
+      | Term_Const()
+    )?
+    (
+      Term_Type()
+      | Term_Arr()
+      | Term_Matrix()
+      | Term_Set()
+      | Term_Complex()
+      | Term_Obj()
+    )
+}
+
+void Inst_Assign() :
+{}
+{
+    (
+      Term_Assign()
+      | Term_AssignOp()
+    )
+    (
+      Type_Def()
+      | Complex_Def()
+      | Inst_Object()
+      | Math_Reference() // non-Furscal rule
+      | Term_IDRight() Property_Alt()
+    )?
+}
+
+void Inst_Show() :
+{}
+{
+  Term_Show()
+  Term_ParLeft()
+  (
+    // Variables must already exist
+    Term_IDRight() Property_Complex_Func()
+    | Term_StrDef()
+    | Term_DateDef()
+    | Term_TimeDef()
+    | Term_DateTimeDef()
+    | ( Complex_Def() Property_Complex_Func() )
+  )
+  Term_ParRight()
+  Term_LineEnd()
+}
+
+
+// Non-Furscal instructions
+
+// General
+void Property_Alt() :
+{}
+{
+  (
+    "."
+    ( 
+      Inst_Set_Ops() 
+      | Arr_Funcs_JS() 
+    )
+  )?
+}
+
+// General (because Array_JS and Anon_Func_Smalltalk have a common initial symbol)
+void Square_Entry() :
+{}
+{
+  Term_SquareLeft()
+  ( Array_JS() | Anon_Func_Smalltalk() )
+}
+
+// General (because Question_Smalltalk and No_Args_Arrow_Func_JS have a common initial symbol)
+void ParLeft_Entry() :
+{}
+{
+  Term_ParLeft()
+  ( Question_Smalltalk() | No_Args_Arrow_Func_JS() )
+}
+
+
+// Python
+void Math_Reference() :
+{}
+{
+    Term_Math_Const()
+    |
+    (
+      Term_Arithmetic_Func()
+      |
+      Term_Trig_Func()
+    )
+    (
+      Term_ParLeft()
+      Args()
+      Term_ParRight()
+    )
+}
+
+// Python
+void Inst_Set_Ops() :
+{}
+{
+  Term_Set_Ops()
+  Term_ParLeft()
+  Term_ID()
+  ","
+  Term_ID()
+  Term_ParRight()
+}
+
+// Javascript
+void Array_JS() :
+{}
+{
+  // Term_SquareLeft()
+  (Args())?
+  Term_SquareRight()
+  Term_LineEnd()
+}
+
+// Javascript
+void Arr_Funcs_JS() :
+{}
+{
+  Term_Arr_Func()
+  Term_ParLeft()
+  Term_ParRight()
+}
+
+// Smalltalk
+void Index_Smalltalk() :
+{}
+{
+  Term_StrDef()
+  "indexOf:"
+  Term_CharDef()
+  "startingAt:"
+  Term_IntDef()
+}
+
+// Smalltalk
+void Anon_Func_Smalltalk() :
+{}
+{
+  // Term_SquareLeft()
+  ":" Args()
+  "|"
+  Block()
+  Term_SquareRight()
+}
+
+// Smalltalk
+void Question_Smalltalk() :
+{}
+{
+  // Term_ParLeft()
+  Term_IDRight()
+  Term_ParRight()
+  Term_Assign()
+  Condition()
+  "ifTrue:"
+  Term_SquareLeft()
+  Block()
+  Term_SquareRight()
+  "ifFalse:"
+  Term_SquareLeft()
+  Block()
+  Term_SquareRight()
+}
+
+// Visual Basic .NET
+void Inst_Function_VB() :
+{}
+{
+  "Function "
+  Term_ID()
+  Term_ParLeft()
+  ( Args() )?
+  Term_ParRight()
+  ( "As " Term_Type() )?
+  Block()
+  "Return " Term_IDRight()
+  "End Function"
+}
+
+// Visual Basic .NET
+void Inst_Module_VB() :
+{}
+{
+  "Module "
+  Term_ID()
+  Block()
+  "End Module"
+}
+
+// Visual Basic .NET
+void Inst_Sub_VB() :
+{}
+{
+  "Sub "
+  Term_ID()
+  Term_ParLeft()
+  ( Args() )?
+  Term_ParRight()
+  Block()
+  "End Sub"
+}
+
+// BASIC (unstructured)
+void Print_BASIC() :
+{}
+{
+  "PRINT "
+  Term_StrDef()
+  ( "END " )?
+}
+
+// BASIC (unstructured)
+void Loop_Basic() :
+{}
+{
+  "LET " Term_ID() Term_Assign() Term_IntDef()
+  "FOR " Term_ID() Term_Assign() Term_IntDef()
+  "TO " ( Term_IntDef() | Term_ID() )
+  Block()
+  "NEXT " Term_IDRight()
+  ( "END " )?
+} 
+
+// BASIC (unstructured)
+void Input_BASIC() :
+{}
+{
+  "INPUT "
+  ( Term_StrDef() )?
+  Term_LineEnd()
+  ( "U$" | Term_ID() )
+}
+
+// Fortran
+void Do_Loop_Fortran() :
+{}
+{
+  "do "
+  Term_ID()
+  Term_Assign()
+  Term_IntDef()
+  ","
+  "stop "
+  Term_IntDef()
+  Block()
+  "end do"
+}
+
+// Fortran
+void Question_Fortran() :
+{}
+{
+  // ( Term_ID() ":" )?
+  "if "
+  Term_ParLeft()
+  Condition()
+  Term_ParRight()
+  "then "
+  Block()
+  "end if"
+  // ( Term_ID() )?
+}
+
+// COBOL
+void Internal_Sort_COBOL() :
+{}
+{
+  (
+    "SORT "
+    Term_IDRight()
+    (
+      "ON ASCENDING KEY " Term_IDRight()
+      |
+      "ON DESCENDING KEY " Term_IDRight()
+    )
+  )
+  (
+    "USING "
+    Term_IDRight()
+    "GIVING "
+    Term_ID()
+    "."
+  )
+}
+
+// Python
+void For_Loop_Python() :
+{}
+{
+  "for "
+  Term_IDRight()
+  "in "
+  Term_IDRight()
+  ":"
+  Block()
+}
+
+// C#
+void Switch_CSharp() :
+{}
+{
+  "switch "
+  Term_ParLeft()
+  Term_IDRight()
+  Term_ParRight()
+  Term_BracketLeft()
+  (
+    "case "
+    (
+      Term_IntDef()
+      | Term_DecDef()
+      | Term_BoolDef()
+      | Term_StrDef()
+      | Term_ID()
+    )
+    ":"
+    (
+      Block()
+      "break " Term_LineEnd()
+    )?
+  )+
+  (
+    "default :"
+    Block()
+  )?
+  Term_BracketRight()
+}
+
+// Javascript
+void No_Args_Arrow_Func_JS() :
+{}
+{
+  // Term_ParLeft()
+  Term_ParRight()
+  "=>"
+  Term_BracketLeft()
+  Block()
+  Term_BracketRight()
+}
+
+// AppleScript
+void Alert_AppleScript() :
+{}
+{
+  "Set "
+  Term_ID()
+  "to display alert "
+  Term_StrDef()
+  "as warning "
+  "buttons "
+  Term_BracketLeft()
+  Args()
+  Term_BracketRight()
+  ( "default button " Term_IntDef() )?
+  ( "cancel button " Term_IntDef() )
+  ( "giving up after " Term_IntDef() )?
+}
+
+
+// Special (auxiliary) non-terminals, for ease of maintenance and understanding
+
+void Args() :
+{}
+{
+  (
+    Term_IDRight() // Variables must already exist
+    | Term_IntDef()
+    | Term_DecDef()
+    | Term_StrDef()
+  )
+  (
+    "," 
+    (
+      Term_IDRight() // Variables must already exist
+      | Term_IntDef()
+      | Term_DecDef()
+      | Term_StrDef()
+    )
+  )*
+}
+
+void Block_Class() :
+{}
+{
+  (
+    Inst_ID()
+    | Inst_ID_Applied()
+    | Inst_Loop()
+    | Inst_Check()
+    | Inst_Function() // Included in Block_Class
+    | Inst_Show()
+    | Term_Comment()
+  )+
+}
+
+void Block() :
+{}
+{
+  (
+    Inst_ID()
+    | Inst_ID_Applied()
+    | Inst_Loop()
+    | Inst_Check()
+    | Inst_Show()
+    | Term_Comment()
+  )+
+}
+
+void Condition() :
+{}
+{
+  (
+    Term_IntDef()
+    | Term_DecDef()
+    | Term_StrDef()
+    | Term_IDRight() // Variables must already exist
+  )
+  (
+    Term_RelOp()
+    | Term_LogicOp()
+  )
+  (
+    Term_IntDef()
+    | Term_DecDef()
+    | Term_StrDef()
+    | Term_IDRight() // Variables must already exist
+  )
+}
+
+void Complex_Def() : // Applied left factorization to the following 2:
+{}
+{
+  (
+    Term_ParLeft()
+    (
+      Term_IntDef()
+      |
+      Term_DecDef()
+    )
+    ","
+    (
+      Term_IntDef()
+      |
+      Term_DecDef()
+    )
+    Term_ParRight()
+  )
+}
+
+void Property_Complex_Func() :
+{}
+{
+  (
+    ":"
+    Term_ComplexFunc()
+  )?
+}
+
+void Type_Def() :
+{}
+{
+  Term_IntDef()
+  | Term_DecDef()
+  | Term_BoolDef()
+  | Term_CharDef()
+  | Term_StrDef()
+  | Term_DateDef()
+  | Term_TimeDef()
+  | Term_DateTimeDef()
+  | Term_ArraySetDef()
+}
+
+
+
+// Terminal BNFs (TOKENs), for easier maintenance
+
+void Term_Comment() :
+{ 
+  Token t; 
+}
+{
+  t = <COMMENT>
+  { System.out.println("<COMMENT>: \t\t\t" + t.image); }
+}
+
+void Term_From() :
+{
+  Token t;
+}
+{
+  t = <FROM>
+  { System.out.println("<FROM>: "); }
+}
+
+void Term_ID() :
+{
+  Token t;
+}
+{
+  t = <ID>
+  { 
+    if(ID_list.contains(t.image) == false)
+    {
+      ID_list.add(t.image);
+      System.out.println("<ID>:\t\t\t\t" + "(" + ID_list.indexOf(t.image) + ")");
+    }
+    else
+    {
+      System.out.println("<ID>:\t\t\t\t" + "(" + ID_list.indexOf(t.image) + ")");
+    }
+  }
+}
+
+void Term_IDRight() :
+{
+  Token t;
+}
+{
+  t = <ID>
+  {
+    if(ID_list.contains(t.image) == false)
+    {
+      throw new ParseException("Use of undeclared variable not allowed. Variable must be declared beforehand.");
+      // ID_list.add(t.image);
+      // System.out.println("<ID>:\t\t\t\t" + "(" + ID_list.indexOf(t.image) + ")");
+    }
+    else
+    {
+      System.out.println("<ID>:\t\t\t\t" + "(" + ID_list.indexOf(t.image) + ")");
+    }
+  }
+}
+
+void Term_Require() :
+{
+  Token t;
+}
+{
+  t = <REQUIRE>
+  { System.out.println("<REQUIRE>: "); }
+}
+
+void Term_LineEnd() :
+{
+  Token t;
+}
+{
+  t = <LINE_END>
+  { System.out.println("<LINE_END>: "); }
+}
+
+void Term_ClassDeclare() :
+{
+  Token t;
+}
+{
+  t = <CLASSDECLARE>
+  { System.out.println("<CLASSDECLARE>: "); }
+}
+
+void Term_ParLeft() :
+{
+  Token t;
+}
+{
+  t = <PARENTHESIS_LEFT>
+  { System.out.println("<PARENTHESIS_LEFT>: "); }
+}
+
+void Term_ParRight() :
+{
+  Token t;
+}
+{
+  t = <PARENTHESIS_RIGHT>
+  { System.out.println("<PARENTHESIS_RIGHT>: "); }
+}
+
+void Term_BracketLeft() :
+{
+  Token t;
+}
+{
+  t = <BRACKET_LEFT>
+  { System.out.println("<BRACKET_LEFT>: "); }
+}
+
+void Term_BracketRight() :
+{
+  Token t;
+}
+{
+  t = <BRACKET_RIGHT>
+  { System.out.println("<BRACKET_RIGHT>: "); }
+}
+
+void Term_Self() :
+{
+  Token t;
+}
+{
+  t = <SELF>
+  { System.out.println("<SELF>: "); }
+}
+
+void Term_Type() :
+{
+  Token t;
+}
+{
+  t = <TYPE>
+  { System.out.println("<TYPE>: \t\t\t" + t.image); }
+}
+
+void Term_Assign() :
+{
+  Token t;
+}
+{
+  t = <ASSIGN>
+  { System.out.println("<ASSIGN>: "); }
+}
+
+void Term_PassAll() :
+{
+  Token t;
+}
+{
+  t = <PASSALL>
+  { System.out.println("<PASSALL>: "); }
+}
+
+void Term_FuncDeclare() :
+{
+  Token t;
+}
+{
+  t = <FUNCTIONDECLARE>
+  { System.out.println("<FUNCTIONDECLARE>: "); }
+}
+
+void Term_IntDef() :
+{
+  Token t;
+}
+{
+  t = <INTDEF>
+  { System.out.println("<INTDEF>: \t\t\t" + t.image); }
+}
+
+void Term_DecDef() :
+{
+  Token t;
+}
+{
+  t = <DECIMALDEF>
+  { System.out.println("<DECIMALDEF>: \t\t\t" + t.image); }
+}
+
+void Term_StrDef() :
+{
+  Token t;
+}
+{
+  t = <STRINGDEF>
+  { System.out.println("<STRINGDEF>: \t\t\t" + t.image); }
+}
+
+void Term_Perform() :
+{
+  Token t;
+}
+{
+  t = <LOOP>
+  { System.out.println("<LOOP>: "); }
+}
+
+void Term_LoopCounter() :
+{
+  Token t;
+}
+{
+  t = <LOOPCOUNTER>
+  { System.out.println("<LOOPCOUNTER>: "); }
+}
+
+void Term_LoopTestBefore() :
+{
+  Token t;
+}
+{
+  t = <LOOPTESTBEFORE>
+  { System.out.println("<LOOPTESTBEFORE>: "); }
+}
+
+void Term_LoopTestAfter() :
+{
+  Token t;
+}
+{
+  t = <LOOPTESTAFTER>
+  { System.out.println("<LOOPTESTAFTER>: "); }
+}
+
+void Term_LoopUntil() :
+{
+  Token t;
+}
+{
+  t = <LOOPUNTIL>
+  { System.out.println("<LOOPUNTIL>: "); }
+}
+
+void Term_RelOp() :
+{
+  Token t;
+}
+{
+  t = <RELATIONALOPERATOR>
+  { System.out.println("<RELATIONALOPERATOR>: \t\t" + t.image); }
+}
+
+void Term_LogicOp() :
+{
+  Token t;
+}
+{
+  t = <LOGICALOPERATOR>
+  { System.out.println("<LOGICALOPERATOR>: \t\t\t" + t.image); }
+}
+
+void Term_Check() :
+{
+  Token t;
+}
+{
+  t = <CHECK>
+  { System.out.println("<CHECK>: "); }
+}
+
+void Term_OnError() :
+{
+  Token t;
+}
+{
+  t = <ONERROR>
+  { System.out.println("<ONERROR>: "); }
+}
+
+void Term_ObjDeclare() :
+{
+  Token t;
+}
+{
+  t = <OBJECTDECLARE>
+  { System.out.println("<OBJECTDECLARE>: "); }
+}
+
+void Term_Complex() :
+{
+  Token t;
+}
+{
+  t = <COMPLEX>
+  { System.out.println("<COMPLEX>: "); }
+}
+
+void Term_ComplexFunc() :
+{
+  Token t;
+}
+{
+  t = <COMPLEX_FUNCTIONS>
+  { System.out.println("<COMPLEX_FUNCTIONS>: \t\t" + t.image); }
+}
+
+void Term_Global() :
+{
+  Token t;
+}
+{
+  t = <GLOBAL>
+  { System.out.println("<GLOBAL>: "); }
+}
+
+void Term_Const() :
+{
+  Token t;
+}
+{
+  t = <CONSTANT>
+  { System.out.println("<CONSTANT>: "); }
+}
+
+void Term_Arr() :
+{
+  Token t;
+}
+{
+  t = <ARR>
+  { System.out.println("<ARR>: "); }
+}
+
+void Term_Matrix() :
+{
+  Token t;
+}
+{
+  t = <MATRIX>
+  { System.out.println("<MATRIX>: "); }
+}
+
+void Term_Set() :
+{
+  Token t;
+}
+{
+  t = <SET>
+  { System.out.println("<SET>: "); }
+}
+
+void Term_AssignOp() :
+{
+  Token t;
+}
+{
+  t = <ASSIGN_OPERATORS>
+  { System.out.println("<ASSIGN_OPERATORS>: \t\t\t" + t.image); }
+}
+
+void Term_BoolDef() :
+{
+  Token t;
+}
+{
+  t = <BOOLDEF>
+  { System.out.println("<BOOLDEF>: \t\t\t" + t.image); }
+}
+
+void Term_CharDef() :
+{
+  Token t;
+}
+{
+  t = <CHARDEF>
+  { System.out.println("<CHARDEF>: \t\t\t" + t.image); }
+}
+
+void Term_DateDef() :
+{
+  Token t;
+}
+{
+  t = <DATEDEF>
+  { System.out.println("<DATEDEF>: \t\t\t" + t.image); }
+}
+
+void Term_TimeDef() :
+{
+  Token t;
+}
+{
+  t = <TIMEDEF>
+  { System.out.println("<TIMEDEF>: \t\t\t" + t.image); }
+}
+
+void Term_DateTimeDef() :
+{
+  Token t;
+}
+{
+  t = <DATETIMEDEF>
+  { System.out.println("<DATETIMEDEF>: \t\t\t" + t.image); }
+}
+
+void Term_ArraySetDef() :
+{
+  Token t;
+}
+{
+  t = <ARRAYSETDEF>
+  { System.out.println("<ARRAYSETDEF>: \t\t\t" + t.image); }
+}
+
+void Term_Show() :
+{
+  Token t;
+}
+{
+  t = <SHOW>
+  { System.out.println("<SHOW>: \t\t\t" + t.image); }
+}
+
+void Term_Math_Const() :
+{
+  Token t;
+}
+{
+  t = <MATH_CONSTANTS>
+  { System.out.println("<MATH_CONSTANTS>: \t\t" + t.image); }
+}
+
+void Term_Arithmetic_Func() :
+{
+  Token t;
+}
+{
+  t = <ARITHMETIC_FUNCTIONS>
+  { System.out.println("<ARITHMETIC_FUNCTIONS>: \t" + t.image); }
+}
+
+void Term_Trig_Func() :
+{
+  Token t;
+}
+{
+  t = <TRIG_FUNCTIONS>
+  { System.out.println("<TRIG_FUNCTIONS>: \t\t" + t.image); }  
+}
+
+void Term_Set_Ops() :
+{
+  Token t;
+}
+{
+  t = <SET_OPERATIONS>
+  { System.out.println("<SET_OPERATIONS>: \t\t" + t.image); }    
+}
+
+void Term_Arr_Func() :
+{
+  Token t;
+}
+{
+  t = <ARRMETHODS>
+  { System.out.println("<ARRMETHODS>: \t\t\t" + t.image); }    
+}
+
+void Term_SquareLeft() :
+{
+  Token t;
+}
+{
+  t = <SQUARE_LEFT>
+  { System.out.println("<SQUARE_LEFT>: "); }    
+}
+
+void Term_SquareRight() :
+{
+  Token t;
+}
+{
+  t = <SQUARE_RIGHT>
+  { System.out.println("<SQUARE_RIGHT>: "); }    
+}
+
+void Term_Obj() :
+{
+  Token t;
+}
+{
+  t = <OBJECT>
+  { System.out.println("<OBJECT>: "); }    
+}

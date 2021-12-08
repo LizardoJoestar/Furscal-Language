@@ -1,0 +1,14 @@
+/* CORRECT */
+int a;
+a := 10;
+int b := a.pop();
+a := b;
+int c := a;
+a.pop();
+
+/* INCORRECT */
+/* Use of undeclared variables */
+w.pop();
+b := z;
+int z := y;
+

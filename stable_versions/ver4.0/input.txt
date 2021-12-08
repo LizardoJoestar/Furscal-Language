@@ -1,0 +1,212 @@
+/* FURSCAL INSTRUCTIONS */
+
+/* Importing modules */
+
+from graphic2d;
+from graphic2d require lin_interpol;
+
+/* Functions */
+
+def AddPlusTwo('hey', 'y')
+{
+    global int x := 6;
+    const decimal y := 8.9f;
+};
+
+
+/* Loops */
+
+int counter := 0;
+int i := 0;
+
+perform 5 times
+{
+    print('y');
+};
+
+perform with test before until ( counter == 5 )
+{
+    show('y');
+};
+
+perform with test after until ( i > 10 )
+{
+    echo(i);
+};
+
+
+/* Checking and On Error */
+
+string f := 'Hello World';
+
+check
+{
+    print(f);
+}
+onError(x)
+{
+    print(f);
+};
+
+
+/* Show */
+
+print(counter);
+show(counter);
+echo(counter);
+display(counter);
+
+
+/* Class definition */
+
+class Animal
+{
+    self int age := 5;
+    self int cars := 10;
+
+    print('g');
+};
+
+class Mammal(Animal)
+{
+    pass;
+};
+
+
+/* Objects */
+
+obj raccoon := summon Animal();
+
+obj raccoon := summon Animal(3,7);
+
+/* Complex numbers, Complex properties */
+
+complex a := (5,3);
+print((5,3));
+print(a:real);
+print((5,3):imaginary);
+
+/* Assign statements */
+/* CORRECT */
+int a;
+a := 10;
+int b := a.pop();
+a := b;
+int c := a;
+a.pop();
+
+
+
+/* NON-FURSCAL INSTRUCTIONS */
+
+/* Python */
+Math.sin(2);
+Math.log(14);
+
+/* Python (array & set operations) */
+int z := x.union(y, x);
+
+/* Javascript */
+['Banana', 'Orange', 'Apple', 'Mango'];
+
+/* Javascript */
+set fruits;
+fruits.pop();
+
+/* Smalltalk */
+'hello world' indexOf: $o startingAt: 6
+
+/* Smalltalk */
+[:x | show(counter); ] 
+
+/* Smalltalk */
+int result := 5;
+(result) := a > b
+    ifTrue:[ show(counter); ]
+    ifFalse:[ show(counter); ]
+
+/* Visual Basic .NET */
+Function Multiply(a,b) As int
+    print(a);
+    Return b
+End Function
+
+/* Visual Basic .NET */
+Module Module1
+	print('Hello World');
+End Module
+
+/* Visual Basic .NET */
+Sub Instruction1()
+	print('Hello World');
+End Sub
+
+/* BASIC (unstructured) */
+PRINT 'Hello World'
+END 
+
+/* BASIC (unstructured) */
+LET N := 10
+FOR K := 1 TO N
+print('Hello World');
+NEXT K
+END 
+
+/* BASIC (unstructured) */
+INPUT 'How much do you love me, Little Star?' ; U$
+INPUT 'How many fingers do you see?:' ; K
+
+/* Fortran */
+do K := 10, stop 100
+	print(K);
+end do
+
+/* Fortran */
+if (a>b) then 
+	print('Hello World');
+end if
+
+/* COBOL */
+int WORK := 0;
+int STUDENT_ID_O := 0;
+int INPUT1 := 0;
+
+SORT WORK ON ASCENDING KEY STUDENT_ID_O
+USING INPUT1 GIVING OUTPUT1.
+
+/* Python */
+for x in fruits:
+    print(x); 
+
+/* C# */
+switch (fruits) {
+    case 'A':
+        print('Hello Case A');
+        break ;
+    case 'B':
+    case 'C':
+        print('Hello Case B and C');
+        break ;
+    case 'D':
+        print('Hello Case D');
+        break ;
+    case 'F':
+        print('Hello Case F');
+        break ;
+    default :
+        print('Hello Case Default');
+}
+
+/* Javascript */
+() => {
+    print('Hello World');
+    show(K);
+}
+
+/* AppleScript */
+Set resultAlertReply to display alert 'Alert Text'
+    as warning 
+    buttons {'Skip', 'Okay', 'Cancel'}
+    default button 2
+    cancel button 1
+    giving up after 2
