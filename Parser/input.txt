@@ -1,5 +1,10 @@
 /* FURSCAL INSTRUCTIONS */
 
+/* Importing modules */
+
+from graphic2d;
+from graphic2d require lin_interpol;
+
 /* Functions */
 
 def AddPlusTwo('hey', 'y')
@@ -10,6 +15,9 @@ def AddPlusTwo('hey', 'y')
 
 
 /* Loops */
+
+int counter := 0;
+int i := 0;
 
 perform 5 times
 {
@@ -23,19 +31,21 @@ perform with test before until ( counter == 5 )
 
 perform with test after until ( i > 10 )
 {
-    echo(x);
+    echo(i);
 };
 
 
 /* Checking and On Error */
 
+string f := 'Hello World';
+
 check
 {
-    print(x);
+    print(f);
 }
 onError(x)
 {
-    print(y);
+    print(f);
 };
 
 
@@ -51,8 +61,8 @@ display(counter);
 
 class Animal
 {
-    self int x := 5;
-    self int y := 10;
+    self int age := 5;
+    self int cars := 10;
 
     print('g');
 };
@@ -69,13 +79,6 @@ obj raccoon := summon Animal();
 
 obj raccoon := summon Animal(3,7);
 
-
-/* Importing modules */
-
-from graphic2d;
-from graphic2d require lin_interpol;
-
-
 /* Complex numbers, Complex properties */
 
 complex a := (5,3);
@@ -84,8 +87,13 @@ print(a:real);
 print((5,3):imaginary);
 
 /* Assign statements */
-int x := y.pop();
-y.pop();
+/* CORRECT */
+int a;
+a := 10;
+int b := a.pop();
+a := b;
+int c := a;
+a.pop();
 
 
 
@@ -94,15 +102,15 @@ y.pop();
 /* Python */
 Math.sin(2);
 Math.log(14);
-a := Math.E;
 
-/* Python */
-z := x.union(y, x);
+/* Python (array & set operations) */
+int z := x.union(y, x);
 
 /* Javascript */
 ['Banana', 'Orange', 'Apple', 'Mango'];
 
 /* Javascript */
+set fruits;
 fruits.pop();
 
 /* Smalltalk */
@@ -112,6 +120,7 @@ fruits.pop();
 [:x | show(counter); ] 
 
 /* Smalltalk */
+int result := 5;
 (result) := a > b
     ifTrue:[ show(counter); ]
     ifFalse:[ show(counter); ]
@@ -158,6 +167,10 @@ if (a>b) then
 end if
 
 /* COBOL */
+int WORK := 0;
+int STUDENT_ID_O := 0;
+int INPUT1 := 0;
+
 SORT WORK ON ASCENDING KEY STUDENT_ID_O
 USING INPUT1 GIVING OUTPUT1.
 
@@ -166,7 +179,7 @@ for x in fruits:
     print(x); 
 
 /* C# */
-switch (grade) {
+switch (fruits) {
     case 'A':
         print('Hello Case A');
         break ;
@@ -191,7 +204,7 @@ switch (grade) {
 }
 
 /* AppleScript */
-set resultAlertReply to display alert 'Alert Text'
+Set resultAlertReply to display alert 'Alert Text'
     as warning 
     buttons {'Skip', 'Okay', 'Cancel'}
     default button 2

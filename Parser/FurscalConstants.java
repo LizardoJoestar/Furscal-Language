@@ -292,7 +292,7 @@ public interface FurscalConstants {
     "\"break \"",
     "\"default :\"",
     "\"=>\"",
-    "\"set \"",
+    "\"Set \"",
     "\"to display alert \"",
     "\"as warning \"",
     "\"buttons \"",

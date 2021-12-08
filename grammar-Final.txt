@@ -1,13 +1,13 @@
-<START> ::= <EXPRESSION>* <EOF>
+<START> ::= (<COMMENT>)* (<IMPORTS>)* (<EXPRESSION>)* <EOF>
 
 <EXPRESSION> ::= 
     // Furscal instructions
-    <IMPORTS>
-    | <INST_CLASS>
+    <INST_CLASS>
     | <INST_FUNCTION>
     | <INST_LOOP>
     | <INST_CHECK>
     | <INST_ID> // this stores more non-terminal rules & non-Furscal rules
+    | <INST_ID_APPLIED>
     | <INST_SHOW>
     | <COMMENT>
     // Non-Furscal instructions
@@ -84,13 +84,31 @@
 
 <INST_ID> ::=
     (
-        ( <INST_TAGS> )?
-        <ID> <PROPERTY_ALT>
+        <INST_TAGS>
+        <ID>
         ( <INST_ASSIGN> )?
-        ( <ID> <PROPERTY_ALT> )?
     )
     <LINE_END>
             
+<INST_ID_APPLIED> ::=
+    <ID>
+    (
+        (
+            "." ( <INST_SET_OPS> | <ARR_FUNCS_JS> )
+        )
+        |
+        (
+            ( <ASSIGN> | <ASSIGN_OPERATORS> )
+            (
+                <TYPE_DEF>
+                | <ID> <PROPERTY_ALT>
+                | <COMPLEX_DEF>
+                | <INST_OBJECT>
+                | <MATH_REFERENCE> // Non-Furscal rule
+            )
+        )
+    )
+    <LINE_END>
 
 <INST_TAGS> ::=
         ( <GLOBAL> | <CONSTANT> )?
@@ -137,6 +155,7 @@
 <BLOCK_CLASS> ::=
     (
         <INST_ID>
+        | <INST_ID_APPLIED>
         | <INST_LOOP>
         | <INST_CHECK>
         | <INST_FUNCTION>
@@ -151,6 +170,7 @@
 <BLOCK> ::= 
     (
         <INST_ID>
+        | <INST_ID_APPLIED>
         | <INST_LOOP>
         | <INST_CHECK>
         | <INST_SHOW>
