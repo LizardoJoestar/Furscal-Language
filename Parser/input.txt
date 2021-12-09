@@ -11,6 +11,11 @@ def AddPlusTwo('hey', 'y')
 {
     global int x := 6;
     const decimal y := 8.9f;
+
+    perform 5 times
+    {
+        print('y');
+    };
 };
 
 
