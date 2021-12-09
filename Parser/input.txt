@@ -1,11 +1,11 @@
 /* FURSCAL INSTRUCTIONS */
 
-/* Importing modules */
+/* 1. Importing modules */
 
 from graphic2d;
 from graphic2d require lin_interpol;
 
-/* Functions */
+/* 2. Functions */
 
 def AddPlusTwo('hey', 'y')
 {
@@ -14,7 +14,7 @@ def AddPlusTwo('hey', 'y')
 };
 
 
-/* Loops */
+/* 3. Loops */
 
 int counter := 0;
 int i := 0;
@@ -35,7 +35,7 @@ perform with test after until ( i > 10 )
 };
 
 
-/* Checking and On Error */
+/* 4. Checking and On Error */
 
 string f := 'Hello World';
 
@@ -49,7 +49,7 @@ onError(x)
 };
 
 
-/* Show */
+/* 5. Show */
 
 print(counter);
 show(counter);
@@ -57,7 +57,7 @@ echo(counter);
 display(counter);
 
 
-/* Class definition */
+/* 6. Class definition */
 
 class Animal
 {
@@ -73,20 +73,20 @@ class Mammal(Animal)
 };
 
 
-/* Objects */
+/* 7. Objects */
 
 obj raccoon := summon Animal();
 
 obj raccoon := summon Animal(3,7);
 
-/* Complex numbers, Complex properties */
+/* 8. Complex numbers, 9. Complex properties */
 
 complex a := (5,3);
 print((5,3));
 print(a:real);
 print((5,3):imaginary);
 
-/* Assign statements */
+/* 10. Assign statements */
 /* CORRECT */
 int a;
 a := 10;
@@ -99,74 +99,74 @@ a.pop();
 
 /* NON-FURSCAL INSTRUCTIONS */
 
-/* Python */
+/* 11. Python */
 Math.sin(2);
 Math.log(14);
 
-/* Python (array & set operations) */
+/* 12. Python (array & set operations) */
 int z := x.union(y, x);
 
-/* Javascript */
+/* 13. Javascript */
 ['Banana', 'Orange', 'Apple', 'Mango'];
 
-/* Javascript */
+/* 14. Javascript */
 set fruits;
 fruits.pop();
 
-/* Smalltalk */
+/* 15. Smalltalk */
 'hello world' indexOf: $o startingAt: 6
 
-/* Smalltalk */
+/* 16. Smalltalk */
 [:x | show(counter); ] 
 
-/* Smalltalk */
+/* 17. Smalltalk */
 int result := 5;
 (result) := a > b
     ifTrue:[ show(counter); ]
     ifFalse:[ show(counter); ]
 
-/* Visual Basic .NET */
+/* 18. Visual Basic .NET */
 Function Multiply(a,b) As int
     print(a);
     Return b
 End Function
 
-/* Visual Basic .NET */
+/* 19. Visual Basic .NET */
 Module Module1
 	print('Hello World');
 End Module
 
-/* Visual Basic .NET */
+/* 20. Visual Basic .NET */
 Sub Instruction1()
 	print('Hello World');
 End Sub
 
-/* BASIC (unstructured) */
+/* 21. BASIC (unstructured) */
 PRINT 'Hello World'
 END 
 
-/* BASIC (unstructured) */
+/* 22. BASIC (unstructured) */
 LET N := 10
 FOR K := 1 TO N
 print('Hello World');
 NEXT K
 END 
 
-/* BASIC (unstructured) */
+/* 23. BASIC (unstructured) */
 INPUT 'How much do you love me, Little Star?' ; U$
 INPUT 'How many fingers do you see?:' ; K
 
-/* Fortran */
+/* 24. Fortran */
 do K := 10, stop 100
 	print(K);
 end do
 
-/* Fortran */
+/* 25. Fortran */
 if (a>b) then 
 	print('Hello World');
 end if
 
-/* COBOL */
+/* 26. COBOL */
 int WORK := 0;
 int STUDENT_ID_O := 0;
 int INPUT1 := 0;
@@ -174,11 +174,11 @@ int INPUT1 := 0;
 SORT WORK ON ASCENDING KEY STUDENT_ID_O
 USING INPUT1 GIVING OUTPUT1.
 
-/* Python */
+/* 27. Python */
 for x in fruits:
     print(x); 
 
-/* C# */
+/* 28. C# */
 switch (fruits) {
     case 'A':
         print('Hello Case A');
@@ -197,13 +197,13 @@ switch (fruits) {
         print('Hello Case Default');
 }
 
-/* Javascript */
+/* 29. Javascript */
 () => {
     print('Hello World');
     show(K);
 }
 
-/* AppleScript */
+/* 30. AppleScript */
 Set resultAlertReply to display alert 'Alert Text'
     as warning 
     buttons {'Skip', 'Okay', 'Cancel'}
